@@ -4,6 +4,11 @@ const EMAILJS_CONFIG = {
   templateId: "template_kbrtznd"
 };
 
+const EMAILJS_CDN_URLS = [
+  'https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js',
+  'https://unpkg.com/@emailjs/browser@4/dist/email.min.js'
+];
+
 const nav = document.querySelector('#siteNav') || document.querySelector('.site-nav') || document.querySelector('nav');
 const menuBtn = document.querySelector('.menu-toggle');
 
@@ -35,16 +40,49 @@ function setStatus(message, type = 'info') {
   statusText.className = `form-status ${type}`;
 }
 
+function getEmailJsClient() {
+  return window.emailjs;
+}
+
+async function loadScript(src) {
+  return new Promise((resolve, reject) => {
+    const existing = document.querySelector(`script[data-emailjs-src="${src}"]`);
+    if (existing) {
+      existing.addEventListener('load', resolve, { once: true });
+      existing.addEventListener('error', reject, { once: true });
+      return;
+    }
+
+    const script = document.createElement('script');
+    script.src = src;
+    script.async = true;
+    script.dataset.emailjsSrc = src;
+    script.onload = resolve;
+    script.onerror = () => reject(new Error(`No se pudo cargar ${src}`));
+    document.head.appendChild(script);
+  });
+}
+
+async function ensureEmailJsLoaded() {
+  if (getEmailJsClient()) return getEmailJsClient();
+
+  for (const src of EMAILJS_CDN_URLS) {
+    try {
+      await loadScript(src);
+      if (getEmailJsClient()) return getEmailJsClient();
+    } catch (error) {
+      console.warn('Fallo al cargar EmailJS desde CDN:', error);
+    }
+  }
+
+  throw new Error('EmailJS no se pudo cargar desde ningun CDN configurado.');
+}
+
 if (form) {
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
 
     if (!form.reportValidity()) return;
-
-    if (typeof emailjs === 'undefined') {
-      setStatus('Falta cargar EmailJS. Revisa el script CDN antes de script.js.', 'error');
-      return;
-    }
 
     if (hasEmailJsPlaceholders) {
       setStatus('El formulario está listo, pero aún faltan tus credenciales de EmailJS en script.js.', 'info');
@@ -56,9 +94,11 @@ if (form) {
     setStatus('');
 
     try {
-      emailjs.init({ publicKey: EMAILJS_CONFIG.publicKey });
+      const emailjsClient = await ensureEmailJsLoaded();
 
-      await emailjs.sendForm(
+      emailjsClient.init({ publicKey: EMAILJS_CONFIG.publicKey });
+
+      await emailjsClient.sendForm(
         EMAILJS_CONFIG.serviceId,
         EMAILJS_CONFIG.templateId,
         form
@@ -68,7 +108,11 @@ if (form) {
       setStatus('Mensaje enviado. Te contactaremos pronto.', 'success');
     } catch (error) {
       console.error('Error al enviar formulario:', error);
-      setStatus('No se pudo enviar el mensaje. Revisa tus IDs de EmailJS o intenta de nuevo.', 'error');
+      if (error?.text) {
+        setStatus(`No se pudo enviar el mensaje: ${error.text}.`, 'error');
+      } else {
+        setStatus('No se pudo cargar o usar EmailJS. Revisa tus IDs, el servicio y la red.', 'error');
+      }
     } finally {
       submitBtn.disabled = false;
       submitBtn.textContent = 'Solicitar propuesta';
