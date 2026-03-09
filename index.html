@@ -9,8 +9,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css" />
-  <script src="script.js"></script>
-
 </head>
 <body>
   <header class="site-header">
@@ -316,30 +314,34 @@
           </div>
         </div>
 
-        <form class="contact-form" id="agencyForm">
-          <label>Nombre
-            <input type="text" name="nombre" placeholder="Tu nombre" required>
+        <form class="contact-form" id="contact-form">
+          <label for="name">Nombre
+            <input type="text" id="name" name="name" placeholder="Tu nombre" required minlength="2" maxlength="80">
           </label>
-          <label>Negocio
-            <input type="text" name="negocio" placeholder="Nombre del negocio" required>
+          <label for="business">Negocio
+            <input type="text" id="business" name="business" placeholder="Nombre del negocio" required minlength="2" maxlength="120">
           </label>
-          <label>Correo
-            <input type="email" name="correo" placeholder="correo@ejemplo.com" required>
+          <label for="email">Correo
+            <input type="email" id="email" name="email" placeholder="correo@ejemplo.com" required>
           </label>
-          <label>Tipo de proyecto
-            <select name="tipo" required>
+          <label for="phone">Teléfono o WhatsApp
+            <input type="tel" id="phone" name="phone" placeholder="+52 000 000 0000" required pattern="[0-9+\-\s()]{10,20}">
+          </label>
+          <label for="service">Tipo de proyecto
+            <select id="service" name="service" required>
               <option value="">Selecciona una opción</option>
-              <option>Landing page</option>
-              <option>Sitio empresarial</option>
-              <option>Rediseño de sitio</option>
-              <option>Mantenimiento</option>
+              <option value="Landing Page">Landing Page</option>
+              <option value="Sitio Empresarial">Sitio empresarial</option>
+              <option value="Rediseño de Sitio">Rediseño de sitio</option>
+              <option value="Mantenimiento Web">Mantenimiento</option>
             </select>
           </label>
-          <label>Cuéntanos qué necesitas
-            <textarea name="mensaje" rows="5" placeholder="Quiero una página para mi negocio con WhatsApp, secciones de servicios y formulario..." required></textarea>
+          <label for="message">Cuéntanos qué necesitas
+            <textarea id="message" name="message" rows="5" placeholder="Quiero una página para mi negocio con WhatsApp, secciones de servicios y formulario..." required minlength="10" maxlength="1000"></textarea>
           </label>
-          <button type="submit" class="btn">Enviar solicitud</button>
-          <p class="form-note">Formulario demo. Después lo conectan a correo, WhatsApp, Formspree o backend propio.</p>
+          <button type="submit" class="btn" id="submit-btn">Solicitar propuesta</button>
+          <p class="form-note">Este formulario ya quedó listo para EmailJS. Solo reemplaza la llave pública, el service ID y el template ID en <strong>script.js</strong>.</p>
+          <p class="form-status" id="form-status" aria-live="polite"></p>
         </form>
       </div>
     </section>
@@ -352,6 +354,7 @@
     </div>
   </footer>
 
-  
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
