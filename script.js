@@ -26,7 +26,7 @@ const statusText = document.getElementById('form-status');
 const submitBtn = document.getElementById('submit-btn');
 
 const hasEmailJsPlaceholders = Object.values(EMAILJS_CONFIG).some(value =>
-  String(value).startsWith('REEMPLAZA_CON_TU_')
+  String(value).startsWith('albertosolis.r26@gmail.com')
 );
 
 function setStatus(message, type = 'info') {
