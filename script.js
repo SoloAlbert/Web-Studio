@@ -14,13 +14,13 @@ const menuBtn = document.querySelector('.menu-toggle');
 
 if (menuBtn && nav) {
   menuBtn.addEventListener('click', () => {
-    const isOpen = nav.classList.toggle('is-open');
+    const isOpen = nav.classList.toggle('open');
     menuBtn.setAttribute('aria-expanded', String(isOpen));
   });
 
   nav.querySelectorAll('a').forEach(link => {
     link.addEventListener('click', () => {
-      nav.classList.remove('is-open');
+      nav.classList.remove('open');
       menuBtn.setAttribute('aria-expanded', 'false');
     });
   });
