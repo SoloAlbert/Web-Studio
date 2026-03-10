@@ -21,7 +21,7 @@ if (lawForm) {
     e.preventDefault();
     const toast = document.createElement('div');
     toast.className = 'toast';
-    toast.textContent = 'Consulta demo enviada. Aquí luego conectas correo, WhatsApp o backend.';
+    toast.textContent = 'Consulta enviada.';
     document.body.appendChild(toast);
     lawForm.reset();
     setTimeout(() => toast.remove(), 3000);

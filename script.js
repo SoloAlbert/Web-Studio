@@ -111,7 +111,7 @@ if (form) {
       if (error?.text) {
         setStatus(`No se pudo enviar el mensaje: ${error.text}.`, 'error');
       } else {
-        setStatus('No se pudo cargar o usar EmailJS. Revisa tus IDs, el servicio y la red.', 'error');
+        setStatus('No se pudo cargar o usar EmailJS.', 'error');
       }
     } finally {
       submitBtn.disabled = false;
