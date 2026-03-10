@@ -212,7 +212,7 @@
               <span class="project-tag">Restaurante</span>
               <h3>Sazón de Casa</h3>
               <p>Un diseño cálido y elegante, pensado para reservaciones, menú destacado y una experiencia visual que antoja sin gritar.</p>
-              <a href="restaurante/index.html" target="_blank" rel="noopener">Abrir</a>
+              <a href="restaurante/index.html" target="_blank" rel="noopener noreferrer">Abrir</a>
             </div>
           </article>
 
@@ -228,7 +228,7 @@
               <span class="project-tag">Despacho</span>
               <h3>Lex Norte Abogados</h3>
               <p>Un sitio sobrio, formal y con estructura orientada a transmitir credibilidad y facilitar la primera consulta.</p>
-              <a href="abogados/index.html" target="_blank" rel="noopener">Abrir</a>
+              <a href="abogados/index.html" target="_blank" rel="noopener noreferrer">Abrir</a>
             </div>
           </article>
         </div>
@@ -307,7 +307,7 @@
             <article>
               <strong>Ubicación</strong>
               <span>Bosques de Morelos, Cuautitlán Izcalli</span>
-            </article>
+<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3508.3224298284467!2d-99.2394187895437!3d19.632924181613348!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d21e89a0144d0d%3A0x44a0d85b9b623aed!2sAlamos%20MZ60LT24%2C%20Bosques%20de%20Morelos%2C%2054760%20Cuautitl%C3%A1n%20Izcalli%2C%20M%C3%A9x.!5e1!3m2!1ses-419!2smx!4v1773163081360!5m2!1ses-419!2smx" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>            </article>
           </div>
         </div>
 
@@ -319,10 +319,10 @@
             <input type="text" id="business" name="business" placeholder="Nombre del negocio" required minlength="2" maxlength="120">
           </label>
           <label for="email">Correo
-            <input type="email" id="email" name="email" placeholder="correo@ejemplo.com" required>
+            <input type="email" id="email" name="email" placeholder="correo@ejemplo.com" required maxlength="120">
           </label>
           <label for="phone">Teléfono o WhatsApp
-            <input type="tel" id="phone" name="phone" placeholder="+52 000 000 0000" required pattern="[0-9+\-\s()]{10,20}">
+            <input type="tel" id="phone" name="phone" placeholder="+52 000 000 0000" required pattern="[0-9+\-\s()]{10,20}" maxlength="20">
           </label>
           <label for="service">Tipo de proyecto
             <select id="service" name="service" required>

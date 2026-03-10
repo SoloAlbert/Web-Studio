@@ -96,7 +96,18 @@ if (form) {
     try {
       const emailjsClient = await ensureEmailJsLoaded();
 
-      emailjsClient.init({ publicKey: EMAILJS_CONFIG.publicKey });
+      emailjsClient.init({
+        publicKey: EMAILJS_CONFIG.publicKey,
+        blockHeadless: true,
+        limitRate: {
+          id: 'nexo-contact-form',
+          throttle: 20000
+        },
+        blockList: {
+          watchVariable: 'email',
+          list: ['test@test.com', 'example@example.com']
+        }
+      });
 
       await emailjsClient.sendForm(
         EMAILJS_CONFIG.serviceId,
