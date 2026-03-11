@@ -26,6 +26,89 @@ if (menuBtn && nav) {
   });
 }
 
+const revealItems = document.querySelectorAll('.reveal-up');
+
+if (revealItems.length) {
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('is-visible');
+      revealObserver.unobserve(entry.target);
+    });
+  }, { threshold: 0.18 });
+
+  revealItems.forEach((item) => revealObserver.observe(item));
+}
+
+const processCarousel = document.querySelector('.process-carousel');
+
+if (processCarousel) {
+  const track = processCarousel.querySelector('.steps');
+  const slides = Array.from(processCarousel.querySelectorAll('.process-step'));
+  const dots = Array.from(processCarousel.querySelectorAll('.process-dot'));
+  const prevBtn = processCarousel.querySelector('.process-prev');
+  const nextBtn = processCarousel.querySelector('.process-next');
+
+  let currentIndex = 0;
+  let autoplayId = null;
+
+  const updateCarousel = (index) => {
+    const maxIndex = Math.max(0, slides.length - 1);
+    currentIndex = Math.min(Math.max(index, 0), maxIndex);
+
+    const slideWidth = slides[0]?.getBoundingClientRect().width || 0;
+    const gap = parseFloat(window.getComputedStyle(track).gap || '0');
+    track.style.transform = `translateX(-${currentIndex * (slideWidth + gap)}px)`;
+
+    slides.forEach((slide, slideIndex) => {
+      const isActive = slideIndex === currentIndex;
+      slide.classList.toggle('is-active', isActive);
+    });
+
+    dots.forEach((dot, dotIndex) => {
+      dot.classList.toggle('is-active', dotIndex === currentIndex);
+    });
+  };
+
+  const nextSlide = () => {
+    const maxIndex = Math.max(0, slides.length - 1);
+    updateCarousel(currentIndex >= maxIndex ? 0 : currentIndex + 1);
+  };
+
+  const startAutoplay = () => {
+    if (autoplayId) window.clearInterval(autoplayId);
+    autoplayId = window.setInterval(nextSlide, 4200);
+  };
+
+  prevBtn?.addEventListener('click', () => {
+    const maxIndex = Math.max(0, slides.length - 1);
+    updateCarousel(currentIndex <= 0 ? maxIndex : currentIndex - 1);
+    startAutoplay();
+  });
+
+  nextBtn?.addEventListener('click', () => {
+    nextSlide();
+    startAutoplay();
+  });
+
+  dots.forEach((dot, index) => {
+    dot.addEventListener('click', () => {
+      updateCarousel(index);
+      startAutoplay();
+    });
+  });
+
+  processCarousel.addEventListener('mouseenter', () => {
+    if (autoplayId) window.clearInterval(autoplayId);
+  });
+
+  processCarousel.addEventListener('mouseleave', startAutoplay);
+  window.addEventListener('resize', () => updateCarousel(currentIndex));
+
+  updateCarousel(0);
+  startAutoplay();
+}
+
 const form = document.getElementById('contact-form');
 const statusText = document.getElementById('form-status');
 const submitBtn = document.getElementById('submit-btn');
