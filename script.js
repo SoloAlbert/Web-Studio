@@ -4,7 +4,11 @@ const APPS_SCRIPT_URL =
 // =========================
 // NAV MOBILE
 // =========================
-const nav = document.querySelector("#siteNav") || document.querySelector(".site-nav") || document.querySelector("nav");
+const nav =
+  document.querySelector("#siteNav") ||
+  document.querySelector(".site-nav") ||
+  document.querySelector("nav");
+
 const menuBtn = document.querySelector(".menu-toggle");
 
 if (menuBtn && nav) {
@@ -48,7 +52,9 @@ const processCarousel = document.querySelector(".process-carousel");
 
 if (processCarousel) {
   const track = processCarousel.querySelector(".steps");
-  const slides = Array.from(processCarousel.querySelectorAll(".process-step"));
+  const slides = Array.from(
+    processCarousel.querySelectorAll(".process-step")
+  );
   const dots = Array.from(processCarousel.querySelectorAll(".process-dot"));
   const prevBtn = processCarousel.querySelector(".process-prev");
   const nextBtn = processCarousel.querySelector(".process-next");
@@ -62,11 +68,12 @@ if (processCarousel) {
 
     const slideWidth = slides[0]?.getBoundingClientRect().width || 0;
     const gap = parseFloat(window.getComputedStyle(track).gap || "0");
-    track.style.transform = `translateX(-${currentIndex * (slideWidth + gap)}px)`;
+    track.style.transform = `translateX(-${
+      currentIndex * (slideWidth + gap)
+    }px)`;
 
     slides.forEach((slide, slideIndex) => {
-      const isActive = slideIndex === currentIndex;
-      slide.classList.toggle("is-active", isActive);
+      slide.classList.toggle("is-active", slideIndex === currentIndex);
     });
 
     dots.forEach((dot, dotIndex) => {
@@ -80,8 +87,8 @@ if (processCarousel) {
   };
 
   const startAutoplay = () => {
-    if (autoplayId) window.clearInterval(autoplayId);
-    autoplayId = window.setInterval(nextSlide, 4200);
+    if (autoplayId) clearInterval(autoplayId);
+    autoplayId = setInterval(nextSlide, 4200);
   };
 
   prevBtn?.addEventListener("click", () => {
@@ -103,7 +110,7 @@ if (processCarousel) {
   });
 
   processCarousel.addEventListener("mouseenter", () => {
-    if (autoplayId) window.clearInterval(autoplayId);
+    if (autoplayId) clearInterval(autoplayId);
   });
 
   processCarousel.addEventListener("mouseleave", startAutoplay);
@@ -134,7 +141,6 @@ if (form) {
 
     const formData = new FormData(form);
 
-    // Traducción del frontend a lo que espera Apps Script
     const payload = {
       nombre: formData.get("name") || "",
       empresa: formData.get("business") || "",
@@ -172,7 +178,10 @@ if (form) {
 
       if (data.ok) {
         form.reset();
-        setStatus("Mensaje enviado correctamente. Te contactaremos pronto.", "success");
+        setStatus(
+          "Mensaje enviado correctamente. Te contactaremos pronto.",
+          "success"
+        );
       } else {
         console.error("Respuesta del backend:", data);
         setStatus("No se pudo enviar el formulario.", "error");
