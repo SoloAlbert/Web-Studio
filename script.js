@@ -213,3 +213,56 @@ if (form) {
     }
   });
 }
+
+const APPS_SCRIPT_URL =
+  "https://script.google.com/macros/s/AKfycbzoa4BunEtlz6f4IwGpE4-Xf1OwrTqPPyLTP5-XIJ5G3_wXOaxl1IUSD9m7bLVjyZmH/exec";
+
+const form = document.getElementById("contact-form");
+const statusEl = document.getElementById("form-status");
+const submitBtn = document.getElementById("submit-btn");
+
+if (form) {
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(form);
+
+    // Traducimos los nombres del frontend a los que espera Apps Script
+    const payload = {
+      nombre: formData.get("name") || "",
+      empresa: formData.get("business") || "",
+      correo: formData.get("email") || "",
+      telefono: formData.get("phone") || "",
+      servicio: formData.get("service") || "",
+      mensaje: formData.get("message") || "",
+      origen: "localconnect.studio",
+    };
+
+    try {
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Enviando...";
+      statusEl.textContent = "";
+
+      const res = await fetch(APPS_SCRIPT_URL, {
+        method: "POST",
+        body: JSON.stringify(payload),
+      });
+
+      const data = await res.json();
+
+      if (data.ok) {
+        statusEl.textContent = "Mensaje enviado correctamente.";
+        form.reset();
+      } else {
+        statusEl.textContent = "No se pudo enviar el formulario.";
+        console.error("Respuesta del backend:", data);
+      }
+    } catch (error) {
+      console.error("Error al enviar:", error);
+      statusEl.textContent = "Ocurrió un error al enviar.";
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = "Solicitar propuesta";
+    }
+  });
+}
