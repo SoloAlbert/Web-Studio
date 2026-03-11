@@ -197,3 +197,114 @@ if (form) {
     }
   });
 }
+// =========================
+// COTIZADOR
+// =========================
+const quoteForm = document.getElementById("quote-form");
+const quoteStatusEl = document.getElementById("quote-form-status");
+const quoteSubmitBtn = document.getElementById("quote-submit-btn");
+
+const quoteSubtotalEl = document.getElementById("quote-subtotal");
+const quoteTotalEl = document.getElementById("quote-total");
+const quoteAnticipoEl = document.getElementById("quote-anticipo");
+
+const PACKAGE_PRICES = {
+  "PKG-001": 4900,
+  "PKG-002": 8900,
+  "PKG-003": 14900,
+};
+
+const EXTRA_PRICES = {
+  "EXT-001": 900,
+  "EXT-002": 1800,
+  "EXT-003": 1200,
+  "EXT-004": 1200,
+  "EXT-005": 1000,
+  "EXT-006": 2500,
+};
+
+const ANTICIPO_PORCENTAJE = 0.5;
+
+function formatCurrency(value) {
+  return new Intl.NumberFormat("es-MX", {
+    style: "currency",
+    currency: "MXN",
+    maximumFractionDigits: 0,
+  }).format(value || 0);
+}
+
+function updateQuoteSummary() {
+  if (!quoteForm) return;
+
+  const paqueteId = quoteForm.querySelector('[name="package_id"]')?.value || "";
+  const extras = Array.from(quoteForm.querySelectorAll('input[name="extras"]:checked')).map(el => el.value);
+
+  const paquetePrecio = PACKAGE_PRICES[paqueteId] || 0;
+  const extrasPrecio = extras.reduce((acc, id) => acc + (EXTRA_PRICES[id] || 0), 0);
+
+  const subtotal = paquetePrecio + extrasPrecio;
+  const total = subtotal;
+  const anticipo = Math.round(total * ANTICIPO_PORCENTAJE);
+
+  if (quoteSubtotalEl) quoteSubtotalEl.textContent = formatCurrency(subtotal);
+  if (quoteTotalEl) quoteTotalEl.textContent = formatCurrency(total);
+  if (quoteAnticipoEl) quoteAnticipoEl.textContent = formatCurrency(anticipo);
+}
+
+if (quoteForm) {
+  quoteForm.addEventListener("change", updateQuoteSummary);
+  updateQuoteSummary();
+
+  quoteForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    if (!quoteForm.reportValidity()) return;
+
+    const formData = new FormData(quoteForm);
+
+    const payload = {
+      action: "cotizacion",
+      nombre: formData.get("name") || "",
+      empresa: formData.get("business") || "",
+      correo: formData.get("email") || "",
+      telefono: formData.get("phone") || "",
+      paquete_id: formData.get("package_id") || "",
+      extras_ids: Array.from(quoteForm.querySelectorAll('input[name="extras"]:checked')).map(el => el.value),
+      descuento: 0,
+      mensaje: formData.get("message") || "",
+      origen: "localconnect.studio"
+    };
+
+    try {
+      quoteSubmitBtn.disabled = true;
+      quoteSubmitBtn.textContent = "Generando...";
+      quoteStatusEl.textContent = "Generando cotización...";
+
+      const res = await fetch(APPS_SCRIPT_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "text/plain;charset=utf-8",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const rawText = await res.text();
+      const data = JSON.parse(rawText);
+
+      if (data.ok) {
+        quoteStatusEl.textContent = `Cotización generada correctamente. Folio: ${data.folio}`;
+        quoteForm.reset();
+        updateQuoteSummary();
+      } else {
+        console.error("Respuesta cotizador:", data);
+        quoteStatusEl.textContent = "No se pudo generar la cotización.";
+      }
+    } catch (error) {
+      console.error("Error al cotizar:", error);
+      quoteStatusEl.textContent = "Ocurrió un error al generar la cotización.";
+    } finally {
+      quoteSubmitBtn.disabled = false;
+      quoteSubmitBtn.textContent = "Generar cotización";
+    }
+  });
+}

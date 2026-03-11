@@ -327,6 +327,65 @@
           </div>
         </div>
 
+        <section class="quote-section reveal-up" id="cotizador">
+  <div class="section-heading">
+    <span class="eyebrow">Cotizador</span>
+    <h2>Cotiza tu proyecto en minutos</h2>
+    <p>Selecciona un paquete, añade extras y obtén un estimado con anticipo.</p>
+  </div>
+
+  <form class="contact-form quote-form" id="quote-form">
+    <label for="quote-name">Nombre
+      <input type="text" id="quote-name" name="name" placeholder="Tu nombre" required>
+    </label>
+
+    <label for="quote-business">Negocio
+      <input type="text" id="quote-business" name="business" placeholder="Nombre del negocio" required>
+    </label>
+
+    <label for="quote-email">Correo
+      <input type="email" id="quote-email" name="email" placeholder="correo@ejemplo.com" required>
+    </label>
+
+    <label for="quote-phone">Teléfono o WhatsApp
+      <input type="tel" id="quote-phone" name="phone" placeholder="+52 000 000 0000" required>
+    </label>
+
+    <label for="quote-package">Paquete
+      <select id="quote-package" name="package_id" required>
+        <option value="">Selecciona un paquete</option>
+        <option value="PKG-001">Landing Esencial — $4,900</option>
+        <option value="PKG-002">Web Profesional — $8,900</option>
+        <option value="PKG-003">Web Premium — $14,900</option>
+      </select>
+    </label>
+
+    <fieldset class="quote-extras">
+      <legend>Extras</legend>
+      <label><input type="checkbox" name="extras" value="EXT-001"> Dominio y configuración (+$900)</label>
+      <label><input type="checkbox" name="extras" value="EXT-002"> Hosting anual (+$1,800)</label>
+      <label><input type="checkbox" name="extras" value="EXT-003"> Correos empresariales (+$1,200)</label>
+      <label><input type="checkbox" name="extras" value="EXT-004"> Sección extra (+$1,200)</label>
+      <label><input type="checkbox" name="extras" value="EXT-005"> Mantenimiento mensual (+$1,000)</label>
+      <label><input type="checkbox" name="extras" value="EXT-006"> Entrega urgente (+$2,500)</label>
+    </fieldset>
+
+    <label for="quote-message">Detalles del proyecto
+      <textarea id="quote-message" name="message" rows="5" placeholder="Cuéntanos qué necesitas..."></textarea>
+    </label>
+
+    <div class="quote-summary">
+      <p><strong>Subtotal:</strong> <span id="quote-subtotal">$0 MXN</span></p>
+      <p><strong>Total:</strong> <span id="quote-total">$0 MXN</span></p>
+      <p><strong>Anticipo (50%):</strong> <span id="quote-anticipo">$0 MXN</span></p>
+    </div>
+
+    <button type="submit" class="btn" id="quote-submit-btn">Generar cotización</button>
+    <p class="form-status" id="quote-form-status" aria-live="polite"></p>
+  </form>
+</section>
+
+
         <form class="contact-form" id="contact-form">
           <label for="name">Nombre
             <input type="text" id="name" name="name" placeholder="Tu nombre" required minlength="2" maxlength="80">
