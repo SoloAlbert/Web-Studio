@@ -5,11 +5,9 @@ const PAYMENT_CONFIG = {
   mode: "link",
   whatsappNumber: "525544492118",
   defaultPaymentLink: "",
-  packagePaymentLinks: {
-    "PKG-001": "https://mpago.la/2NaSLoz",
-    "PKG-002": "https://mpago.la/2yQo1Xe",
-    "PKG-003": "https://mpago.la/1c4sGfR",
-  },
+  // Usa el mismo Apps Script para generar el link dinamico de Mercado Pago.
+  paymentLinkEndpoint: APPS_SCRIPT_URL,
+  packagePaymentLinks: {},
 };
 
 const PACKAGE_PRICES = {
@@ -117,12 +115,9 @@ if (processCarousel) {
   const updateCarousel = (index) => {
     const maxIndex = Math.max(0, slides.length - 1);
     currentIndex = Math.min(Math.max(index, 0), maxIndex);
-
-    const slideWidth = slides[0]?.getBoundingClientRect().width || 0;
-    const gap = parseFloat(window.getComputedStyle(track).gap || "0");
-    track.style.transform = `translateX(-${
-      currentIndex * (slideWidth + gap)
-    }px)`;
+    const targetSlide = slides[currentIndex];
+    const translateX = targetSlide?.offsetLeft || 0;
+    track.style.transform = `translateX(-${translateX}px)`;
 
     slides.forEach((slide, slideIndex) => {
       slide.classList.toggle("is-active", slideIndex === currentIndex);
@@ -268,6 +263,7 @@ const quoteSelectedExtrasEl = document.getElementById("quote-selected-extras");
 const quoteDeliveryEl = document.getElementById("quote-delivery");
 const quoteDeliveryNoteEl = document.getElementById("quote-delivery-note");
 const quoteNextStepEl = document.getElementById("quote-next-step");
+const quotePaymentHintEl = document.getElementById("quote-payment-hint");
 
 let latestQuote = null;
 
@@ -360,7 +356,66 @@ function updateQuoteSummary() {
       : "Selecciona un paquete para estimar tiempos de trabajo.";
   }
 
+  if (quotePaymentHintEl) {
+    const usesStaticPackageLink =
+      PAYMENT_CONFIG.mode === "link" &&
+      !PAYMENT_CONFIG.paymentLinkEndpoint &&
+      Boolean(
+        PAYMENT_CONFIG.packagePaymentLinks[packageId] ||
+          PAYMENT_CONFIG.defaultPaymentLink
+      );
+
+    quotePaymentHintEl.textContent = usesStaticPackageLink
+      ? ""
+      : "El anticipo se prepara con el total actualizado de tu cotización.";
+  }
+
   highlightSelectedPackage(packageId);
+}
+
+function getQuoteComputedAmounts(packageId, extrasIds) {
+  const packagePrice = PACKAGE_PRICES[packageId] || 0;
+  const extrasPrice = extrasIds.reduce(
+    (acc, id) => acc + (EXTRA_PRICES[id] || 0),
+    0
+  );
+  const total = packagePrice + extrasPrice;
+
+  return {
+    packagePrice,
+    extrasPrice,
+    total,
+    anticipo: Math.round(total * ANTICIPO_PORCENTAJE),
+  };
+}
+
+async function requestDynamicPaymentLink(quote) {
+  if (!PAYMENT_CONFIG.paymentLinkEndpoint) return "";
+
+  const response = await fetch(PAYMENT_CONFIG.paymentLinkEndpoint, {
+    method: "POST",
+    headers: {
+      "Content-Type": "text/plain;charset=utf-8",
+    },
+    body: JSON.stringify({
+      action: "crear_pago",
+      folio: quote.folio,
+      nombre: quote.nombre,
+      empresa: quote.empresa,
+      correo: quote.correo,
+      telefono: quote.telefono,
+      paquete_id: quote.packageId,
+      paquete_nombre: quote.packageName,
+      extras_ids: quote.extrasIds,
+      extras_detalle: quote.extrasDetail,
+      total: quote.total,
+      anticipo: quote.anticipo,
+      concepto: `Anticipo ${quote.packageName} (${quote.folio})`,
+    }),
+  });
+
+  const data = await response.json();
+  return data?.paymentLink || data?.init_point || data?.sandbox_init_point || "";
 }
 
 packageSelectButtons.forEach((button) => {
@@ -423,6 +478,8 @@ if (quoteForm) {
       quoteSubmitBtn.textContent = "Generando...";
       quoteStatusEl.textContent = "Generando cotización...";
 
+      const computedAmounts = getQuoteComputedAmounts(packageId, extrasIds);
+
       const res = await fetch(APPS_SCRIPT_URL, {
         method: "POST",
         headers: {
@@ -439,11 +496,18 @@ if (quoteForm) {
           folio: data.folio,
           packageId,
           packageName: packageMeta?.name || packageId,
-          total: data.total,
-          anticipo: data.anticipo,
+          extrasIds,
+          extrasDetail: extrasIds.map((id) => ({
+            id,
+            name: EXTRA_META[id] || id,
+            price: EXTRA_PRICES[id] || 0,
+          })),
+          total: Number(data.total) || computedAmounts.total,
+          anticipo: Number(data.anticipo) || computedAmounts.anticipo,
           nombre: payload.nombre,
           empresa: payload.empresa,
           correo: payload.correo,
+          telefono: payload.telefono,
         };
 
         setPayButtonState(true);
@@ -469,7 +533,7 @@ if (quoteForm) {
 }
 
 if (quotePayBtn) {
-  quotePayBtn.addEventListener("click", () => {
+  quotePayBtn.addEventListener("click", async () => {
     if (!latestQuote) {
       quoteStatusEl.textContent =
         "Primero genera una cotización para habilitar el anticipo.";
@@ -477,20 +541,48 @@ if (quotePayBtn) {
       return;
     }
 
-    const paymentLink =
-      PAYMENT_CONFIG.packagePaymentLinks[latestQuote.packageId] ||
-      PAYMENT_CONFIG.defaultPaymentLink;
+    try {
+      quotePayBtn.disabled = true;
+      quotePayBtn.textContent = "Preparando pago...";
+      quoteStatusEl.textContent = "Preparando link de pago...";
 
-    if (PAYMENT_CONFIG.mode === "link" && paymentLink) {
-      window.open(paymentLink, "_blank", "noopener,noreferrer");
-      return;
+      if (PAYMENT_CONFIG.mode === "link") {
+        const dynamicPaymentLink = await requestDynamicPaymentLink(latestQuote);
+        const fallbackPaymentLink =
+          PAYMENT_CONFIG.packagePaymentLinks[latestQuote.packageId] ||
+          PAYMENT_CONFIG.defaultPaymentLink;
+        const paymentLink = dynamicPaymentLink || fallbackPaymentLink;
+
+        if (paymentLink) {
+          window.open(paymentLink, "_blank", "noopener,noreferrer");
+
+          quoteStatusEl.textContent = dynamicPaymentLink
+            ? "Link de pago listo con el total actualizado."
+            : "Se abrió el link de pago configurado para este paquete.";
+          return;
+        }
+      }
+
+      const extrasSummary = latestQuote.extrasDetail?.length
+        ? latestQuote.extrasDetail
+            .map((extra) => `- ${extra.name}: ${formatCurrency(extra.price)}`)
+            .join("\n")
+        : "- Sin extras";
+
+      const message = encodeURIComponent(
+        `Hola, quiero continuar con el anticipo de mi proyecto en LocalConnect Studio.\n\nFolio: ${latestQuote.folio}\nPaquete: ${latestQuote.packageName}\nExtras:\n${extrasSummary}\nAnticipo: ${formatCurrency(latestQuote.anticipo)}\nTotal estimado: ${formatCurrency(latestQuote.total)}\nNombre: ${latestQuote.nombre}\nEmpresa: ${latestQuote.empresa}\nCorreo: ${latestQuote.correo}`
+      );
+
+      const whatsappUrl = `https://wa.me/${PAYMENT_CONFIG.whatsappNumber}?text=${message}`;
+      window.open(whatsappUrl, "_blank", "noopener,noreferrer");
+      quoteStatusEl.textContent =
+        "No había un link dinámico listo; te enviamos al flujo por WhatsApp con el resumen completo.";
+    } catch (error) {
+      console.error("Error al preparar el pago:", error);
+      quoteStatusEl.textContent = "No se pudo preparar el pago.";
+    } finally {
+      quotePayBtn.disabled = false;
+      quotePayBtn.textContent = "Pagar anticipo";
     }
-
-    const message = encodeURIComponent(
-      `Hola, quiero continuar con el anticipo de mi proyecto en LocalConnect Studio.\n\nFolio: ${latestQuote.folio}\nPaquete: ${latestQuote.packageName}\nAnticipo: ${formatCurrency(latestQuote.anticipo)}\nTotal estimado: ${formatCurrency(latestQuote.total)}\nNombre: ${latestQuote.nombre}\nEmpresa: ${latestQuote.empresa}\nCorreo: ${latestQuote.correo}`
-    );
-
-    const whatsappUrl = `https://wa.me/${PAYMENT_CONFIG.whatsappNumber}?text=${message}`;
-    window.open(whatsappUrl, "_blank", "noopener,noreferrer");
   });
 }
