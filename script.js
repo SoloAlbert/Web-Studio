@@ -564,8 +564,6 @@ if (quotePayBtn) {
       return;
     }
 
-    const paymentWindow = window.open("", "_blank");
-
     try {
       quotePayBtn.disabled = true;
       quotePayBtn.textContent = "Preparando pago...";
@@ -576,21 +574,12 @@ if (quotePayBtn) {
       }
 
       const paymentLink = await requestDynamicPaymentLink(latestQuote);
-
-      if (paymentWindow) {
-        paymentWindow.location.href = paymentLink;
-      } else {
-        window.location.href = paymentLink;
-      }
+      window.location.href = paymentLink;
 
       quoteStatusEl.textContent =
         "Link de pago listo con el total actualizado.";
 
     } catch (error) {
-      if (paymentWindow && !paymentWindow.closed) {
-        paymentWindow.close();
-      }
-
       console.error("Error al preparar el pago:", error);
       quoteStatusEl.textContent =
         error?.message || "No se pudo preparar el pago.";
