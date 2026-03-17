@@ -1,5 +1,5 @@
 const APPS_SCRIPT_URL =
-  "https://script.google.com/macros/s/AKfycbzoa4BunEtlz6f4IwGpE4-Xf1OwrTqPPyLTP5-XIJ5G3_wXOaxl1IUSD9m7bLVjyZmH/exec";
+  "https://script.google.com/macros/s/AKfycbxKEju7CbigTv0hQl9fcQwaESto_6omYrmgn7ppCvQJ9mQIcDbttLkiZX8poG5bkQPUWw/exec";
 
 const PAYMENT_CONFIG = {
   mode: "link",
