@@ -414,8 +414,31 @@ async function requestDynamicPaymentLink(quote) {
     }),
   });
 
-  const data = await response.json();
-  return data?.paymentLink || data?.init_point || data?.sandbox_init_point || "";
+  const rawText = await response.text();
+  let data = {};
+
+  try {
+    data = JSON.parse(rawText);
+  } catch {
+    throw new Error(`Respuesta no valida del backend de pago: ${rawText}`);
+  }
+
+  if (!data?.ok) {
+    throw new Error(
+      data?.message || data?.error || "El backend no pudo generar el link de pago."
+    );
+  }
+
+  const paymentLink =
+    data?.paymentLink || data?.init_point || data?.sandbox_init_point || "";
+
+  if (!paymentLink) {
+    throw new Error(
+      `El backend respondio sin paymentLink. Respuesta: ${rawText}`
+    );
+  }
+
+  return paymentLink;
 }
 
 packageSelectButtons.forEach((button) => {
@@ -563,23 +586,10 @@ if (quotePayBtn) {
         }
       }
 
-      const extrasSummary = latestQuote.extrasDetail?.length
-        ? latestQuote.extrasDetail
-            .map((extra) => `- ${extra.name}: ${formatCurrency(extra.price)}`)
-            .join("\n")
-        : "- Sin extras";
-
-      const message = encodeURIComponent(
-        `Hola, quiero continuar con el anticipo de mi proyecto en LocalConnect Studio.\n\nFolio: ${latestQuote.folio}\nPaquete: ${latestQuote.packageName}\nExtras:\n${extrasSummary}\nAnticipo: ${formatCurrency(latestQuote.anticipo)}\nTotal estimado: ${formatCurrency(latestQuote.total)}\nNombre: ${latestQuote.nombre}\nEmpresa: ${latestQuote.empresa}\nCorreo: ${latestQuote.correo}`
-      );
-
-      const whatsappUrl = `https://wa.me/${PAYMENT_CONFIG.whatsappNumber}?text=${message}`;
-      window.open(whatsappUrl, "_blank", "noopener,noreferrer");
-      quoteStatusEl.textContent =
-        "No había un link dinámico listo; te enviamos al flujo por WhatsApp con el resumen completo.";
     } catch (error) {
       console.error("Error al preparar el pago:", error);
-      quoteStatusEl.textContent = "No se pudo preparar el pago.";
+      quoteStatusEl.textContent =
+        error?.message || "No se pudo preparar el pago.";
     } finally {
       quotePayBtn.disabled = false;
       quotePayBtn.textContent = "Pagar anticipo";
