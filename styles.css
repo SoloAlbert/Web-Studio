@@ -74,10 +74,16 @@ button, input, select, textarea { font: inherit; }
   place-items: center;
   border-radius: 15px;
   overflow: hidden;
+  padding: 6px;
   color: white;
   font-weight: 1200;
   background: linear-gradient(135deg, #ffffff, #ffffff 62%, #ffffff);
   box-shadow: 0 16px 30px rgba(37, 99, 235, 0.22);
+}
+.brand-mark picture {
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 .brand-mark img {
   width: 100%;
