@@ -564,29 +564,33 @@ if (quotePayBtn) {
       return;
     }
 
+    const paymentWindow = window.open("", "_blank");
+
     try {
       quotePayBtn.disabled = true;
       quotePayBtn.textContent = "Preparando pago...";
       quoteStatusEl.textContent = "Preparando link de pago...";
 
-      if (PAYMENT_CONFIG.mode === "link") {
-        const dynamicPaymentLink = await requestDynamicPaymentLink(latestQuote);
-        const fallbackPaymentLink =
-          PAYMENT_CONFIG.packagePaymentLinks[latestQuote.packageId] ||
-          PAYMENT_CONFIG.defaultPaymentLink;
-        const paymentLink = dynamicPaymentLink || fallbackPaymentLink;
-
-        if (paymentLink) {
-          window.open(paymentLink, "_blank", "noopener,noreferrer");
-
-          quoteStatusEl.textContent = dynamicPaymentLink
-            ? "Link de pago listo con el total actualizado."
-            : "Se abrió el link de pago configurado para este paquete.";
-          return;
-        }
+      if (PAYMENT_CONFIG.mode !== "link") {
+        throw new Error("El modo de pago configurado no soporta links.");
       }
 
+      const paymentLink = await requestDynamicPaymentLink(latestQuote);
+
+      if (paymentWindow) {
+        paymentWindow.location.href = paymentLink;
+      } else {
+        window.location.href = paymentLink;
+      }
+
+      quoteStatusEl.textContent =
+        "Link de pago listo con el total actualizado.";
+
     } catch (error) {
+      if (paymentWindow && !paymentWindow.closed) {
+        paymentWindow.close();
+      }
+
       console.error("Error al preparar el pago:", error);
       quoteStatusEl.textContent =
         error?.message || "No se pudo preparar el pago.";
