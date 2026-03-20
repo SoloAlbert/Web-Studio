@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Inversión | Altos del Valle</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Cormorant+Garamond:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a href="index.html" class="brand">
+        <span class="brand-mark">AV</span>
+        <span><strong>Altos del Valle</strong><small>Residencias contemporáneas</small></span>
+      </a>
+      <button class="menu-toggle" aria-label="Abrir menú" aria-expanded="false">☰</button>
+      <nav class="site-nav">
+        <a href="desarrollo.html">Desarrollo</a>
+        <a href="modelos.html">Modelos</a>
+        <a href="amenidades.html">Amenidades</a>
+        <a href="galeria.html">Galería</a>
+        <a href="inversion.html">Inversión</a>
+        <a href="contacto.html" class="btn btn-nav">Solicitar información</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="page-hero premium-page-hero">
+      <div class="container page-hero-shell reverse">
+        <div>
+          <p class="eyebrow">Visión de inversión</p>
+          <h1>Argumentos patrimoniales con una presentación más concreta y estratégica.</h1>
+          <p class="lead">La página ya no depende de un bloque largo; ahora cruza plusvalía, etapa y perfil de compra con una lectura más comercial.</p>
+        </div>
+        <div class="page-hero-side" data-reveal>
+          <div class="media-stack-card hero-scene-lifestyle access"></div>
+          <div class="floating-stat">
+            <small>Perspectiva</small>
+            <strong>Ubicación consolidada, fase temprana y atractivo para compra patrimonial</strong>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container comparison-grid">
+        <article class="comparison-card" data-reveal>
+          <strong>Entrada en etapa activa</strong>
+          <p>La preventa permite capturar una mejor posición frente a etapas futuras.</p>
+        </article>
+        <article class="comparison-card" data-reveal>
+          <strong>Zona con proyección</strong>
+          <p>Corredor residencial con servicios, conectividad y un perfil consistente de demanda.</p>
+        </article>
+        <article class="comparison-card" data-reveal>
+          <strong>Producto con mejor lectura</strong>
+          <p>Diseño actual y amenidades que sostienen valor percibido en el tiempo.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section section-soft">
+      <div class="container media-tabs" data-media-tabs data-reveal>
+        <div class="media-tab-list" role="tablist" aria-label="Ángulos de inversión">
+          <button class="media-tab-btn" type="button" data-media-tab="etapa" aria-selected="true">Etapa</button>
+          <button class="media-tab-btn" type="button" data-media-tab="zona" aria-selected="false">Zona</button>
+          <button class="media-tab-btn" type="button" data-media-tab="valor" aria-selected="false">Valor</button>
+        </div>
+        <section class="media-tab-panel" data-media-panel="etapa">
+          <div class="media-tab-grid">
+            <div class="media-tab-visual access"></div>
+            <div class="media-tab-copy">
+              <h3>Entrar en la etapa adecuada</h3>
+              <p>La fase activa del proyecto permite leer mejor la oportunidad frente a etapas posteriores.</p>
+              <div class="media-pill-list"><span>Preventa</span><span>Oportunidad</span><span>Entrada</span></div>
+            </div>
+          </div>
+        </section>
+        <section class="media-tab-panel" data-media-panel="zona" hidden>
+          <div class="media-tab-grid reverse">
+            <div class="media-tab-visual facade"></div>
+            <div class="media-tab-copy">
+              <h3>Zona con demanda consistente</h3>
+              <p>Conectividad, servicios y lectura residencial que sostienen una mejor percepción de compra.</p>
+              <div class="media-pill-list"><span>Ubicación</span><span>Servicios</span><span>Demanda</span></div>
+            </div>
+          </div>
+        </section>
+        <section class="media-tab-panel" data-media-panel="valor" hidden>
+          <div class="media-tab-grid">
+            <div class="media-tab-visual interior"></div>
+            <div class="media-tab-copy">
+              <h3>Valor a mediano plazo</h3>
+              <p>Un producto bien resuelto visual y funcionalmente conserva mejor atractivo frente a nuevas opciones.</p>
+              <div class="media-pill-list"><span>Diseño</span><span>Amenidades</span><span>Percepción</span></div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-wrap">
+      <p>Altos del Valle</p>
+      <a href="contacto.html">Solicitar esquema</a>
+    </div>
+  </footer>
+
+  <script src="../shared/demo.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

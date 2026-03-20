@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Instalaciones | Clínica Aurora</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a href="index.html" class="brand">
+        <span class="brand-mark">A</span>
+        <span><strong>Clínica Aurora</strong><small>Medicina familiar y especialidades</small></span>
+      </a>
+      <button class="menu-toggle" aria-label="Abrir menú" aria-expanded="false">☰</button>
+      <nav class="site-nav">
+        <a href="especialidades.html">Especialidades</a>
+        <a href="equipo.html">Equipo</a>
+        <a href="instalaciones.html">Instalaciones</a>
+        <a href="agenda.html" class="btn btn-nav">Agendar cita</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="page-hero">
+      <div class="container page-hero-shell reverse">
+        <div>
+          <p class="eyebrow">Instalaciones</p>
+          <h1>Una clínica más clara, compacta y visual desde la primera vista.</h1>
+          <p class="lead">La página ahora mezcla espacios, orientación y señales de confianza en un formato más estructural y menos vacío.</p>
+        </div>
+        <div class="page-hero-side" data-reveal>
+          <div class="care-highlight">
+            <strong>Recepción ordenada, consultorios claros y un ambiente familiar desde el ingreso.</strong>
+          </div>
+          <div class="page-kpi">
+            <small>Experiencia de llegada</small>
+            <strong>Ingreso simple, circulación clara y atención inmediata</strong>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-alt">
+      <div class="container gallery-grid">
+        <article class="gallery-card gallery-card-wide" data-reveal>
+          <div class="gallery-media reception"></div>
+          <div class="gallery-copy">
+            <strong>Recepción ordenada</strong>
+            <span>Ingreso claro, ambiente tranquilo y atención inmediata.</span>
+          </div>
+        </article>
+        <article class="gallery-card" data-reveal>
+          <div class="gallery-media consultorio-a"></div>
+          <div class="gallery-copy">
+            <strong>Consultorio familiar</strong>
+            <span>Espacios cuidados para consulta general y seguimiento.</span>
+          </div>
+        </article>
+        <article class="gallery-card" data-reveal>
+          <div class="gallery-media consultorio-b"></div>
+          <div class="gallery-copy">
+            <strong>Área de valoración</strong>
+            <span>Recorrido limpio y sensación de confianza.</span>
+          </div>
+        </article>
+        <article class="gallery-card" data-reveal>
+          <div class="gallery-media consultorio-c"></div>
+          <div class="gallery-copy">
+            <strong>Atención profesional</strong>
+            <span>Imagen sobria y práctica para pacientes nuevos.</span>
+          </div>
+        </article>
+        <article class="gallery-card" data-reveal>
+          <div class="gallery-media consultorio-d"></div>
+          <div class="gallery-copy">
+            <strong>Ambiente cómodo</strong>
+            <span>Una clínica pensada para familias y seguimiento continuo.</span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container media-tabs" data-media-tabs data-reveal>
+        <div class="media-tab-list" role="tablist" aria-label="Recorrido de instalaciones">
+          <button class="media-tab-btn" type="button" data-media-tab="recepcion" aria-selected="true">Recepción</button>
+          <button class="media-tab-btn" type="button" data-media-tab="consulta" aria-selected="false">Consulta</button>
+          <button class="media-tab-btn" type="button" data-media-tab="seguimiento" aria-selected="false">Seguimiento</button>
+        </div>
+        <section class="media-tab-panel" data-media-panel="recepcion">
+          <div class="media-tab-grid">
+            <div class="media-tab-visual reception"></div>
+            <div class="media-tab-copy">
+              <h3>Recepción e ingreso</h3>
+              <p>Señalización simple, atención inmediata y una primera impresión más ordenada para pacientes nuevos.</p>
+              <div class="media-pill-list"><span>Ingreso</span><span>Orden</span><span>Atención</span></div>
+            </div>
+          </div>
+        </section>
+        <section class="media-tab-panel" data-media-panel="consulta" hidden>
+          <div class="media-tab-grid reverse">
+            <div class="media-tab-visual consultorio-a"></div>
+            <div class="media-tab-copy">
+              <h3>Consulta y valoración</h3>
+              <p>Consultorios claros y prácticos para mantener una experiencia médica más cómoda y confiable.</p>
+              <div class="media-pill-list"><span>Consulta</span><span>Valoración</span><span>Comodidad</span></div>
+            </div>
+          </div>
+        </section>
+        <section class="media-tab-panel" data-media-panel="seguimiento" hidden>
+          <div class="media-tab-grid">
+            <div class="media-tab-visual consultorio-d"></div>
+            <div class="media-tab-copy">
+              <h3>Seguimiento y regreso</h3>
+              <p>Una clínica fácil de ubicar y de recordar, pensada para pacientes de seguimiento y familias.</p>
+              <div class="media-pill-list"><span>Seguimiento</span><span>Familias</span><span>Confianza</span></div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-wrap">
+      <p>Clínica Aurora</p>
+      <a href="agenda.html">Agendar cita</a>
+    </div>
+  </footer>
+
+  <script src="../shared/demo.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

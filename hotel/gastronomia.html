@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gastronomía | Casa Lucerna</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a href="index.html" class="brand">
+        <span class="brand-mark">CL</span>
+        <span><strong>Casa Lucerna</strong><small>Hotel boutique</small></span>
+      </a>
+      <button class="menu-toggle" aria-label="Abrir menú" aria-expanded="false">☰</button>
+      <nav class="site-nav">
+        <a href="habitaciones.html">Habitaciones</a>
+        <a href="experiencias.html">Experiencias</a>
+        <a href="gastronomia.html">Gastronomía</a>
+        <a href="galeria.html">Galería</a>
+        <a href="eventos.html">Eventos</a>
+        <a href="reservas.html" class="btn btn-nav">Reservar</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="page-hero premium-page-hero">
+      <div class="container page-hero-shell">
+        <div>
+          <p class="eyebrow">Gastronomía</p>
+          <h1>Una propuesta culinaria presentada como experiencia, no solo como texto.</h1>
+          <p class="lead">Ahora la página combina bloques visuales, tabs y escenarios de consumo para que la gastronomía se sienta más viva.</p>
+        </div>
+        <div class="page-hero-side" data-reveal>
+          <div class="media-stack-card dining-visual"></div>
+          <div class="floating-stat">
+            <small>Concepto</small>
+            <strong>Cocina estacional, coctelería de autor y experiencias a la mesa</strong>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container dining-layout">
+        <div class="amenity-visual dining-visual" data-reveal></div>
+        <div class="editorial-stack">
+          <article class="story-card" data-reveal>
+            <strong>Brunch de casa</strong>
+            <span>Servicio relajado con carta breve, postres ligeros y barra de café.</span>
+          </article>
+          <article class="story-card" data-reveal>
+            <strong>Cena maridaje</strong>
+            <span>Menús por temporada con montaje íntimo para parejas o grupos pequeños.</span>
+          </article>
+          <article class="story-card" data-reveal>
+            <strong>Room service cuidado</strong>
+            <span>Presentación premium para quienes prefieren mantener la experiencia dentro de la suite.</span>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-soft">
+      <div class="container media-tabs" data-media-tabs data-reveal>
+        <div class="media-tab-list" role="tablist" aria-label="Momentos gastronómicos">
+          <button class="media-tab-btn" type="button" data-media-tab="brunch" aria-selected="true">Brunch</button>
+          <button class="media-tab-btn" type="button" data-media-tab="cena" aria-selected="false">Cena maridaje</button>
+          <button class="media-tab-btn" type="button" data-media-tab="cocteles" aria-selected="false">Coctelería</button>
+        </div>
+        <section class="media-tab-panel" data-media-panel="brunch">
+          <div class="media-tab-grid reverse">
+            <div class="media-tab-visual breakfast"></div>
+            <div class="media-tab-copy">
+              <h3>Brunch de ritmo lento</h3>
+              <p>Ideal para estancias de fin de semana con barra de café, repostería ligera y servicio relajado.</p>
+              <div class="media-pill-list"><span>Café</span><span>Brunch</span><span>Ritmo lento</span></div>
+            </div>
+          </div>
+        </section>
+        <section class="media-tab-panel" data-media-panel="cena" hidden>
+          <div class="media-tab-grid">
+            <div class="media-tab-visual dinner"></div>
+            <div class="media-tab-copy">
+              <h3>Cenas privadas y maridaje</h3>
+              <p>Formatos para aniversarios, pedidas o encuentros discretos con montaje íntimo.</p>
+              <div class="media-pill-list"><span>Maridaje</span><span>Montaje</span><span>Cena privada</span></div>
+            </div>
+          </div>
+        </section>
+        <section class="media-tab-panel" data-media-panel="cocteles" hidden>
+          <div class="media-tab-grid reverse">
+            <div class="media-tab-visual rooftop"></div>
+            <div class="media-tab-copy">
+              <h3>Coctelería al atardecer</h3>
+              <p>Una extensión natural del rooftop con música, vista abierta y servicio más personalizado.</p>
+              <div class="media-pill-list"><span>Rooftop</span><span>Atardecer</span><span>Coctelería</span></div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-wrap">
+      <p>Casa Lucerna</p>
+      <a href="reservas.html">Reservar una experiencia</a>
+    </div>
+  </footer>
+
+  <script src="../shared/demo.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

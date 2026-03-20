@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Experiencias | Casa Lucerna</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a href="index.html" class="brand">
+        <span class="brand-mark">CL</span>
+        <span><strong>Casa Lucerna</strong><small>Hotel boutique</small></span>
+      </a>
+      <button class="menu-toggle" aria-label="Abrir menú" aria-expanded="false">☰</button>
+      <nav class="site-nav">
+        <a href="habitaciones.html">Habitaciones</a>
+        <a href="experiencias.html">Experiencias</a>
+        <a href="gastronomia.html">Gastronomía</a>
+        <a href="galeria.html">Galería</a>
+        <a href="eventos.html">Eventos</a>
+        <a href="reservas.html" class="btn btn-nav">Reservar</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="page-hero premium-page-hero">
+      <div class="container page-hero-shell reverse">
+        <div>
+          <p class="eyebrow">Experiencias</p>
+          <h1>Momentos curados para que la estancia se sienta más viva y menos plana.</h1>
+          <p class="lead">La página ahora se mueve entre bienestar, rooftop y celebraciones con una lectura mucho más visual e interactiva.</p>
+        </div>
+        <div class="page-hero-side" data-reveal>
+          <div class="media-stack-card rooftop"></div>
+          <div class="floating-stat">
+            <small>Curaduría</small>
+            <strong>Programas de bienestar, cenas privadas y agenda local personalizada</strong>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-soft">
+      <div class="container experience-grid">
+        <article class="experience-card" data-reveal>
+          <div class="experience-media ritual"></div>
+          <h3>Ritual de bienvenida</h3>
+          <p>Té de la casa, aromaterapia y selección musical para abrir la estancia con otra intención.</p>
+        </article>
+        <article class="experience-card" data-reveal>
+          <div class="experience-media rooftop"></div>
+          <h3>Atardecer en rooftop</h3>
+          <p>Coctelería de autor, mesas privadas y vista abierta para cenas o celebraciones al caer la tarde.</p>
+        </article>
+        <article class="experience-card" data-reveal>
+          <div class="experience-media spa"></div>
+          <h3>Spa privado</h3>
+          <p>Cabina íntima, masajes para pareja y pausas diseñadas para viajes orientados al descanso.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container media-tabs" data-media-tabs data-reveal>
+        <div class="media-tab-list" role="tablist" aria-label="Escenarios de viaje">
+          <button class="media-tab-btn" type="button" data-media-tab="pareja" aria-selected="true">Pareja</button>
+          <button class="media-tab-btn" type="button" data-media-tab="descanso" aria-selected="false">Descanso</button>
+          <button class="media-tab-btn" type="button" data-media-tab="celebracion" aria-selected="false">Celebración</button>
+        </div>
+        <section class="media-tab-panel" data-media-panel="pareja">
+          <div class="media-tab-grid reverse">
+            <div class="media-tab-visual rooftop"></div>
+            <div class="media-tab-copy">
+              <h3>Fin de semana en pareja</h3>
+              <p>Suite Terraza, masaje nocturno y cena maridaje con un ritmo pensado para dos personas.</p>
+              <div class="media-pill-list"><span>Suite</span><span>Masaje</span><span>Cena</span></div>
+            </div>
+          </div>
+        </section>
+        <section class="media-tab-panel" data-media-panel="descanso" hidden>
+          <div class="media-tab-grid">
+            <div class="media-tab-visual spa"></div>
+            <div class="media-tab-copy">
+              <h3>Escapada de descanso</h3>
+              <p>Desayuno tardío, spa privado y recomendaciones locales de ritmo lento.</p>
+              <div class="media-pill-list"><span>Spa</span><span>Desayuno</span><span>Ritmo lento</span></div>
+            </div>
+          </div>
+        </section>
+        <section class="media-tab-panel" data-media-panel="celebracion" hidden>
+          <div class="media-tab-grid reverse">
+            <div class="media-tab-visual dinner"></div>
+            <div class="media-tab-copy">
+              <h3>Celebración íntima</h3>
+              <p>Montaje especial, fotógrafo y reservación exclusiva para momentos memorables.</p>
+              <div class="media-pill-list"><span>Fotógrafo</span><span>Montaje</span><span>Reserva privada</span></div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-wrap">
+      <p>Casa Lucerna</p>
+      <a href="gastronomia.html">Explorar gastronomía</a>
+    </div>
+  </footer>
+
+  <script src="../shared/demo.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Desarrollo | Altos del Valle</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Cormorant+Garamond:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a href="index.html" class="brand">
+        <span class="brand-mark">AV</span>
+        <span><strong>Altos del Valle</strong><small>Residencias contemporáneas</small></span>
+      </a>
+      <button class="menu-toggle" aria-label="Abrir menú" aria-expanded="false">☰</button>
+      <nav class="site-nav">
+        <a href="desarrollo.html">Desarrollo</a>
+        <a href="modelos.html">Modelos</a>
+        <a href="amenidades.html">Amenidades</a>
+        <a href="galeria.html">Galería</a>
+        <a href="inversion.html">Inversión</a>
+        <a href="contacto.html" class="btn btn-nav">Solicitar información</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="page-hero premium-page-hero">
+      <div class="container page-hero-shell">
+        <div>
+          <p class="eyebrow">Desarrollo</p>
+          <h1>Un proyecto residencial presentado con más estructura y menos vacío visual.</h1>
+          <p class="lead">Aquí se concentra ubicación, trazo urbano, paisaje y visión general del desarrollo con una composición mucho más sólida.</p>
+        </div>
+        <div class="page-hero-side" data-reveal>
+          <div class="media-stack-card hero-scene-lifestyle facade"></div>
+          <div class="floating-stat">
+            <small>Master plan</small>
+            <strong>Acceso controlado, vialidades amplias, paisaje y etapas con visión integral</strong>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container story-cards">
+        <article class="story-card" data-reveal>
+          <strong>Ubicación estratégica</strong>
+          <p>Zona residencial con conectividad, servicios cercanos y crecimiento sostenido.</p>
+        </article>
+        <article class="story-card featured" data-reveal>
+          <strong>Trazo urbano limpio</strong>
+          <p>Calles más ordenadas, accesos definidos y una composición visual coherente.</p>
+        </article>
+        <article class="story-card" data-reveal>
+          <strong>Entorno residencial</strong>
+          <p>Un proyecto pensado para mantener valor, tranquilidad y mejor percepción a largo plazo.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section section-soft">
+      <div class="container media-tabs" data-media-tabs data-reveal>
+        <div class="media-tab-list" role="tablist" aria-label="Lecturas del desarrollo">
+          <button class="media-tab-btn" type="button" data-media-tab="vivir" aria-selected="true">Para vivir</button>
+          <button class="media-tab-btn" type="button" data-media-tab="subir" aria-selected="false">Cambiar de nivel</button>
+          <button class="media-tab-btn" type="button" data-media-tab="invertir" aria-selected="false">Invertir</button>
+        </div>
+        <section class="media-tab-panel" data-media-panel="vivir">
+          <div class="media-tab-grid">
+            <div class="media-tab-visual facade"></div>
+            <div class="media-tab-copy">
+              <h3>Un proyecto para vivir mejor</h3>
+              <p>Diseño actual, entorno familiar y un desarrollo que acompaña la vida diaria con mayor orden.</p>
+              <div class="media-pill-list"><span>Diseño</span><span>Entorno</span><span>Rutina</span></div>
+            </div>
+          </div>
+        </section>
+        <section class="media-tab-panel" data-media-panel="subir" hidden>
+          <div class="media-tab-grid reverse">
+            <div class="media-tab-visual interior"></div>
+            <div class="media-tab-copy">
+              <h3>Para cambiar de nivel</h3>
+              <p>Más amplitud, mejor imagen residencial y una propuesta con mayor presencia que otras opciones del mercado.</p>
+              <div class="media-pill-list"><span>Amplitud</span><span>Imagen</span><span>Presencia</span></div>
+            </div>
+          </div>
+        </section>
+        <section class="media-tab-panel" data-media-panel="invertir" hidden>
+          <div class="media-tab-grid">
+            <div class="media-tab-visual access"></div>
+            <div class="media-tab-copy">
+              <h3>Para invertir con visión</h3>
+              <p>Ubicación, perfil de comprador y lectura patrimonial del proyecto dentro de un corredor con proyección.</p>
+              <div class="media-pill-list"><span>Ubicación</span><span>Patrimonio</span><span>Proyección</span></div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-wrap">
+      <p>Altos del Valle</p>
+      <a href="modelos.html">Ver modelos</a>
+    </div>
+  </footer>
+
+  <script src="../shared/demo.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

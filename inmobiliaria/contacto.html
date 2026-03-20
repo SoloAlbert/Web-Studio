@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contacto | Altos del Valle</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Cormorant+Garamond:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a href="index.html" class="brand">
+        <span class="brand-mark">AV</span>
+        <span><strong>Altos del Valle</strong><small>Residencias contemporáneas</small></span>
+      </a>
+      <button class="menu-toggle" aria-label="Abrir menú" aria-expanded="false">☰</button>
+      <nav class="site-nav">
+        <a href="desarrollo.html">Desarrollo</a>
+        <a href="modelos.html">Modelos</a>
+        <a href="amenidades.html">Amenidades</a>
+        <a href="galeria.html">Galería</a>
+        <a href="inversion.html">Inversión</a>
+        <a href="contacto.html" class="btn btn-nav">Solicitar información</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="page-hero premium-page-hero">
+      <div class="container page-hero-shell">
+        <div>
+          <p class="eyebrow">Contacto y recorrido</p>
+          <h1>Un cierre comercial más completo, visual y menos estático.</h1>
+          <p class="lead">La conversación final se acompaña con escenarios de compra y un cierre más consistente con el resto de la experiencia premium.</p>
+        </div>
+        <div class="page-hero-side" data-reveal>
+          <div class="media-stack-card hero-scene-lifestyle terrace"></div>
+          <div class="floating-stat">
+            <small>Atención directa</small>
+            <strong>Respuesta por WhatsApp, llamada o correo para seguimiento inmediato</strong>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-soft">
+      <div class="container media-tabs" data-media-tabs data-reveal>
+        <div class="media-tab-list" role="tablist" aria-label="Motivos de contacto">
+          <button class="media-tab-btn" type="button" data-media-tab="precios" aria-selected="true">Precios</button>
+          <button class="media-tab-btn" type="button" data-media-tab="recorrido" aria-selected="false">Recorrido</button>
+          <button class="media-tab-btn" type="button" data-media-tab="disponibilidad" aria-selected="false">Disponibilidad</button>
+        </div>
+        <section class="media-tab-panel" data-media-panel="precios">
+          <div class="media-tab-grid reverse">
+            <div class="media-tab-visual interior"></div>
+            <div class="media-tab-copy">
+              <h3>Solicitud de precios</h3>
+              <p>Ideal para quien ya identificó un modelo y quiere aterrizar inversión, rango y condiciones.</p>
+              <div class="media-pill-list"><span>Precios</span><span>Rango</span><span>Esquema</span></div>
+            </div>
+          </div>
+        </section>
+        <section class="media-tab-panel" data-media-panel="recorrido" hidden>
+          <div class="media-tab-grid">
+            <div class="media-tab-visual facade"></div>
+            <div class="media-tab-copy">
+              <h3>Recorrido privado</h3>
+              <p>Atención personalizada para conocer ubicación, modelos, amenidades y lectura general del proyecto.</p>
+              <div class="media-pill-list"><span>Ubicación</span><span>Modelos</span><span>Visita</span></div>
+            </div>
+          </div>
+        </section>
+        <section class="media-tab-panel" data-media-panel="disponibilidad" hidden>
+          <div class="media-tab-grid reverse">
+            <div class="media-tab-visual access"></div>
+            <div class="media-tab-copy">
+              <h3>Disponibilidad de etapa</h3>
+              <p>Para compradores que buscan entender fase activa, ubicación dentro del desarrollo y margen de elección.</p>
+              <div class="media-pill-list"><span>Etapa</span><span>Lotes</span><span>Disponibilidad</span></div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container contact-grid" data-reveal>
+        <div class="contact-copy">
+          <p class="eyebrow">Puntos de contacto</p>
+          <h2>Un cierre más claro para acompañar al prospecto hasta la visita o la cotización.</h2>
+          <div class="contact-points">
+            <article>
+              <strong>Horario comercial</strong>
+              <span>Lunes a sábado de 10:00 a.m. a 7:00 p.m.</span>
+            </article>
+            <article>
+              <strong>Recorrido privado</strong>
+              <span>Atención personalizada para conocer ubicación, modelos y amenidades.</span>
+            </article>
+            <article>
+              <strong>Ubicación</strong>
+              <span>Corredor norte residencial, Celaya, Gto.</span>
+            </article>
+          </div>
+        </div>
+
+        <form class="contact-form" id="realEstateForm">
+          <input type="text" placeholder="Nombre completo" required>
+          <input type="tel" placeholder="Teléfono" required>
+          <input type="email" placeholder="Correo electrónico" required>
+          <select required>
+            <option value="">Interés principal</option>
+            <option>Solicitar precios</option>
+            <option>Agendar recorrido</option>
+            <option>Conocer disponibilidad</option>
+          </select>
+          <textarea rows="5" placeholder="Cuéntanos qué tipo de residencia te interesa" required></textarea>
+          <button type="submit" class="btn">Solicitar información</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-wrap">
+      <p>Altos del Valle</p>
+      <a href="index.html">Volver al inicio</a>
+    </div>
+  </footer>
+
+  <script src="../shared/demo.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

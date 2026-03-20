@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reservas | Casa Lucerna</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a href="index.html" class="brand">
+        <span class="brand-mark">CL</span>
+        <span><strong>Casa Lucerna</strong><small>Hotel boutique</small></span>
+      </a>
+      <button class="menu-toggle" aria-label="Abrir menú" aria-expanded="false">☰</button>
+      <nav class="site-nav">
+        <a href="habitaciones.html">Habitaciones</a>
+        <a href="experiencias.html">Experiencias</a>
+        <a href="gastronomia.html">Gastronomía</a>
+        <a href="galeria.html">Galería</a>
+        <a href="eventos.html">Eventos</a>
+        <a href="reservas.html" class="btn btn-nav">Reservar</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="page-hero premium-page-hero">
+      <div class="container page-hero-shell">
+        <div>
+          <p class="eyebrow">Reservas</p>
+          <h1>Una página de cierre más compacta, útil e interactiva.</h1>
+          <p class="lead">La solicitud de estancia ahora se acompaña con escenarios de viaje y una lectura más clara antes de llegar al formulario.</p>
+        </div>
+        <div class="page-hero-side" data-reveal>
+          <div class="media-stack-card terrace"></div>
+          <div class="floating-stat">
+            <small>Atención directa</small>
+            <strong>Respuesta por correo, WhatsApp o motor de reservas integrado</strong>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container media-tabs" data-media-tabs data-reveal>
+        <div class="media-tab-list" role="tablist" aria-label="Motivos de viaje">
+          <button class="media-tab-btn" type="button" data-media-tab="escapada" aria-selected="true">Escapada</button>
+          <button class="media-tab-btn" type="button" data-media-tab="celebracion" aria-selected="false">Celebración</button>
+          <button class="media-tab-btn" type="button" data-media-tab="descanso" aria-selected="false">Descanso</button>
+        </div>
+        <section class="media-tab-panel" data-media-panel="escapada">
+          <div class="media-tab-grid reverse">
+            <div class="media-tab-visual terrace"></div>
+            <div class="media-tab-copy">
+              <h3>Escapada de fin de semana</h3>
+              <p>Suite, desayuno tardío y una agenda ligera para desconectar del ritmo diario.</p>
+              <div class="media-pill-list"><span>Fin de semana</span><span>Suite</span><span>Desayuno</span></div>
+            </div>
+          </div>
+        </section>
+        <section class="media-tab-panel" data-media-panel="celebracion" hidden>
+          <div class="media-tab-grid">
+            <div class="media-tab-visual dinner"></div>
+            <div class="media-tab-copy">
+              <h3>Celebración especial</h3>
+              <p>Cena maridaje, rooftop reservado y montaje para aniversario o pedida.</p>
+              <div class="media-pill-list"><span>Celebración</span><span>Rooftop</span><span>Montaje</span></div>
+            </div>
+          </div>
+        </section>
+        <section class="media-tab-panel" data-media-panel="descanso" hidden>
+          <div class="media-tab-grid reverse">
+            <div class="media-tab-visual spa"></div>
+            <div class="media-tab-copy">
+              <h3>Viaje de descanso</h3>
+              <p>Opciones con spa, late checkout y recomendaciones para una estancia más lenta.</p>
+              <div class="media-pill-list"><span>Spa</span><span>Late checkout</span><span>Descanso</span></div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container contact-grid" data-reveal>
+        <div class="reservation-copy">
+          <p class="eyebrow">Antes de llegar</p>
+          <h2>Comparte el tipo de viaje y el equipo prepara una propuesta acorde a la estancia.</h2>
+          <div class="reservation-benefits">
+            <article class="benefit-card">
+              <strong>Escapadas privadas</strong>
+              <span>Montajes, amenidades especiales y horarios flexibles según disponibilidad.</span>
+            </article>
+            <article class="benefit-card">
+              <strong>Celebraciones</strong>
+              <span>Cenas maridaje, rooftop reservado y detalles para aniversarios o pedidas.</span>
+            </article>
+            <article class="benefit-card">
+              <strong>Viajes de descanso</strong>
+              <span>Opciones con spa, late checkout y recomendaciones para una agenda más lenta.</span>
+            </article>
+          </div>
+        </div>
+        <form class="contact-form" id="hotelForm">
+          <input type="text" placeholder="Nombre completo" required>
+          <input type="email" placeholder="Correo electrónico" required>
+          <input type="date" required>
+          <select required>
+            <option value="">Motivo de estancia</option>
+            <option>Escapada de fin de semana</option>
+            <option>Celebración especial</option>
+            <option>Viaje de descanso</option>
+          </select>
+          <textarea rows="5" placeholder="Cuéntanos qué tipo de experiencia estás buscando" required></textarea>
+          <button type="submit" class="btn">Solicitar disponibilidad</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-wrap">
+      <p>Casa Lucerna</p>
+      <a href="index.html">Volver al inicio</a>
+    </div>
+  </footer>
+
+  <script src="../shared/demo.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

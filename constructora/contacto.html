@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contacto | Grupo Norte Obra</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a href="index.html" class="brand">
+        <span class="brand-mark">GN</span>
+        <span><strong>Grupo Norte Obra</strong><small>Construcción y desarrollo</small></span>
+      </a>
+      <button class="menu-toggle" aria-label="Abrir menú" aria-expanded="false">☰</button>
+      <nav class="site-nav">
+        <a href="servicios.html">Servicios</a>
+        <a href="proyectos.html">Proyectos</a>
+        <a href="proceso.html">Proceso</a>
+        <a href="contacto.html" class="btn btn-nav">Solicitar propuesta</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="page-hero">
+      <div class="container">
+        <p class="eyebrow">Contacto</p>
+        <h1>Solicita una propuesta con el contexto necesario para avanzar más rápido.</h1>
+        <p class="lead">La salida comercial está pensada para captar tipo de obra, empresa y necesidad del proyecto desde el primer mensaje.</p>
+      </div>
+    </section>
+
+    <section class="section section-alt">
+      <div class="container contact-grid">
+        <div>
+          <p class="eyebrow">Atención directa</p>
+          <h2>Un contacto claro para cotización, seguimiento y revisión inicial del proyecto.</h2>
+          <div class="contact-points">
+            <article>
+              <strong>Teléfono</strong>
+              <span>+52 461 000 0000</span>
+            </article>
+            <article>
+              <strong>Correo</strong>
+              <span>contacto@gruponorteobra.com</span>
+            </article>
+            <article>
+              <strong>Cobertura</strong>
+              <span>Celaya, León, Querétaro y alrededores</span>
+            </article>
+          </div>
+        </div>
+        <form class="contact-form" id="builderForm">
+          <input type="text" placeholder="Nombre completo" required>
+          <input type="text" placeholder="Empresa" required>
+          <input type="tel" placeholder="Teléfono" required>
+          <select required>
+            <option value="">Tipo de proyecto</option>
+            <option>Obra civil</option>
+            <option>Nave industrial</option>
+            <option>Urbanización</option>
+            <option>Remodelación</option>
+          </select>
+          <textarea rows="5" placeholder="Cuéntanos brevemente tu proyecto" required></textarea>
+          <button type="submit" class="btn">Solicitar propuesta</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-wrap">
+      <p>Grupo Norte Obra</p>
+      <a href="index.html">Volver al inicio</a>
+    </div>
+  </footer>
+
+  <script src="../shared/demo.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Galería | Altos del Valle</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Cormorant+Garamond:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a href="index.html" class="brand">
+        <span class="brand-mark">AV</span>
+        <span><strong>Altos del Valle</strong><small>Residencias contemporáneas</small></span>
+      </a>
+      <button class="menu-toggle" aria-label="Abrir menú" aria-expanded="false">☰</button>
+      <nav class="site-nav">
+        <a href="desarrollo.html">Desarrollo</a>
+        <a href="modelos.html">Modelos</a>
+        <a href="amenidades.html">Amenidades</a>
+        <a href="galeria.html">Galería</a>
+        <a href="inversion.html">Inversión</a>
+        <a href="contacto.html" class="btn btn-nav">Solicitar información</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="page-hero premium-page-hero">
+      <div class="container">
+        <p class="eyebrow">Galería</p>
+        <h1>Una lectura visual del proyecto antes de la visita presencial.</h1>
+        <p class="lead">Fachadas, interiores, acceso, paisaje y escenas del desarrollo seleccionadas para construir percepción y deseo de recorrido.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container gallery-grid premium-gallery">
+        <div class="gallery-card gallery-tall facade"></div>
+        <div class="gallery-card interior"></div>
+        <div class="gallery-card terrace"></div>
+        <div class="gallery-card gallery-wide access"></div>
+      </div>
+    </section>
+
+    <section class="section section-soft">
+      <div class="container caption-grid">
+        <article class="caption-card">
+          <strong>Fachada y acceso</strong>
+          <p>Primera impresión limpia, controlada y con mayor presencia residencial.</p>
+        </article>
+        <article class="caption-card">
+          <strong>Interiores</strong>
+          <p>Materiales sobrios, luz natural y una estética más atemporal.</p>
+        </article>
+        <article class="caption-card">
+          <strong>Vida exterior</strong>
+          <p>Terrazas, paisaje y amenidades que construyen una rutina más disfrutable.</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-wrap">
+      <p>Altos del Valle</p>
+      <a href="contacto.html">Agendar recorrido</a>
+    </div>
+  </footer>
+
+  <script src="../shared/demo.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

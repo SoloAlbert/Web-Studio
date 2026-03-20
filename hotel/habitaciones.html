@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Habitaciones | Casa Lucerna</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a href="index.html" class="brand">
+        <span class="brand-mark">CL</span>
+        <span><strong>Casa Lucerna</strong><small>Hotel boutique</small></span>
+      </a>
+      <button class="menu-toggle" aria-label="Abrir menú" aria-expanded="false">☰</button>
+      <nav class="site-nav">
+        <a href="habitaciones.html">Habitaciones</a>
+        <a href="experiencias.html">Experiencias</a>
+        <a href="gastronomia.html">Gastronomía</a>
+        <a href="galeria.html">Galería</a>
+        <a href="eventos.html">Eventos</a>
+        <a href="reservas.html" class="btn btn-nav">Reservar</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="page-hero premium-page-hero">
+      <div class="container page-hero-shell reverse">
+        <div>
+          <p class="eyebrow">Habitaciones</p>
+          <h1>Suites con carácter propio y una presentación más editorial.</h1>
+          <p class="lead">Las categorías ya no se muestran como una lista plana. Ahora se sienten más cercanas a una ficha comercial de hospitalidad premium.</p>
+        </div>
+        <div class="page-hero-side" data-reveal>
+          <div class="media-stack-card suite"></div>
+          <div class="floating-stat">
+            <small>Selección</small>
+            <strong>3 categorías con terraza, tina exterior y servicio personalizado</strong>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-dark">
+      <div class="container room-grid">
+        <article class="room-card featured" data-reveal>
+          <div class="room-media suite"></div>
+          <h3>Suite Terraza</h3>
+          <p>Recámara amplia, terraza privada, tina exterior y ritual nocturno de cortesía.</p>
+        </article>
+        <article class="room-card" data-reveal>
+          <div class="room-media deluxe"></div>
+          <h3>Deluxe Patio</h3>
+          <p>Patio interior, cama king y una atmósfera serena para fines de semana de descanso.</p>
+        </article>
+        <article class="room-card" data-reveal>
+          <div class="room-media garden"></div>
+          <h3>Garden Residence</h3>
+          <p>Mayor privacidad, estancia prolongada y una experiencia más silenciosa con vista al jardín.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container media-tabs" data-media-tabs data-reveal>
+        <div class="media-tab-list" role="tablist" aria-label="Tipos de estancia">
+          <button class="media-tab-btn" type="button" data-media-tab="celebrar" aria-selected="true">Celebrar</button>
+          <button class="media-tab-btn" type="button" data-media-tab="descanso" aria-selected="false">Descanso</button>
+          <button class="media-tab-btn" type="button" data-media-tab="larga" aria-selected="false">Estancia larga</button>
+        </div>
+        <section class="media-tab-panel" data-media-panel="celebrar">
+          <div class="media-tab-grid">
+            <div class="media-tab-visual suite"></div>
+            <div class="media-tab-copy">
+              <h3>Suite Terraza para celebrar</h3>
+              <p>Montaje especial, cena privada, tina exterior y detalles de bienvenida para aniversarios o escapadas.</p>
+              <div class="media-pill-list"><span>Terraza</span><span>Tina</span><span>Cena privada</span></div>
+            </div>
+          </div>
+        </section>
+        <section class="media-tab-panel" data-media-panel="descanso" hidden>
+          <div class="media-tab-grid reverse">
+            <div class="media-tab-visual deluxe"></div>
+            <div class="media-tab-copy">
+              <h3>Deluxe Patio para desconectar</h3>
+              <p>Ideal para estancias de ritmo lento con desayuno tardío, aromaterapia y acceso a spa.</p>
+              <div class="media-pill-list"><span>Patio</span><span>Spa</span><span>Desayuno tardío</span></div>
+            </div>
+          </div>
+        </section>
+        <section class="media-tab-panel" data-media-panel="larga" hidden>
+          <div class="media-tab-grid">
+            <div class="media-tab-visual garden"></div>
+            <div class="media-tab-copy">
+              <h3>Garden Residence para quedarse más tiempo</h3>
+              <p>Mayor privacidad, beneficios para estancias largas y una experiencia más silenciosa con vista al jardín.</p>
+              <div class="media-pill-list"><span>Privacidad</span><span>Vista jardín</span><span>Estancia larga</span></div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-wrap">
+      <p>Casa Lucerna</p>
+      <a href="reservas.html">Solicitar disponibilidad</a>
+    </div>
+  </footer>
+
+  <script src="../shared/demo.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

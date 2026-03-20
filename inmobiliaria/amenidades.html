@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Amenidades | Altos del Valle</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Cormorant+Garamond:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a href="index.html" class="brand">
+        <span class="brand-mark">AV</span>
+        <span><strong>Altos del Valle</strong><small>Residencias contemporáneas</small></span>
+      </a>
+      <button class="menu-toggle" aria-label="Abrir menú" aria-expanded="false">☰</button>
+      <nav class="site-nav">
+        <a href="desarrollo.html">Desarrollo</a>
+        <a href="modelos.html">Modelos</a>
+        <a href="amenidades.html">Amenidades</a>
+        <a href="galeria.html">Galería</a>
+        <a href="inversion.html">Inversión</a>
+        <a href="contacto.html" class="btn btn-nav">Solicitar información</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="page-hero premium-page-hero">
+      <div class="container page-hero-shell">
+        <div>
+          <p class="eyebrow">Amenidades</p>
+          <h1>Vida diaria, bienestar y exterior en una página más viva y funcional.</h1>
+          <p class="lead">Aquí el proyecto deja de sentirse estático y presenta distintas formas de vivirlo: convivencia, ejercicio, descanso y una rutina mejor resuelta.</p>
+        </div>
+        <div class="page-hero-side" data-reveal>
+          <div class="media-stack-card hero-scene-lifestyle">
+            <strong>Casa club, alberca, jardines y senderos con una lectura más visual y menos plana.</strong>
+          </div>
+          <div class="floating-stat">
+            <small>Vida cotidiana</small>
+            <strong>Amenidades pensadas para elevar el día a día dentro del desarrollo</strong>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-dark">
+      <div class="container amenities-grid">
+        <article class="amenity-card" data-reveal>
+          <div class="amenity-media club"></div>
+          <h3>Casa club</h3>
+          <p>Punto de encuentro con una imagen sobria y atmósfera residencial más cuidada.</p>
+        </article>
+        <article class="amenity-card featured" data-reveal>
+          <div class="amenity-media alberca"></div>
+          <h3>Alberca y terraza</h3>
+          <p>Áreas exteriores para descanso, convivencia y una percepción más aspiracional.</p>
+        </article>
+        <article class="amenity-card" data-reveal>
+          <div class="amenity-media jardines"></div>
+          <h3>Jardines y senderos</h3>
+          <p>Paisaje que suma amplitud visual, bienestar y mejor experiencia diaria.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container media-tabs" data-media-tabs data-reveal>
+        <div class="media-tab-list" role="tablist" aria-label="Escenarios de amenidades">
+          <button class="media-tab-btn" type="button" data-media-tab="familia" aria-selected="true">Familia</button>
+          <button class="media-tab-btn" type="button" data-media-tab="bienestar" aria-selected="false">Bienestar</button>
+          <button class="media-tab-btn" type="button" data-media-tab="social" aria-selected="false">Social</button>
+        </div>
+        <section class="media-tab-panel" data-media-panel="familia">
+          <div class="media-tab-grid">
+            <div class="media-tab-visual jardines"></div>
+            <div class="media-tab-copy">
+              <h3>Espacios para rutina familiar</h3>
+              <p>Senderos, jardines y zonas abiertas para una vida diaria más tranquila y funcional.</p>
+              <div class="media-pill-list"><span>Áreas verdes</span><span>Recorridos</span><span>Ritmo diario</span></div>
+            </div>
+          </div>
+        </section>
+        <section class="media-tab-panel" data-media-panel="bienestar" hidden>
+          <div class="media-tab-grid reverse">
+            <div class="media-tab-visual alberca"></div>
+            <div class="media-tab-copy">
+              <h3>Bienestar y descanso</h3>
+              <p>La alberca y la terraza funcionan como extensión del estilo de vida del proyecto.</p>
+              <div class="media-pill-list"><span>Alberca</span><span>Descanso</span><span>Exterior</span></div>
+            </div>
+          </div>
+        </section>
+        <section class="media-tab-panel" data-media-panel="social" hidden>
+          <div class="media-tab-grid">
+            <div class="media-tab-visual club"></div>
+            <div class="media-tab-copy">
+              <h3>Convivencia y comunidad</h3>
+              <p>La casa club concentra reuniones, encuentros y una vida social mejor integrada al desarrollo.</p>
+              <div class="media-pill-list"><span>Casa club</span><span>Convivencia</span><span>Comunidad</span></div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-wrap">
+      <p>Altos del Valle</p>
+      <a href="galeria.html">Ver galería</a>
+    </div>
+  </footer>
+
+  <script src="../shared/demo.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

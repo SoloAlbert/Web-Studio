@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Eventos | Casa Lucerna</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a href="index.html" class="brand">
+        <span class="brand-mark">CL</span>
+        <span><strong>Casa Lucerna</strong><small>Hotel boutique</small></span>
+      </a>
+      <button class="menu-toggle" aria-label="Abrir menú" aria-expanded="false">☰</button>
+      <nav class="site-nav">
+        <a href="habitaciones.html">Habitaciones</a>
+        <a href="experiencias.html">Experiencias</a>
+        <a href="gastronomia.html">Gastronomía</a>
+        <a href="galeria.html">Galería</a>
+        <a href="eventos.html">Eventos</a>
+        <a href="reservas.html" class="btn btn-nav">Reservar</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="page-hero premium-page-hero">
+      <div class="container page-hero-shell reverse">
+        <div>
+          <p class="eyebrow">Eventos privados</p>
+          <h1>Celebraciones íntimas con mejor ritmo visual y menos espacio desperdiciado.</h1>
+          <p class="lead">Rooftop, terraza y salón privado para bodas pequeñas, cenas especiales y encuentros de marca con una lectura mucho más dinámica.</p>
+        </div>
+        <div class="page-hero-side" data-reveal>
+          <div class="media-stack-card hero-scene-events">
+            <strong>Montajes con luz cálida, rooftop privado y servicio coordinado para cada formato.</strong>
+          </div>
+          <div class="floating-stat">
+            <small>Capacidad</small>
+            <strong>Formatos boutique para 10 a 60 invitados según el montaje</strong>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-soft">
+      <div class="container event-grid">
+        <article class="experience-card" data-reveal>
+          <div class="experience-media ceremony"></div>
+          <h3>Bodas íntimas</h3>
+          <p>Montajes sobrios, cenas al aire libre y alojamiento para invitados cercanos.</p>
+        </article>
+        <article class="experience-card" data-reveal>
+          <div class="experience-media dinner"></div>
+          <h3>Cenas privadas</h3>
+          <p>Formatos pequeños con cocina maridada, iluminación tenue y servicio cercano.</p>
+        </article>
+        <article class="experience-card" data-reveal>
+          <div class="experience-media brand-scene"></div>
+          <h3>Eventos de marca</h3>
+          <p>Lanzamientos y sesiones editoriales dentro de una atmósfera más exclusiva.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container media-tabs" data-media-tabs data-reveal>
+        <div class="media-tab-list" role="tablist" aria-label="Formatos de eventos">
+          <button class="media-tab-btn" type="button" data-media-tab="bodas" aria-selected="true">Bodas</button>
+          <button class="media-tab-btn" type="button" data-media-tab="cenas" aria-selected="false">Cenas privadas</button>
+          <button class="media-tab-btn" type="button" data-media-tab="marca" aria-selected="false">Eventos de marca</button>
+        </div>
+        <section class="media-tab-panel" data-media-panel="bodas">
+          <div class="media-tab-grid">
+            <div class="media-tab-visual ceremony"></div>
+            <div class="media-tab-copy">
+              <h3>Bodas y celebraciones pequeñas</h3>
+              <p>Montaje en terraza, hospedaje para invitados y cierre con brunch o cena especial.</p>
+              <div class="media-pill-list"><span>Terraza</span><span>Hospedaje</span><span>Cena especial</span></div>
+            </div>
+          </div>
+        </section>
+        <section class="media-tab-panel" data-media-panel="cenas" hidden>
+          <div class="media-tab-grid reverse">
+            <div class="media-tab-visual dinner"></div>
+            <div class="media-tab-copy">
+              <h3>Cenas privadas con montaje boutique</h3>
+              <p>Formatos para aniversarios o encuentros discretos con coctelería y servicio más cercano.</p>
+              <div class="media-pill-list"><span>Chef invitado</span><span>Rooftop</span><span>Montaje nocturno</span></div>
+            </div>
+          </div>
+        </section>
+        <section class="media-tab-panel" data-media-panel="marca" hidden>
+          <div class="media-tab-grid">
+            <div class="media-tab-visual brand-scene"></div>
+            <div class="media-tab-copy">
+              <h3>Encuentros de marca y producción</h3>
+              <p>Sesiones, lanzamientos y experiencias privadas con una escena más cuidada visualmente.</p>
+              <div class="media-pill-list"><span>Producción</span><span>Branding</span><span>Contenido</span></div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container trust-grid" data-reveal>
+        <div>
+          <p class="eyebrow">Producción</p>
+          <h2>Una página más estructural que combina operación, montaje y hospitalidad.</h2>
+          <ul class="trust-list">
+            <li>Coordinación previa con montaje, catering y tiempos del evento</li>
+            <li>Opciones de hospedaje para invitados y anfitriones</li>
+            <li>Flexibilidad para celebraciones sociales o encuentros de marca</li>
+          </ul>
+        </div>
+        <div class="trust-panel">
+          <article>
+            <strong>Rooftop privado</strong>
+            <span>Perfecto para cocteles, cenas y eventos con una atmósfera más elevada.</span>
+          </article>
+          <article>
+            <strong>Terraza jardín</strong>
+            <span>Montajes suaves con luz natural para ceremonias íntimas.</span>
+          </article>
+          <article>
+            <strong>Apoyo de concierge</strong>
+            <span>El equipo coordina proveedores, agenda y atención al invitado.</span>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-wrap">
+      <p>Casa Lucerna</p>
+      <a href="reservas.html">Consultar fecha</a>
+    </div>
+  </footer>
+
+  <script src="../shared/demo.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

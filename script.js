@@ -96,6 +96,88 @@ if (revealItems.length) {
 }
 
 // =========================
+// PORTFOLIO FILTER
+// =========================
+const portfolioFilterButtons = Array.from(
+  document.querySelectorAll(".portfolio-filter-btn")
+);
+const portfolioCards = Array.from(
+  document.querySelectorAll(".project-card[data-category]")
+);
+const portfolioStageCopy = document.getElementById("portfolio-stage-copy");
+
+const PORTFOLIO_STAGE_META = {
+  esencial: {
+    tag: "Esencial",
+    title: "Una sola vista para presentar lo esencial y generar contacto rápido.",
+    copy:
+      "Ideal para negocios que necesitan presencia inmediata con una estructura breve, clara y enfocada en conversión.",
+  },
+  profesional: {
+    tag: "Profesional",
+    title: "Hasta 5 páginas internas para presentar servicios, confianza y contacto.",
+    copy:
+      "Pensado para negocios que necesitan una web más clara comercialmente, con mejor jerarquía y base lista para crecer.",
+  },
+  premium: {
+    tag: "Premium",
+    title: "Hasta 7 páginas internas con más profundidad visual y comercial.",
+    copy:
+      "Diseñado para marcas que buscan una experiencia más personalizada, con narrativa visual y una presencia más aspiracional.",
+  },
+};
+
+PORTFOLIO_STAGE_META.esencial.highlights = [
+  "1 vista",
+  "Mensaje directo",
+  "Conversión rápida",
+];
+PORTFOLIO_STAGE_META.profesional.highlights = [
+  "5 páginas",
+  "Más orden",
+  "Base escalable",
+];
+PORTFOLIO_STAGE_META.premium.highlights = [
+  "7 páginas",
+  "Más personalización",
+  "Mayor profundidad",
+];
+
+function setPortfolioFilter(category) {
+  portfolioFilterButtons.forEach((button) => {
+    const isActive = button.dataset.filter === category;
+    button.classList.toggle("is-active", isActive);
+    button.setAttribute("aria-pressed", String(isActive));
+  });
+
+  portfolioCards.forEach((card) => {
+    card.hidden = card.dataset.category !== category;
+  });
+
+  const stageMeta = PORTFOLIO_STAGE_META[category];
+  if (portfolioStageCopy && stageMeta) {
+    const highlightsMarkup = (stageMeta.highlights || [])
+      .map((item) => `<span>${item}</span>`)
+      .join("");
+    portfolioStageCopy.innerHTML = `
+      <span class="portfolio-stage-tag">${stageMeta.tag}</span>
+      <h3>${stageMeta.title}</h3>
+      <div class="portfolio-stage-highlights">${highlightsMarkup}</div>
+    `;
+  }
+}
+
+if (portfolioFilterButtons.length && portfolioCards.length) {
+  portfolioFilterButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      setPortfolioFilter(button.dataset.filter || "esencial");
+    });
+  });
+
+  setPortfolioFilter("esencial");
+}
+
+// =========================
 // PROCESS CAROUSEL
 // =========================
 const processCarousel = document.querySelector(".process-carousel");

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Agendar cita | Clínica Aurora</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a href="index.html" class="brand">
+        <span class="brand-mark">A</span>
+        <span><strong>Clínica Aurora</strong><small>Medicina familiar y especialidades</small></span>
+      </a>
+      <button class="menu-toggle" aria-label="Abrir menú" aria-expanded="false">☰</button>
+      <nav class="site-nav">
+        <a href="especialidades.html">Especialidades</a>
+        <a href="equipo.html">Equipo</a>
+        <a href="instalaciones.html">Instalaciones</a>
+        <a href="agenda.html" class="btn btn-nav">Agendar cita</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="page-hero">
+      <div class="container">
+        <p class="eyebrow">Agendar cita</p>
+        <h1>Solicita atención en menos de un minuto con una ruta simple y clara.</h1>
+        <p class="lead">La página de agenda funciona como cierre del sitio: especialidad, fecha y confirmación por el canal que prefiera el paciente.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container appointment-box">
+        <div class="appointment-copy">
+          <p class="eyebrow">Disponibilidad</p>
+          <h2>Un formulario directo para pacientes nuevos o de seguimiento.</h2>
+          <div class="appointment-highlights">
+            <span>Confirmación por teléfono o WhatsApp</span>
+            <span>Horarios sujetos a disponibilidad</span>
+            <span>Respuesta rápida en horario laboral</span>
+          </div>
+        </div>
+
+        <form class="appointment-form" id="appointmentForm">
+          <input type="text" placeholder="Nombre completo" required>
+          <input type="tel" placeholder="Teléfono" required>
+          <select required>
+            <option value="">Especialidad</option>
+            <option>Medicina familiar</option>
+            <option>Pediatría</option>
+            <option>Ginecología</option>
+            <option>Nutrición clínica</option>
+          </select>
+          <input type="date" required>
+          <button type="submit" class="btn">Solicitar cita</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-wrap">
+      <p>Clínica Aurora</p>
+      <a href="index.html">Volver al inicio</a>
+    </div>
+  </footer>
+
+  <script src="../shared/demo.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

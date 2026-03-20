@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Proceso | Grupo Norte Obra</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a href="index.html" class="brand">
+        <span class="brand-mark">GN</span>
+        <span><strong>Grupo Norte Obra</strong><small>Construcción y desarrollo</small></span>
+      </a>
+      <button class="menu-toggle" aria-label="Abrir menú" aria-expanded="false">☰</button>
+      <nav class="site-nav">
+        <a href="servicios.html">Servicios</a>
+        <a href="proyectos.html">Proyectos</a>
+        <a href="proceso.html">Proceso</a>
+        <a href="contacto.html" class="btn btn-nav">Solicitar propuesta</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="page-hero">
+      <div class="container page-hero-shell reverse">
+        <div>
+          <p class="eyebrow">Proceso de trabajo</p>
+          <h1>Un flujo más concreto, visual y útil para bajar incertidumbre.</h1>
+          <p class="lead">La página ya no se queda en un titular enorme. Ahora combina ruta, puntos de control y una lectura más dinámica del proceso comercial y técnico.</p>
+        </div>
+        <div class="page-hero-side" data-reveal>
+          <div class="process-highlight">
+            <strong>Del levantamiento a la ejecución con una secuencia clara de revisión, propuesta y seguimiento.</strong>
+          </div>
+          <div class="page-kpi">
+            <small>Respuesta inicial</small>
+            <strong>Contacto, revisión y salida comercial en una misma ruta</strong>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container process-grid">
+        <article class="process-card" data-reveal>
+          <span>01</span>
+          <h3>Levantamiento</h3>
+          <p>Se revisa alcance, ubicación, tiempos y tipo de necesidad del proyecto.</p>
+        </article>
+        <article class="process-card" data-reveal>
+          <span>02</span>
+          <h3>Propuesta</h3>
+          <p>Se define una salida inicial con enfoque técnico y comercial.</p>
+        </article>
+        <article class="process-card" data-reveal>
+          <span>03</span>
+          <h3>Planeación</h3>
+          <p>Se aterrizan frentes de trabajo, coordinación operativa y seguimiento.</p>
+        </article>
+        <article class="process-card" data-reveal>
+          <span>04</span>
+          <h3>Ejecución</h3>
+          <p>La obra se atiende con supervisión, control y comunicación continua.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section section-alt">
+      <div class="container media-tabs" data-media-tabs data-reveal>
+        <div class="media-tab-list" role="tablist" aria-label="Etapas del proceso">
+          <button class="media-tab-btn" type="button" data-media-tab="comercial" aria-selected="true">Fase comercial</button>
+          <button class="media-tab-btn" type="button" data-media-tab="tecnica" aria-selected="false">Fase técnica</button>
+          <button class="media-tab-btn" type="button" data-media-tab="seguimiento" aria-selected="false">Seguimiento</button>
+        </div>
+        <section class="media-tab-panel" data-media-panel="comercial">
+          <div class="media-tab-grid">
+            <div class="media-tab-visual nave"></div>
+            <div class="media-tab-copy">
+              <h3>Primera revisión y propuesta</h3>
+              <p>La conversación arranca con levantamiento, lectura de alcance y definición de una salida inicial.</p>
+              <div class="media-pill-list"><span>Alcance</span><span>Tiempo</span><span>Propuesta</span></div>
+            </div>
+          </div>
+        </section>
+        <section class="media-tab-panel" data-media-panel="tecnica" hidden>
+          <div class="media-tab-grid reverse">
+            <div class="media-tab-visual urbanizacion"></div>
+            <div class="media-tab-copy">
+              <h3>Planeación y frentes de trabajo</h3>
+              <p>Se aterrizan recursos, coordinación operativa y la lógica técnica que llevará la obra.</p>
+              <div class="media-pill-list"><span>Frentes</span><span>Recursos</span><span>Coordinación</span></div>
+            </div>
+          </div>
+        </section>
+        <section class="media-tab-panel" data-media-panel="seguimiento" hidden>
+          <div class="media-tab-grid">
+            <div class="media-tab-visual estructura"></div>
+            <div class="media-tab-copy">
+              <h3>Supervisión y control</h3>
+              <p>La ejecución se acompaña con control, comunicación continua y seguimiento operativo.</p>
+              <div class="media-pill-list"><span>Supervisión</span><span>Calidad</span><span>Reporte</span></div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-wrap">
+      <p>Grupo Norte Obra</p>
+      <a href="contacto.html">Hablar con un asesor</a>
+    </div>
+  </footer>
+
+  <script src="../shared/demo.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

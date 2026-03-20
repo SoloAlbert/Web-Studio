@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Modelos | Altos del Valle</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Cormorant+Garamond:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a href="index.html" class="brand">
+        <span class="brand-mark">AV</span>
+        <span><strong>Altos del Valle</strong><small>Residencias contemporáneas</small></span>
+      </a>
+      <button class="menu-toggle" aria-label="Abrir menú" aria-expanded="false">☰</button>
+      <nav class="site-nav">
+        <a href="desarrollo.html">Desarrollo</a>
+        <a href="modelos.html">Modelos</a>
+        <a href="amenidades.html">Amenidades</a>
+        <a href="galeria.html">Galería</a>
+        <a href="inversion.html">Inversión</a>
+        <a href="contacto.html" class="btn btn-nav">Solicitar información</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="page-hero premium-page-hero">
+      <div class="container page-hero-shell reverse">
+        <div>
+          <p class="eyebrow">Modelos residenciales</p>
+          <h1>Producto más claro, visual y comparativo para distintos perfiles de compra.</h1>
+          <p class="lead">La página ahora presenta los modelos como una decisión real, con lectura más dinámica y menos sensación de catálogo plano.</p>
+        </div>
+        <div class="page-hero-side" data-reveal>
+          <div class="media-stack-card hero-scene-lifestyle model-three"></div>
+          <div class="floating-stat">
+            <small>Selección</small>
+            <strong>Modelos con 3 y 4 recámaras, estudio flexible y relación interior-exterior</strong>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-soft">
+      <div class="container model-grid">
+        <article class="model-card" data-reveal>
+          <div class="model-media model-one"></div>
+          <h3>Horizonte</h3>
+          <p>180 m² con planta abierta, estudio y terraza social para familias jóvenes.</p>
+        </article>
+        <article class="model-card" data-reveal>
+          <div class="model-media model-two"></div>
+          <h3>Reserva</h3>
+          <p>210 m² con jardín posterior y una distribución ideal para crecer a futuro.</p>
+        </article>
+        <article class="model-card" data-reveal>
+          <div class="model-media model-three"></div>
+          <h3>Gran Valle</h3>
+          <p>240 m² con recámara en planta baja y un perfil más patrimonial.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container media-tabs" data-media-tabs data-reveal>
+        <div class="media-tab-list" role="tablist" aria-label="Perfiles de compra">
+          <button class="media-tab-btn" type="button" data-media-tab="familias" aria-selected="true">Familias</button>
+          <button class="media-tab-btn" type="button" data-media-tab="crecer" aria-selected="false">Crecer</button>
+          <button class="media-tab-btn" type="button" data-media-tab="patrimonio" aria-selected="false">Patrimonio</button>
+        </div>
+        <section class="media-tab-panel" data-media-panel="familias">
+          <div class="media-tab-grid reverse">
+            <div class="media-tab-visual model-one"></div>
+            <div class="media-tab-copy">
+              <h3>Horizonte para familias jóvenes</h3>
+              <p>Planta abierta, estudio y una terraza que favorece convivencia y flexibilidad diaria.</p>
+              <div class="media-pill-list"><span>180 m²</span><span>Estudio</span><span>Terraza</span></div>
+            </div>
+          </div>
+        </section>
+        <section class="media-tab-panel" data-media-panel="crecer" hidden>
+          <div class="media-tab-grid">
+            <div class="media-tab-visual model-two"></div>
+            <div class="media-tab-copy">
+              <h3>Reserva para crecer a futuro</h3>
+              <p>Jardín posterior y una distribución con mejor margen para cambios familiares y ampliación.</p>
+              <div class="media-pill-list"><span>210 m²</span><span>Jardín</span><span>Flexibilidad</span></div>
+            </div>
+          </div>
+        </section>
+        <section class="media-tab-panel" data-media-panel="patrimonio" hidden>
+          <div class="media-tab-grid reverse">
+            <div class="media-tab-visual model-three"></div>
+            <div class="media-tab-copy">
+              <h3>Gran Valle con visión patrimonial</h3>
+              <p>Recámara en planta baja, mayor amplitud y una lectura de producto más sólida para compra patrimonial.</p>
+              <div class="media-pill-list"><span>240 m²</span><span>Planta baja</span><span>Patrimonio</span></div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-wrap">
+      <p>Altos del Valle</p>
+      <a href="amenidades.html">Explorar amenidades</a>
+    </div>
+  </footer>
+
+  <script src="../shared/demo.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
