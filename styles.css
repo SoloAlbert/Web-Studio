@@ -598,51 +598,6 @@ h3 { line-height: 1.08; margin: 0 0 1rem; }
 }
 .price-card li + li { margin-top: 0.55rem; }
 .btn-full { width: 100%; }
-.package-compare {
-  margin-top: 1.3rem;
-  padding: 1.15rem;
-  border-radius: 26px;
-  border: 1px solid var(--line);
-  background: linear-gradient(180deg, #ffffff, #f8fbff);
-  box-shadow: var(--shadow-soft);
-}
-.compare-head {
-  margin-bottom: 0.9rem;
-  font-size: 0.82rem;
-  font-weight: 900;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--primary);
-}
-.compare-table {
-  display: grid;
-  gap: 0.75rem;
-}
-.compare-row {
-  display: grid;
-  grid-template-columns: 1.3fr repeat(3, 1fr);
-  gap: 0.8rem;
-  align-items: center;
-  padding: 0.8rem 0;
-  border-top: 1px solid rgba(148, 163, 184, 0.18);
-}
-.compare-row:first-child {
-  padding-top: 0;
-  border-top: 0;
-}
-.compare-row span {
-  color: var(--text-soft);
-  font-weight: 700;
-}
-.compare-row span:first-child {
-  color: var(--text);
-  font-weight: 800;
-}
-.compare-labels span {
-  font-size: 0.84rem;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-}
 .section-footnote {
   margin: 1.25rem 0 0;
   text-align: center;
@@ -1297,8 +1252,7 @@ h3 { line-height: 1.08; margin: 0 0 1rem; }
   .quote-summary.modern-summary,
   .quote-mini-card { grid-template-columns: 1fr; }
   .portfolio-stage,
-  .preview-window-body,
-  .compare-row { grid-template-columns: 1fr; }
+  .preview-window-body { grid-template-columns: 1fr; }
   .hero-visual { min-height: auto; }
   .floating-chip { position: static; margin-top: 1rem; display: inline-flex; }
   .chip-dark { margin-right: 0.75rem; }
