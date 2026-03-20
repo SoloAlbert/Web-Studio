@@ -1269,6 +1269,40 @@ h3 { line-height: 1.08; margin: 0 0 1rem; }
     flex-direction: column;
     align-items: flex-start;
   }
+  .portfolio-filter {
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(170px, 78vw);
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 0.35rem;
+    scrollbar-width: none;
+  }
+  .portfolio-filter::-webkit-scrollbar {
+    display: none;
+  }
+  .portfolio-filter-btn {
+    scroll-snap-align: start;
+  }
+  .portfolio-grid {
+    display: grid;
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(280px, 86vw);
+    gap: 0.9rem;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 0.35rem;
+    scrollbar-width: none;
+  }
+  .portfolio-grid::-webkit-scrollbar {
+    display: none;
+  }
+  .portfolio-grid .project-card {
+    scroll-snap-align: start;
+  }
 }
 
 @media (max-width: 560px) {
