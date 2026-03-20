@@ -105,6 +105,7 @@ const portfolioCards = Array.from(
   document.querySelectorAll(".project-card[data-category]")
 );
 const portfolioStageCopy = document.getElementById("portfolio-stage-copy");
+const portfolioStagePreview = document.getElementById("portfolio-stage-preview");
 
 const PORTFOLIO_STAGE_META = {
   esencial: {
@@ -144,6 +145,24 @@ PORTFOLIO_STAGE_META.premium.highlights = [
 ];
 
 function setPortfolioFilter(category) {
+  const previewMeta = {
+    esencial: {
+      title: "Esencial",
+      copy: "Una vista breve con recorrido directo.",
+    },
+    profesional: {
+      title: "Profesional",
+      copy: "MÃ¡s orden, soporte comercial y mejor jerarquÃ­a.",
+    },
+    premium: {
+      title: "Premium",
+      copy: "Mayor presencia visual y una experiencia mÃ¡s envolvente.",
+    },
+  };
+
+  previewMeta.profesional.copy = "Mas orden, soporte comercial y mejor jerarquia.";
+  previewMeta.premium.copy = "Mayor presencia visual y una experiencia mas envolvente.";
+
   portfolioFilterButtons.forEach((button) => {
     const isActive = button.dataset.filter === category;
     button.classList.toggle("is-active", isActive);
@@ -155,6 +174,7 @@ function setPortfolioFilter(category) {
   });
 
   const stageMeta = PORTFOLIO_STAGE_META[category];
+  const stagePreviewMeta = previewMeta[category];
   if (portfolioStageCopy && stageMeta) {
     const highlightsMarkup = (stageMeta.highlights || [])
       .map((item) => `<span>${item}</span>`)
@@ -163,6 +183,32 @@ function setPortfolioFilter(category) {
       <span class="portfolio-stage-tag">${stageMeta.tag}</span>
       <h3>${stageMeta.title}</h3>
       <div class="portfolio-stage-highlights">${highlightsMarkup}</div>
+    `;
+  }
+
+  if (portfolioStagePreview && stagePreviewMeta) {
+    portfolioStagePreview.dataset.tone = category;
+    portfolioStagePreview.innerHTML = `
+      <div class="preview-window">
+        <div class="preview-window-top">
+          <span></span><span></span><span></span>
+        </div>
+        <div class="preview-window-body">
+          <div class="preview-window-sidebar">
+            <small>Nivel</small>
+            <strong>${stagePreviewMeta.title}</strong>
+            <p>${stagePreviewMeta.copy}</p>
+          </div>
+          <div class="preview-window-main">
+            <div class="preview-window-hero"></div>
+            <div class="preview-window-grid">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+          </div>
+        </div>
+      </div>
     `;
   }
 }
