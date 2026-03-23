@@ -112,6 +112,9 @@ summary:focus-visible {
 .social-links-header {
   margin-left: 0.4rem;
 }
+.social-links-menu {
+  display: none;
+}
 .social-links-contact {
   margin-top: 1rem;
 }
@@ -1287,6 +1290,10 @@ h3 { line-height: 1.08; margin: 0 0 1rem; }
   .social-links-header {
     display: none;
   }
+  .social-links-menu {
+    display: flex;
+    padding-top: 0.5rem;
+  }
   .hero-stats,
   .cards.four,
   .cards.three,
@@ -1336,10 +1343,8 @@ h3 { line-height: 1.08; margin: 0 0 1rem; }
     scroll-snap-align: start;
   }
   .portfolio-grid {
-    display: grid;
-    grid-template-columns: none;
-    grid-auto-flow: column;
-    grid-auto-columns: minmax(272px, 82vw);
+    display: flex;
+    flex-wrap: nowrap;
     gap: 0.9rem;
     overflow-x: auto;
     overscroll-behavior-x: contain;
@@ -1351,6 +1356,8 @@ h3 { line-height: 1.08; margin: 0 0 1rem; }
     display: none;
   }
   .portfolio-grid .project-card {
+    flex: 0 0 82vw;
+    min-width: 82vw;
     scroll-snap-align: start;
   }
   .social-links-contact {
@@ -1370,8 +1377,11 @@ h3 { line-height: 1.08; margin: 0 0 1rem; }
     margin-bottom: 0.8rem;
   }
   .portfolio-grid {
-    grid-auto-columns: minmax(255px, 78vw);
     gap: 0.8rem;
+  }
+  .portfolio-grid .project-card {
+    flex-basis: 80vw;
+    min-width: 80vw;
   }
 }
 
