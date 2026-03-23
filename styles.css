@@ -112,6 +112,9 @@ summary:focus-visible {
 .social-links-header {
   margin-left: 0.4rem;
 }
+.social-links-contact {
+  margin-top: 1rem;
+}
 .social-links-footer {
   margin-top: 0.8rem;
 }
@@ -1336,12 +1339,12 @@ h3 { line-height: 1.08; margin: 0 0 1rem; }
     display: grid;
     grid-template-columns: none;
     grid-auto-flow: column;
-    grid-auto-columns: minmax(280px, 86vw);
+    grid-auto-columns: minmax(272px, 82vw);
     gap: 0.9rem;
     overflow-x: auto;
     overscroll-behavior-x: contain;
     scroll-snap-type: x mandatory;
-    padding-bottom: 0.35rem;
+    padding: 0 0.35rem 0.55rem;
     scrollbar-width: none;
   }
   .portfolio-grid::-webkit-scrollbar {
@@ -1349,6 +1352,9 @@ h3 { line-height: 1.08; margin: 0 0 1rem; }
   }
   .portfolio-grid .project-card {
     scroll-snap-align: start;
+  }
+  .social-links-contact {
+    justify-content: flex-start;
   }
 }
 
@@ -1362,6 +1368,10 @@ h3 { line-height: 1.08; margin: 0 0 1rem; }
   .badge {
     position: static;
     margin-bottom: 0.8rem;
+  }
+  .portfolio-grid {
+    grid-auto-columns: minmax(255px, 78vw);
+    gap: 0.8rem;
   }
 }
 
