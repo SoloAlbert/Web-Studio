@@ -1,0 +1,8 @@
+# Documentos privados del negocio: NO se suben (el repositorio es público)
+docs/
+
+node_modules/
+.netlify/
+.DS_Store
+Thumbs.db
+*.log

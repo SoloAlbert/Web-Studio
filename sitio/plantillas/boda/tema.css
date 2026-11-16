@@ -1,0 +1,19 @@
+/* Tema: Boda — marfil, beige y dorado */
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Great+Vibes&family=Montserrat:wght@400;600&display=swap");
+
+:root {
+  --fondo: #fbf7f0;
+  --fondo-suave: #f4ece0;
+  --fondo-pagina: #e9dfd1;
+  --superficie: #fffdf9;
+  --texto: #3d3529;
+  --texto-suave: #7a6e60;
+  --acento: #c2a36b;
+  --acento-oscuro: #8a6a3b;
+  --acento-suave: #eadfca;
+  --boton-texto: #ffffff;
+  --fuente-display: "Great Vibes", cursive;
+  --fuente-titulo: "Cormorant Garamond", Georgia, serif;
+  --fuente-texto: "Cormorant Garamond", Georgia, serif;
+  --fuente-etiqueta: "Montserrat", system-ui, sans-serif;
+}

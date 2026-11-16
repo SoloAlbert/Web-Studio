@@ -1,0 +1,10 @@
+{
+  "name": "localconnect-invitaciones",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Invitaciones web personalizadas para eventos",
+  "scripts": {
+    "start": "node servidor.js",
+    "nuevo": "node nuevo-evento.js"
+  }
+}
