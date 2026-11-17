@@ -36,6 +36,8 @@ fs.writeFileSync(
   fs
     .readFileSync(html, "utf8")
     .replaceAll("../../plantillas/", "../plantillas/")
+    // Invitación privada: que no aparezca en Google ni Bing.
+    .replace(/(<meta name="viewport"[^>]*>)/, `$1\n  <meta name="robots" content="noindex, nofollow">`)
     .replace(
       /\s*<meta property="og:image"[^>]*>/,
       `\n  <!-- Foto al compartir por WhatsApp (dirección completa):\n  <meta property="og:image" content="https://localconnect.studio/${nombre}/fotos/portada.jpg"> -->`
