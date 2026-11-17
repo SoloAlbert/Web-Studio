@@ -121,7 +121,10 @@ function estado(inv) {
 }
 
 function urlEvento(ev) {
-  const u = (ev && ev.url) || `${SITIO}/${ev.id}/`;
+  let u = (ev && ev.url) || `${SITIO}/${ev.id}/`;
+  // En la compu (servidor local) los enlaces apuntan a la versión local para revisarlos antes de publicar.
+  const local = /^(localhost|127\.0\.0\.1|192\.168\.\d+\.\d+|10\.\d+\.\d+\.\d+)$/.test(location.hostname);
+  if (local && u.startsWith(SITIO)) u = location.origin + u.slice(SITIO.length);
   return u.endsWith("/") ? u : u + "/";
 }
 const enlaceInvitado = (inv) => `${urlEvento(S.evento)}?i=${inv.id}`;

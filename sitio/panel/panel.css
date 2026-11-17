@@ -35,6 +35,7 @@
 .aviso-error { color: #b3261e; font-size: 0.92rem; margin: 0; }
 .nota { color: var(--gris); font-size: 0.9rem; margin: 0.4rem 0 0; }
 .codigo-usuario { font-size: 0.9rem; }
+.codigo-usuario .enlace { background: none; border: 0; padding: 0 0.3rem; font: inherit; font-weight: 600; color: var(--rosa-oscuro); text-decoration: underline; cursor: pointer; }
 .codigo-usuario code { background: var(--crema-2); padding: 0.2rem 0.5rem; border-radius: 6px; word-break: break-all; }
 
 .titulo-vista { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 1rem; margin-bottom: 1.5rem; }
