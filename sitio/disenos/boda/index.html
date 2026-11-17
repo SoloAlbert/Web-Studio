@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <script>
+    // Asegura la "/" final para que las rutas relativas funcionen en cualquier servidor.
+    (function (p) { if (!/\/$|\.html$/.test(p)) location.replace(p + "/" + location.search + location.hash); })(location.pathname);
+  </script>
+
+  <!-- Lo que se ve al compartir el enlace por WhatsApp / Facebook.
+       WhatsApp NO lee datos.js, por eso estos textos se escriben aquí. -->
+  <title>María &amp; Alejandro · Nuestra boda</title>
+  <meta name="description" content="¡Nos casamos! 15 de mayo de 2027. Toca para ver todos los detalles y confirmar tu asistencia.">
+  <meta property="og:title" content="María &amp; Alejandro · Nuestra boda">
+  <meta property="og:description" content="¡Nos casamos! 15 de mayo de 2027. Toca para ver todos los detalles y confirmar tu asistencia.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://localconnect.studio/assets/disenos/boda.png">
+  <meta name="theme-color" content="#fbf7f0">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="../../plantillas/comun/base.css">
+  <link rel="stylesheet" href="../../plantillas/boda/tema.css">
+</head>
+<body>
+  <div id="app"></div>
+  <noscript><p style="padding:2rem;text-align:center">Activa JavaScript para ver la invitación.</p></noscript>
+  <script src="../../plantillas/comun/marca.js"></script>
+  <script src="datos.js"></script>
+  <script src="../../plantillas/comun/invitacion.js"></script>
+</body>
+</html>

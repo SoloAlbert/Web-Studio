@@ -1,0 +1,36 @@
+/* Tema: Graduación — negro y dorado */
+@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Great+Vibes&family=Lato:wght@400;700&display=swap");
+
+:root {
+  --fondo: #121318;
+  --fondo-suave: #1a1c23;
+  --fondo-pagina: #08090c;
+  --superficie: #1f222b;
+  --texto: #f3ece0;
+  --texto-suave: #b9b0a2;
+  --acento: #d4af37;
+  --acento-oscuro: #c9a227;
+  --acento-suave: #3a3426;
+  --boton-texto: #15161b;
+  --fuente-display: "Great Vibes", cursive;
+  --fuente-titulo: "Cinzel", Georgia, serif;
+  --fuente-texto: "Lato", system-ui, sans-serif;
+  --fuente-etiqueta: "Lato", system-ui, sans-serif;
+  --sombra: 0 10px 30px rgba(0, 0, 0, 0.35);
+  color-scheme: dark;
+}
+body { font-size: 1.02rem; }
+.portada {
+  background:
+    radial-gradient(circle at 50% 0%, rgba(212, 175, 55, 0.22) 0, transparent 55%),
+    radial-gradient(circle at 85% 95%, rgba(212, 175, 55, 0.12) 0, transparent 40%),
+    var(--fondo);
+}
+.portada::before, .portada::after { border-radius: 4px; }
+.portada__nombres { color: var(--acento); }
+.portada__nombres .conector { color: var(--texto); }
+.etiqueta { color: var(--acento); }
+.titulo { color: var(--acento); }
+.tarjeta__titulo, .regalo__tienda, .vestimenta__codigo, .pase__nombre { font-weight: 400; letter-spacing: 0.04em; }
+.intro__sello { color: #15161b; }
+.formulario__aviso { color: var(--texto); }

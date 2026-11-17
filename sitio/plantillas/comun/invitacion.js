@@ -7,10 +7,12 @@
 (function () {
   "use strict";
 
-  // Datos de tu marca (aparecen en el pie de cada invitación).
-  const MARCA = { nombre: "LocalConnect", url: "/" };
+  // Datos del negocio (plantillas/comun/marca.js).
+  const MARCA = Object.assign({ nombre: "LocalConnect", sitio: "https://localconnect.studio", whatsapp: "" }, window.MARCA);
 
   const E = window.EVENTO;
+  // Diseño de la colección: muestra la barra "Quiero este diseño".
+  const CAT = E && E.catalogo;
   const app = document.getElementById("app");
   if (!E || !app) {
     document.body.innerHTML =
@@ -34,6 +36,7 @@
   const fechaLarga = fechaValida
     ? fmt({ weekday: "long", day: "numeric", month: "long", year: "numeric" }).format(fechaEvento)
     : "";
+  const fechaLargaTitulo = fechaLarga.charAt(0).toUpperCase() + fechaLarga.slice(1);
   const horaEvento = fechaValida ? fmt({ hour: "numeric", minute: "2-digit", hour12: true }).format(fechaEvento) : "";
   const fechaCorta = (() => {
     if (!fechaValida) return "";
@@ -55,6 +58,13 @@
     corazon: '<path d="M12 21s-7.5-4.6-9.5-9.4C1.2 8.3 3.4 4.5 7 4.5c2 0 3.6 1.1 5 3 1.4-1.9 3-3 5-3 3.6 0 5.8 3.8 4.5 7.1C19.5 16.4 12 21 12 21z"/>',
     copiar: '<rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/>',
     hotel: '<path d="M3 21V7l9-4 9 4v14M9 21v-6h6v6M8 10h.01M12 10h.01M16 10h.01"/>',
+    // Emblemas de portada
+    anillos: '<circle cx="9" cy="14.5" r="5.5"/><circle cx="15" cy="14.5" r="5.5"/><path d="M7 5.5L8.3 3.5h1.4L11 5.5 9 8z"/>',
+    corona: '<path d="M4 18L3 8l5 4 4-7 4 7 5-4-1 10z"/><path d="M4 21h16"/><circle cx="12" cy="3" r=".8"/>',
+    nube: '<path d="M7 18h10a4 4 0 0 0 .6-7.96A6 6 0 0 0 6.1 9.1 4.5 4.5 0 0 0 7 18z"/><path d="M19.5 2.5v3M18 4h3M4 3v2M3 4h2"/>',
+    birrete: '<path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11v5c3.5 2.6 8.5 2.6 12 0v-5M22 9v6"/>',
+    globos: '<ellipse cx="9" cy="8" rx="4.2" ry="5.2"/><ellipse cx="16.2" cy="10" rx="3.4" ry="4.3"/><path d="M8.3 13.4h1.4M9 13.4c0 3 2.6 4.2 3 8.6M16.2 14.4c0 3-3.6 4.2-4.2 7.6"/>',
+    flecha: '<path d="M15 18l-6-6 6-6"/>',
   };
   const icono = (n) =>
     `<svg class="icono" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONOS[n] || ""}</svg>`;
@@ -82,6 +92,7 @@
     return `
       <header class="portada${fondo ? " portada--foto" : ""}"${fondo}>
         <div class="portada__contenido">
+          ${E.emblema && ICONOS[E.emblema] ? `<div class="portada__emblema">${icono(E.emblema)}</div>` : ""}
           ${E.pretitulo ? `<p class="etiqueta">${esc(E.pretitulo)}</p>` : ""}
           <h1 class="portada__nombres">${nombres}</h1>
           ${E.frase ? `<p class="portada__frase">${esc(E.frase)}</p>` : ""}
@@ -123,7 +134,7 @@
          ${caja("d", "Días")}${caja("h", "Horas")}${caja("m", "Min")}${caja("s", "Seg")}
        </div>
        <p class="cuenta__fin" hidden>${esc(E.textos?.cuentaFin || "¡Llegó el gran día!")}</p>
-       <p class="fecha-larga">${icono("calendario")} <span>${esc(fechaLarga)}</span></p>
+       <p class="fecha-larga">${icono("calendario")} <span>${esc(fechaLargaTitulo)}</span></p>
        <p class="fecha-larga">${icono("reloj")} <span>${esc(horaEvento)}</span></p>
        <a class="boton boton--claro" target="_blank" rel="noopener" href="${calendarioURL()}">Agregar a mi calendario</a>`,
       "seccion--suave"
@@ -242,7 +253,7 @@
 
   function confirmacion() {
     const c = E.confirmacion;
-    if (!c || !c.whatsapp) return "";
+    if (!c || (!c.whatsapp && !CAT)) return "";
     const max = pases || c.maxPersonas || 5;
     const opciones = Array.from({ length: max }, (_, i) => `<option value="${i + 1}">${i + 1}</option>`).join("");
     return seccion(
@@ -266,6 +277,7 @@
          </label>
          <p class="formulario__error" hidden>Escribe tu nombre para confirmar.</p>
          <button class="boton boton--grande" type="submit">${icono("mensaje")} Confirmar por WhatsApp</button>
+         <p class="formulario__aviso" hidden>En tu invitación, esta confirmación te llega directo a tu WhatsApp con el nombre del invitado, cuántas personas asistirán y su mensaje.</p>
        </form>`
     );
   }
@@ -279,14 +291,34 @@
         <p class="portada__nombres portada__nombres--chico">${esc(E.nombres?.principal)}${E.nombres?.segundo ? ` ${esc(E.nombres.conector || "&")} ${esc(E.nombres.segundo)}` : ""}</p>
       </section>
       <footer class="pie">
-        Invitación digital hecha por <a href="${esc(MARCA.url)}" target="_blank" rel="noopener">${esc(MARCA.nombre)}</a>
+        Invitación digital hecha por <a href="${esc(MARCA.sitio)}" target="_blank" rel="noopener">${esc(MARCA.nombre)}</a>
       </footer>`;
   }
 
+  function enlaceWhatsApp(texto) {
+    const n = String(MARCA.whatsapp || "").replace(/\D/g, "");
+    return `https://wa.me/${n}?text=${encodeURIComponent(texto)}`;
+  }
+
+  function barraCatalogo() {
+    if (!CAT) return "";
+    return `
+      <nav class="barra-catalogo" aria-label="Opciones del diseño">
+        <a class="barra-catalogo__volver" href="${esc(CAT.volver || "../../#disenos")}" aria-label="Ver todos los diseños">${icono("flecha")}</a>
+        <div class="barra-catalogo__info">
+          <strong>${esc(CAT.nombre)}</strong>
+          <span>${esc(CAT.detalle || "Personalízalo con tus datos")}</span>
+        </div>
+        <a class="barra-catalogo__boton" target="_blank" rel="noopener"
+           href="${enlaceWhatsApp(`¡Hola ${MARCA.nombre}! Me interesa el diseño "${CAT.nombre}" para mi evento. ¿Me dan información?`)}">Lo quiero</a>
+      </nav>`;
+  }
+
   function intro() {
-    if (E.intro === false) return "";
+    if (E.intro === false || params.has("directo")) return "";
     const n = E.nombres || {};
-    const iniciales = n.segundo ? `${(n.principal || "")[0] || ""}<span>${esc(n.conector || "&")}</span>${(n.segundo || "")[0] || ""}` : esc(n.principal || "");
+    const ini = (t) => esc((t || "").trim().charAt(0).toUpperCase());
+    const iniciales = n.segundo ? `${ini(n.principal)}<span>${esc(n.conector || "&")}</span>${ini(n.segundo)}` : ini(n.principal);
     return `
       <div class="intro" role="dialog" aria-label="Abrir invitación">
         <div class="intro__sello">${iniciales}</div>
@@ -297,6 +329,7 @@
 
   // ---------- armado ----------
   document.documentElement.dataset.tema = E.tipo || "boda";
+  if (CAT && !params.has("directo")) document.body.classList.add("con-barra");
   app.innerHTML =
     intro() +
     `<main class="invitacion">` +
@@ -305,6 +338,7 @@
     pase() + mensaje() + cuentaRegresiva() + familia() + lugares() + itinerario() +
     vestimenta() + galeria() + regalos() + hospedaje() + confirmacion() + despedida() +
     `</div></main>` +
+    (params.has("directo") ? "" : barraCatalogo()) +
     (E.musica ? `<button class="musica" aria-label="Música" hidden>${icono("musica")}</button><audio loop preload="none" src="${esc(E.musica)}"></audio>` : "");
 
   // ---------- comportamiento ----------
@@ -455,6 +489,11 @@
           : `¡Hola! Soy *${nombre}*. Lamentablemente no podré asistir a ${titulo}. ¡Les deseo lo mejor!`;
       const msj = form.mensaje.value.trim();
       if (msj) txt += `\n\nMensaje: ${msj}`;
+      if (CAT && !E.confirmacion.whatsapp) {
+        // Diseño de la colección: se explica cómo funciona en lugar de enviar.
+        form.querySelector(".formulario__aviso").hidden = false;
+        return;
+      }
       const numero = String(E.confirmacion.whatsapp).replace(/\D/g, "");
       window.open(`https://wa.me/${numero}?text=${encodeURIComponent(txt)}`, "_blank", "noopener");
     });

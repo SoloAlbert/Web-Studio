@@ -178,7 +178,7 @@ a { color: var(--acento-oscuro); }
 .cuenta__num { display: block; font-family: var(--fuente-titulo); font-size: 2rem; font-weight: 600; line-height: 1; font-variant-numeric: tabular-nums; }
 .cuenta__txt { font-family: var(--fuente-etiqueta); font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--texto-suave); }
 .cuenta__fin { font-family: var(--fuente-display); font-size: 2.2rem; color: var(--acento-oscuro); margin: 0 0 1rem; }
-.fecha-larga { margin: 0.2rem 0; text-transform: capitalize; display: flex; gap: 0.5rem; justify-content: center; align-items: center; }
+.fecha-larga { margin: 0.2rem 0; display: flex; gap: 0.5rem; justify-content: center; align-items: center; }
 .fecha-larga .icono { color: var(--acento); width: 1.2em; height: 1.2em; }
 
 /* Familia */
@@ -320,7 +320,7 @@ a { color: var(--acento-oscuro); }
 .intro {
   position: fixed;
   inset: 0;
-  z-index: 50;
+  z-index: 55;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -371,6 +371,68 @@ a { color: var(--acento-oscuro); }
 .musica .icono { width: 1.3rem; height: 1.3rem; }
 .musica--pausa { animation: none; opacity: 0.8; }
 @keyframes girar { to { transform: rotate(360deg); } }
+
+/* Emblema de portada */
+.portada__emblema { color: var(--acento); margin-bottom: 0.6rem; }
+.portada__emblema .icono { width: 3.4rem; height: 3.4rem; stroke-width: 1.2; }
+.portada--foto .portada__emblema { color: #fff; }
+
+.formulario__aviso {
+  margin: 0;
+  padding: 0.9rem 1rem;
+  border-radius: 12px;
+  background: var(--acento-suave);
+  color: var(--texto);
+  font-size: 1rem;
+  text-align: center;
+}
+
+/* Barra de la colección de diseños */
+.barra-catalogo {
+  position: fixed;
+  left: 50%;
+  bottom: calc(0.75rem + env(safe-area-inset-bottom, 0px));
+  transform: translateX(-50%);
+  width: min(536px, calc(100% - 1.5rem));
+  z-index: 45;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.55rem 0.55rem 0.55rem 0.6rem;
+  border-radius: 999px;
+  background: rgba(22, 27, 45, 0.92);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  color: #fff;
+  font-family: "Montserrat", system-ui, sans-serif;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+}
+.barra-catalogo__volver {
+  flex: none;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.12);
+}
+.barra-catalogo__volver .icono { width: 1.2rem; height: 1.2rem; vertical-align: 0; }
+.barra-catalogo__info { flex: 1; min-width: 0; line-height: 1.25; }
+.barra-catalogo__info strong { display: block; font-size: 0.85rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.barra-catalogo__info span { display: block; font-size: 0.7rem; opacity: 0.75; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.barra-catalogo__boton {
+  flex: none;
+  background: #e8b4a0;
+  color: #1b2033;
+  font-weight: 600;
+  font-size: 0.8rem;
+  text-decoration: none;
+  padding: 0.7rem 1.2rem;
+  border-radius: 999px;
+}
+.con-barra .musica { bottom: calc(5rem + env(safe-area-inset-bottom, 0px)); }
+.con-barra .pie { padding-bottom: calc(5.5rem + env(safe-area-inset-bottom, 0px)); }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }

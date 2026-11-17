@@ -1,0 +1,40 @@
+/* Tema: Cumpleaños — colorido y festivo */
+@import url("https://fonts.googleapis.com/css2?family=Pacifico&family=Nunito:ital,wght@0,400;0,700;0,800;1,400&display=swap");
+
+:root {
+  --fondo: #fffaf3;
+  --fondo-suave: #fff0e4;
+  --fondo-pagina: #ffe3cf;
+  --superficie: #ffffff;
+  --texto: #33264a;
+  --texto-suave: #6f6385;
+  --acento: #ff8a5c;
+  --acento-oscuro: #e0466b;
+  --acento-suave: #ffe0d1;
+  --boton-texto: #ffffff;
+  --fuente-display: "Pacifico", cursive;
+  --fuente-titulo: "Nunito", system-ui, sans-serif;
+  --fuente-texto: "Nunito", system-ui, sans-serif;
+  --fuente-etiqueta: "Nunito", system-ui, sans-serif;
+  --radio: 22px;
+}
+body { font-size: 1.02rem; }
+.portada {
+  background:
+    radial-gradient(circle at 12% 12%, #ffd6e0 0, transparent 30%),
+    radial-gradient(circle at 88% 18%, #d4ecff 0, transparent 28%),
+    radial-gradient(circle at 20% 88%, #fff1b8 0, transparent 30%),
+    radial-gradient(circle at 85% 85%, #e3d6ff 0, transparent 32%),
+    var(--fondo);
+}
+.portada::before, .portada::after { border-style: dashed; border-radius: 32px; }
+.portada__nombres { font-size: clamp(3rem, 13vw, 4.2rem); color: var(--acento-oscuro); line-height: 1.25; }
+.titulo { font-size: 2.2rem; color: var(--acento-oscuro); }
+.etiqueta { font-weight: 800; }
+.tarjeta__titulo, .regalo__tienda, .vestimenta__codigo, .pase__nombre { font-weight: 800; }
+.portada__frase, .mensaje__texto, .despedida__texto { font-style: normal; }
+.cuenta__caja:nth-child(1) { background: #ffe3ea; }
+.cuenta__caja:nth-child(2) { background: #e2f1ff; }
+.cuenta__caja:nth-child(3) { background: #fff4c7; }
+.cuenta__caja:nth-child(4) { background: #ece3ff; }
+.cuenta__caja { border: 0; }

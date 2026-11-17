@@ -1,0 +1,27 @@
+/* Tema: Bautizo y baby shower — azul cielo y crema */
+@import url("https://fonts.googleapis.com/css2?family=Allura&family=Lora:ital,wght@0,400;0,600;1,400&family=Quicksand:wght@500;600&display=swap");
+
+:root {
+  --fondo: #f6faff;
+  --fondo-suave: #e8f1fb;
+  --fondo-pagina: #d7e5f5;
+  --superficie: #ffffff;
+  --texto: #2f4058;
+  --texto-suave: #6a7d96;
+  --acento: #8db4dd;
+  --acento-oscuro: #4a74a8;
+  --acento-suave: #d9e7f6;
+  --boton-texto: #ffffff;
+  --fuente-display: "Allura", cursive;
+  --fuente-titulo: "Lora", Georgia, serif;
+  --fuente-texto: "Lora", Georgia, serif;
+  --fuente-etiqueta: "Quicksand", system-ui, sans-serif;
+}
+body { font-size: 1.05rem; }
+.portada {
+  background:
+    radial-gradient(circle at 18% 12%, #dbe9f8 0, transparent 40%),
+    radial-gradient(circle at 85% 88%, #fbeedd 0, transparent 45%),
+    var(--fondo);
+}
+.portada::before, .portada::after { border-radius: 40px; }

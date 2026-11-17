@@ -1,0 +1,25 @@
+/* Tema: XV años — rosa, lila y champagne */
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Pinyon+Script&family=Montserrat:wght@400;600&display=swap");
+
+:root {
+  --fondo: #fdf5f8;
+  --fondo-suave: #f7e6ef;
+  --fondo-pagina: #ecd5e2;
+  --superficie: #fffafc;
+  --texto: #4a2f43;
+  --texto-suave: #8a6b80;
+  --acento: #d08fb4;
+  --acento-oscuro: #9b4f80;
+  --acento-suave: #f1d7e5;
+  --boton-texto: #ffffff;
+  --fuente-display: "Pinyon Script", cursive;
+  --fuente-titulo: "Cormorant Garamond", Georgia, serif;
+  --fuente-texto: "Cormorant Garamond", Georgia, serif;
+  --fuente-etiqueta: "Montserrat", system-ui, sans-serif;
+}
+.portada {
+  background:
+    radial-gradient(circle at 20% 15%, #f6d3e4 0, transparent 42%),
+    radial-gradient(circle at 80% 85%, #e6d3f3 0, transparent 45%),
+    var(--fondo);
+}

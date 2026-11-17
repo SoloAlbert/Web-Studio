@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800">
+<defs>
+<linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fbf5ea"/><stop offset="1" stop-color="#dbe7f5"/></linearGradient>
+<radialGradient id="l" cx=".3" cy=".25" r=".7"><stop offset="0" stop-color="#fff" stop-opacity=".55"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
+</defs>
+<rect width="800" height="800" fill="url(#g)"/>
+<rect width="800" height="800" fill="url(#l)"/>
+<circle cx="176" cy="752" r="40" fill="#fff" opacity="0.08"/><circle cx="472" cy="664" r="19" fill="#fff" opacity="0.13"/><circle cx="768" cy="576" r="48" fill="#fff" opacity="0.18"/><circle cx="264" cy="488" r="27" fill="#fff" opacity="0.23"/><circle cx="560" cy="400" r="56" fill="#fff" opacity="0.08"/><circle cx="56" cy="312" r="35" fill="#fff" opacity="0.13"/><circle cx="352" cy="224" r="14" fill="#fff" opacity="0.18"/><circle cx="648" cy="136" r="43" fill="#fff" opacity="0.23"/><circle cx="144" cy="48" r="22" fill="#fff" opacity="0.08"/>
+<g transform="translate(470 430) rotate(10) scale(18) translate(-12 -12)" fill="none" stroke="#5b84b6" stroke-width="0.35" stroke-linecap="round" stroke-linejoin="round" opacity=".55"><path d="M7 18h10a4 4 0 0 0 .6-7.96A6 6 0 0 0 6.1 9.1 4.5 4.5 0 0 0 7 18z"/><path d="M19.5 2.5v3M18 4h3M4 3v2M3 4h2"/></g>
+<rect x="24" y="24" width="752" height="752" fill="none" stroke="#fff" stroke-opacity=".5" stroke-width="2"/>
+</svg>
