@@ -82,7 +82,9 @@ window.EVENTO = {
     { nombre: "Hoteles en Coyoacán", detalle: "Opciones a 5 minutos del salón", url: "https://www.google.com/maps/search/?api=1&query=hoteles+Coyoacan" },
   ],
 
+  // evento: id del evento en el panel de invitados (localconnect.studio/panel). null = sin panel.
   confirmacion: {
+    evento: null,
     whatsapp: "", // WhatsApp de quien recibe las confirmaciones: 52 + 10 dígitos
     fechaLimite: "1 de mayo de 2027",
     maxPersonas: 4,

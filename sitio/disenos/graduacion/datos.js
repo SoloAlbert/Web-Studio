@@ -61,7 +61,10 @@ window.EVENTO = {
   regalos: null,
   hospedaje: null,
 
-  confirmacion: { whatsapp: "", fechaLimite: "10 de julio de 2027", maxPersonas: 3 },
+  // evento: id del evento en el panel de invitados (localconnect.studio/panel). null = sin panel.
+  confirmacion: {
+    evento: null,
+    whatsapp: "", fechaLimite: "10 de julio de 2027", maxPersonas: 3 },
 
   musica: null,
 

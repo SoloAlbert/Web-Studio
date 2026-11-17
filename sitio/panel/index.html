@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Panel de invitados · LocalConnect</title>
+  <meta name="theme-color" content="#faf6f1">
+  <link rel="icon" href="../assets/icono.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@500;600&display=swap">
+  <link rel="stylesheet" href="../assets/sitio.css">
+  <link rel="stylesheet" href="panel.css">
+</head>
+<body class="panel">
+
+<header class="cabecera">
+  <div class="contenedor cabecera__fila">
+    <a class="logo" href="../" aria-label="LocalConnect">
+      <img src="../assets/icono.svg" alt="" width="34" height="34">
+      <span class="logo__texto">LocalConnect<small>Panel de invitados</small></span>
+    </a>
+    <div class="usuario" hidden>
+      <span class="usuario__nombre"></span>
+      <button class="boton boton--chico boton--borde" data-accion="salir" type="button">Salir</button>
+    </div>
+  </div>
+</header>
+
+<main class="contenedor panel__main">
+
+  <!-- Cargando -->
+  <section class="vista" data-vista="cargando">
+    <div class="tarjeta-centro"><div class="giro" aria-hidden="true"></div><p>Cargando…</p></div>
+  </section>
+
+  <!-- Entrar -->
+  <section class="vista" data-vista="entrar" hidden>
+    <div class="tarjeta-centro">
+      <img src="../assets/icono.svg" alt="" width="64" height="64">
+      <h1>Panel de invitados</h1>
+      <p>Consulta en tiempo real quién confirmó, envía las invitaciones y recuerda a quien falte por responder.</p>
+      <button class="boton boton--google" data-accion="entrar" type="button">
+        <svg viewBox="0 0 48 48" aria-hidden="true"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.4-.4-3.5z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-8l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.4-.4-3.5z"/></svg>
+        Entrar con Google
+      </button>
+      <p class="aviso-error" data-error-entrar hidden></p>
+    </div>
+  </section>
+
+  <!-- Sin eventos -->
+  <section class="vista" data-vista="sin-eventos" hidden>
+    <div class="tarjeta-centro">
+      <h1>Aún no tienes eventos</h1>
+      <p>Esta cuenta (<strong data-correo></strong>) todavía no tiene un evento asignado. Si ya contrataste tu invitación, escríbenos por WhatsApp para activarlo.</p>
+      <p class="codigo-usuario">Tu código de usuario: <code data-uid></code>
+        <button class="enlace" data-accion="copiar-uid" type="button">Copiar</button></p>
+    </div>
+  </section>
+
+  <!-- Lista de eventos -->
+  <section class="vista" data-vista="eventos" hidden>
+    <div class="titulo-vista">
+      <h1>Eventos</h1>
+    </div>
+    <div class="eventos" data-lista-eventos></div>
+
+    <form class="caja formulario-panel" data-form="evento" hidden>
+      <h2>Nuevo evento</h2>
+      <div class="campos">
+        <label>Nombre del evento
+          <input name="nombre" required maxlength="100" placeholder="Boda de María y Alejandro">
+        </label>
+        <label>Enlace de la invitación
+          <span class="campo-prefijo"><span>localconnect.studio/</span><input name="slug" required pattern="[a-z0-9]+(-[a-z0-9]+)*" maxlength="60" placeholder="maria-y-alejandro"></span>
+        </label>
+        <label class="campo-ancho">Correo(s) de Google del anfitrión <small>separados por coma</small>
+          <input name="anfitriones" required placeholder="novia@gmail.com, novio@gmail.com">
+        </label>
+      </div>
+      <p class="aviso-error" data-error-evento hidden></p>
+      <button class="boton" type="submit">Crear evento</button>
+    </form>
+  </section>
+
+  <!-- Evento -->
+  <section class="vista" data-vista="evento" hidden>
+    <div class="titulo-vista">
+      <div>
+        <button class="enlace volver" data-accion="volver" type="button" hidden>← Todos los eventos</button>
+        <h1 data-evento-nombre></h1>
+        <a class="enlace" data-evento-url target="_blank" rel="noopener"></a>
+      </div>
+      <div class="acciones-vista">
+        <button class="boton boton--chico boton--borde" data-accion="exportar" type="button">Descargar Excel</button>
+        <button class="boton boton--chico boton--borde" data-accion="mensajes" type="button">Mensajes</button>
+        <button class="boton boton--chico boton--borde" data-accion="ajustes" type="button" hidden>Ajustes</button>
+      </div>
+    </div>
+
+    <div class="resumen" data-resumen></div>
+
+    <details class="caja agregar" open>
+      <summary>Agregar invitados</summary>
+      <form class="formulario-panel" data-form="invitado">
+        <div class="campos campos--fila">
+          <label>Nombre
+            <input name="nombre" required maxlength="80" placeholder="Familia Pérez">
+          </label>
+          <label>WhatsApp
+            <input name="telefono" inputmode="tel" maxlength="20" placeholder="55 1234 5678">
+          </label>
+          <label class="campo-chico">Pases
+            <input name="pases" type="number" min="1" max="20" value="2" required>
+          </label>
+          <button class="boton" type="submit">Agregar</button>
+        </div>
+      </form>
+      <details class="importar">
+        <summary>Agregar varios a la vez</summary>
+        <form class="formulario-panel" data-form="importar">
+          <label>Un invitado por renglón: <strong>Nombre, WhatsApp, Pases</strong>
+            <textarea name="lista" rows="6" placeholder="Familia Pérez, 5512345678, 4&#10;Tía Rosa, 5587654321, 2&#10;Carlos Ruiz, , 1"></textarea>
+          </label>
+          <button class="boton boton--borde" type="submit">Agregar lista</button>
+          <p class="nota" data-resultado-importar hidden></p>
+        </form>
+      </details>
+    </details>
+
+    <div class="filtros" role="tablist" data-filtros></div>
+    <input class="buscar" type="search" placeholder="Buscar invitado…" data-buscar aria-label="Buscar invitado">
+    <div class="invitados" data-lista-invitados></div>
+
+    <section class="caja respuestas-generales" data-respuestas hidden>
+      <h2>Confirmaciones sin enlace personal</h2>
+      <p class="nota">Personas que confirmaron desde el enlace general de la invitación.</p>
+      <div data-lista-respuestas></div>
+    </section>
+  </section>
+</main>
+
+<!-- Ventanas -->
+<dialog class="ventana" data-ventana="mensajes">
+  <form method="dialog" class="formulario-panel" data-form="mensajes">
+    <h2>Mensajes de WhatsApp</h2>
+    <p class="nota">Puedes usar: <code>{nombre}</code> <code>{evento}</code> <code>{enlace}</code> <code>{pases}</code></p>
+    <label>Invitación
+      <textarea name="mensajeInvitacion" rows="5" maxlength="1000"></textarea>
+    </label>
+    <label>Recordatorio
+      <textarea name="mensajeRecordatorio" rows="4" maxlength="1000"></textarea>
+    </label>
+    <div class="ventana__acciones">
+      <button class="boton boton--borde" value="cancelar" type="submit" formnovalidate>Cancelar</button>
+      <button class="boton" value="guardar" type="submit">Guardar</button>
+    </div>
+  </form>
+</dialog>
+
+<dialog class="ventana" data-ventana="editar">
+  <form method="dialog" class="formulario-panel" data-form="editar">
+    <h2>Editar invitado</h2>
+    <label>Nombre <input name="nombre" required maxlength="80"></label>
+    <label>WhatsApp <input name="telefono" inputmode="tel" maxlength="20"></label>
+    <label>Pases <input name="pases" type="number" min="1" max="20" required></label>
+    <div class="ventana__acciones">
+      <button class="boton boton--borde" value="cancelar" type="submit" formnovalidate>Cancelar</button>
+      <button class="boton" value="guardar" type="submit">Guardar</button>
+    </div>
+  </form>
+</dialog>
+
+<dialog class="ventana" data-ventana="ajustes">
+  <form method="dialog" class="formulario-panel" data-form="ajustes">
+    <h2>Ajustes del evento</h2>
+    <label>Nombre del evento <input name="nombre" required maxlength="100"></label>
+    <label>Dirección de la invitación <input name="url" required></label>
+    <label>Correo(s) de Google del anfitrión <small>separados por coma</small>
+      <input name="anfitriones" required>
+    </label>
+    <div class="ventana__acciones">
+      <button class="boton boton--borde" value="cancelar" type="submit" formnovalidate>Cancelar</button>
+      <button class="boton" value="guardar" type="submit">Guardar</button>
+    </div>
+  </form>
+</dialog>
+
+<dialog class="ventana ventana--qr" data-ventana="qr">
+  <form method="dialog">
+    <h2 data-qr-nombre></h2>
+    <div class="qr" data-qr></div>
+    <p class="nota" data-qr-enlace></p>
+    <div class="ventana__acciones">
+      <a class="boton boton--borde" data-qr-descargar download="invitacion-qr.png">Descargar</a>
+      <button class="boton" value="cerrar" type="submit">Cerrar</button>
+    </div>
+  </form>
+</dialog>
+
+<dialog class="ventana" data-ventana="confirmar">
+  <form method="dialog">
+    <h2 data-confirmar-titulo></h2>
+    <p data-confirmar-texto></p>
+    <div class="ventana__acciones">
+      <button class="boton boton--borde" value="no" type="submit">Cancelar</button>
+      <button class="boton boton--peligro" value="si" type="submit">Eliminar</button>
+    </div>
+  </form>
+</dialog>
+
+<div class="aviso-flotante" role="status" aria-live="polite" hidden></div>
+
+<script src="../plantillas/comun/marca.js"></script>
+<script src="../plantillas/comun/firebase-config.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.js" defer></script>
+<script type="module" src="panel.js"></script>
+</body>
+</html>

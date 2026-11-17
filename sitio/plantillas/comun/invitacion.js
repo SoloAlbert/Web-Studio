@@ -80,6 +80,47 @@
   const invitado = (params.get("invitado") || "").trim().slice(0, 80);
   const pases = Math.max(0, Math.min(20, parseInt(params.get("pases"), 10) || 0));
 
+  // ---------- Panel de invitados (Firebase / Firestore) ----------
+  // Se activa cuando datos.js tiene confirmacion.evento = "<id del evento en el panel>".
+  const FB = window.FIREBASE_CONFIG;
+  const EVENTO_ID = E.confirmacion && E.confirmacion.evento;
+  const USA_PANEL = !!(FB && FB.projectId && EVENTO_ID && !CAT);
+  const INV_ID = USA_PANEL && /^[A-Za-z0-9]{10,40}$/.test(params.get("i") || "") ? params.get("i") : null;
+  const API = USA_PANEL
+    ? `https://firestore.googleapis.com/v1/projects/${FB.projectId}/databases/(default)/documents/eventos/${encodeURIComponent(EVENTO_ID)}`
+    : "";
+  const aCampos = (o) => {
+    const fields = {};
+    for (const [k, v] of Object.entries(o)) {
+      if (v instanceof Date) fields[k] = { timestampValue: v.toISOString() };
+      else if (Number.isInteger(v)) fields[k] = { integerValue: String(v) };
+      else if (v === null || v === undefined) fields[k] = { nullValue: null };
+      else fields[k] = { stringValue: String(v) };
+    }
+    return { fields };
+  };
+  const deCampos = (d) => {
+    const o = {};
+    for (const [k, v] of Object.entries((d && d.fields) || {})) {
+      if ("integerValue" in v) o[k] = Number(v.integerValue);
+      else if ("doubleValue" in v) o[k] = v.doubleValue;
+      else if ("stringValue" in v) o[k] = v.stringValue;
+      else if ("timestampValue" in v) o[k] = v.timestampValue;
+      else o[k] = null;
+    }
+    return o;
+  };
+  async function api(ruta, opciones = {}, mascara) {
+    const q = new URLSearchParams({ key: FB.apiKey });
+    if (mascara) {
+      mascara.forEach((m) => q.append("updateMask.fieldPaths", m));
+      q.append("currentDocument.exists", "true");
+    }
+    const r = await fetch(`${API}${ruta}?${q}`, { ...opciones, headers: { "Content-Type": "application/json" } });
+    if (!r.ok) throw new Error("Firestore " + r.status);
+    return r.json();
+  }
+
   // ---------- secciones ----------
   function portada() {
     const n = E.nombres || {};
@@ -109,13 +150,16 @@
       </header>`;
   }
 
+  const textoPases = (n) => `Pase válido para <strong>${n}</strong> ${n === 1 ? "persona" : "personas"}`;
+
   function pase() {
-    if (!invitado && !pases) return "";
+    // Con enlace personal del panel, el nombre y pases llegan después (ver aplicarInvitado).
+    if (!invitado && !pases && !INV_ID) return "";
     return `
-      <section class="seccion pase revelar"><div class="seccion__contenido">
+      <section class="seccion pase revelar"${!invitado && !pases ? " hidden" : ""}><div class="seccion__contenido">
         <p class="etiqueta">Esta invitación es para</p>
-        ${invitado ? `<p class="pase__nombre">${esc(invitado)}</p>` : ""}
-        ${pases ? `<p class="pase__numero">Pase válido para <strong>${pases}</strong> ${pases === 1 ? "persona" : "personas"}</p>` : ""}
+        <p class="pase__nombre"${invitado ? "" : " hidden"}>${esc(invitado)}</p>
+        <p class="pase__numero"${pases ? "" : " hidden"}>${pases ? textoPases(pases) : ""}</p>
       </div></section>`;
   }
 
@@ -278,9 +322,8 @@
 
   function confirmacion() {
     const c = E.confirmacion;
-    if (!c || (!c.whatsapp && !CAT)) return "";
-    const max = pases || c.maxPersonas || 5;
-    const opciones = Array.from({ length: max }, (_, i) => `<option value="${i + 1}">${i + 1}</option>`).join("");
+    if (!c || (!c.whatsapp && !CAT && !USA_PANEL)) return "";
+    const opciones = opcionesPersonas(pases || c.maxPersonas || 5);
     return seccion(
       "confirmar",
       E.textos?.confirmar || "Confirma tu asistencia",
@@ -303,8 +346,19 @@
          <p class="formulario__error" hidden>Escribe tu nombre para confirmar.</p>
          <button class="boton boton--grande" type="submit">${icono("mensaje")} Confirmar por WhatsApp</button>
          <p class="formulario__aviso" hidden>En tu invitación, esta confirmación te llega directo a tu WhatsApp con el nombre del invitado, cuántas personas asistirán y su mensaje.</p>
-       </form>`
+       </form>
+       <div class="gracias" hidden>
+         ${icono("corazon")}
+         <p class="gracias__titulo"></p>
+         <p class="gracias__texto"></p>
+         <a class="boton boton--claro gracias__whatsapp" target="_blank" rel="noopener" hidden>${icono("mensaje")} Avisar también por WhatsApp</a>
+         <button class="gracias__cambiar" type="button">Cambiar mi respuesta</button>
+       </div>`
     );
+  }
+
+  function opcionesPersonas(max) {
+    return Array.from({ length: Math.max(1, max) }, (_, i) => `<option value="${i + 1}">${i + 1}</option>`).join("");
   }
 
   function despedida() {
@@ -522,34 +576,138 @@
     });
   }
 
-  // Confirmación por WhatsApp
+  // ---------- Confirmación de asistencia ----------
   const form = app.querySelector(".formulario");
+  const gracias = app.querySelector(".gracias");
+  const numeroAnfitrion = String((E.confirmacion && E.confirmacion.whatsapp) || "").replace(/\D/g, "");
+  let invitadoPanel = null; // datos del invitado cuando llega con enlace personal (?i=...)
+
+  function aplicarInvitado(d) {
+    const sec = app.querySelector(".pase");
+    if (sec) {
+      const nom = sec.querySelector(".pase__nombre");
+      const num = sec.querySelector(".pase__numero");
+      nom.textContent = d.nombre || "";
+      nom.hidden = !d.nombre;
+      num.innerHTML = d.pases ? textoPases(d.pases) : "";
+      num.hidden = !d.pases;
+      sec.hidden = !d.nombre && !d.pases;
+      sec.classList.add("visible");
+    }
+    if (!form) return;
+    if (d.nombre) {
+      form.nombre.value = d.nombre;
+      form.nombre.readOnly = true;
+    }
+    if (d.pases) form.personas.innerHTML = opcionesPersonas(d.pases);
+    if (d.respuesta === "si" || d.respuesta === "no") {
+      form.asiste.value = d.respuesta;
+      if (d.personas) form.personas.value = String(d.personas);
+      if (d.mensaje) form.mensaje.value = d.mensaje;
+      form.querySelector(".campo-personas").hidden = d.respuesta === "no";
+      mostrarGracias(d.nombre, d.respuesta, d.personas, null, true);
+    }
+  }
+
+  function mostrarGracias(nombre, asiste, n, txtWhatsApp, previa) {
+    if (!gracias) return;
+    const primer = String(nombre || "").split(" ")[0];
+    gracias.querySelector(".gracias__titulo").textContent = previa
+      ? `Ya registraste tu respuesta${primer ? ", " + primer : ""}`
+      : `¡Gracias${primer ? ", " + primer : ""}!`;
+    gracias.querySelector(".gracias__texto").textContent =
+      asiste === "si"
+        ? `Confirmaste tu asistencia para ${n} ${n === 1 ? "persona" : "personas"}. ¡Te esperamos!`
+        : "Registramos que no podrás asistir. ¡Gracias por avisarnos!";
+    const wa = gracias.querySelector(".gracias__whatsapp");
+    wa.hidden = !(txtWhatsApp && numeroAnfitrion);
+    if (txtWhatsApp && numeroAnfitrion) wa.href = `https://wa.me/${numeroAnfitrion}?text=${encodeURIComponent(txtWhatsApp)}`;
+    form.hidden = true;
+    gracias.hidden = false;
+  }
+
+  if (gracias) {
+    gracias.querySelector(".gracias__cambiar").addEventListener("click", () => {
+      gracias.hidden = true;
+      form.hidden = false;
+      form.querySelector("button[type=submit]").focus();
+    });
+  }
+
+  // Enlace personal: carga nombre y pases, y registra que abrió la invitación.
+  if (INV_ID) {
+    api(`/invitados/${INV_ID}`)
+      .then((doc) => {
+        invitadoPanel = deCampos(doc);
+        aplicarInvitado(invitadoPanel);
+        const ahora = new Date();
+        const campos = { ultimaVista: ahora };
+        if (!invitadoPanel.abierto) campos.abierto = ahora;
+        return api(`/invitados/${INV_ID}`, { method: "PATCH", body: JSON.stringify(aCampos(campos)) }, Object.keys(campos));
+      })
+      .catch(() => {});
+  }
+
   if (form) {
     const campoPersonas = form.querySelector(".campo-personas");
     const error = form.querySelector(".formulario__error");
+    const boton = form.querySelector("button[type=submit]");
     form.addEventListener("change", () => {
       campoPersonas.hidden = form.asiste.value === "no";
     });
     form.addEventListener("submit", (e) => {
       e.preventDefault();
       const nombre = form.nombre.value.trim();
-      if (!nombre) { error.hidden = false; form.nombre.focus(); return; }
+      if (!nombre) {
+        error.textContent = "Escribe tu nombre para confirmar.";
+        error.hidden = false;
+        form.nombre.focus();
+        return;
+      }
       error.hidden = true;
+      const asiste = form.asiste.value;
       const titulo = E.tituloCorto || "el evento";
-      const n = +form.personas.value;
+      const n = asiste === "si" ? +form.personas.value : 0;
       let txt =
-        form.asiste.value === "si"
+        asiste === "si"
           ? `¡Hola! Soy *${nombre}* y confirmo mi asistencia a ${titulo} el ${fechaLarga}. Asistiremos *${n} ${n === 1 ? "persona" : "personas"}*.`
           : `¡Hola! Soy *${nombre}*. Lamentablemente no podré asistir a ${titulo}. ¡Les deseo lo mejor!`;
       const msj = form.mensaje.value.trim();
       if (msj) txt += `\n\nMensaje: ${msj}`;
-      if (CAT && !E.confirmacion.whatsapp) {
+
+      if (CAT && !numeroAnfitrion) {
         // Diseño de la colección: se explica cómo funciona en lugar de enviar.
         form.querySelector(".formulario__aviso").hidden = false;
         return;
       }
-      const numero = String(E.confirmacion.whatsapp).replace(/\D/g, "");
-      window.open(`https://wa.me/${numero}?text=${encodeURIComponent(txt)}`, "_blank", "noopener");
+
+      if (!USA_PANEL) {
+        window.open(`https://wa.me/${numeroAnfitrion}?text=${encodeURIComponent(txt)}`, "_blank", "noopener");
+        return;
+      }
+
+      // Guardar en el panel de invitados
+      boton.disabled = true;
+      const respuesta = { respuesta: asiste, personas: n, mensaje: msj };
+      const guardar =
+        INV_ID && invitadoPanel
+          ? api(`/invitados/${INV_ID}`, { method: "PATCH", body: JSON.stringify(aCampos({ ...respuesta, respondido: new Date() })) },
+              ["respuesta", "personas", "mensaje", "respondido"])
+          : api(`/respuestas`, { method: "POST", body: JSON.stringify(aCampos({ nombre: nombre.slice(0, 80), ...respuesta, creado: new Date() })) });
+      guardar
+        .then(() => {
+          if (invitadoPanel) Object.assign(invitadoPanel, respuesta);
+          mostrarGracias(nombre, asiste, n, txt, false);
+        })
+        .catch(() => {
+          if (numeroAnfitrion) {
+            window.open(`https://wa.me/${numeroAnfitrion}?text=${encodeURIComponent(txt)}`, "_blank", "noopener");
+          } else {
+            error.textContent = "No pudimos guardar tu respuesta. Revisa tu conexión e inténtalo de nuevo.";
+            error.hidden = false;
+          }
+        })
+        .finally(() => (boton.disabled = false));
     });
   }
 })();

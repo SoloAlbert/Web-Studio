@@ -1,13 +1,15 @@
 // Crea la invitación de un cliente copiando un diseño de la colección.
-// Uso:  node nuevo-evento.js boda juan-y-ana
+// Uso:  node nuevo-evento.js boda juan-y-ana          (confirmación por WhatsApp)
+//       node nuevo-evento.js boda juan-y-ana panel    (con panel de invitados)
 //       → queda publicada en localconnect.studio/juan-y-ana
 const fs = require("fs");
 const path = require("path");
 
-const [tipo, nombre] = process.argv.slice(2);
+const [tipo, nombre, opcion] = process.argv.slice(2);
+const conPanel = opcion === "panel";
 const SITIO = path.join(__dirname, "sitio");
 const DISENOS = path.join(SITIO, "disenos");
-const RESERVADOS = ["disenos", "plantillas", "assets"];
+const RESERVADOS = ["disenos", "plantillas", "assets", "panel"];
 const tipos = fs.readdirSync(DISENOS).filter((d) => fs.statSync(path.join(DISENOS, d)).isDirectory());
 
 function salir(msj) {
@@ -40,9 +42,11 @@ fs.writeFileSync(
     )
 );
 
-// datos.js: quita la barra de la colección
+// datos.js: quita la barra de la colección y, si lleva panel, lo conecta
 const datos = path.join(destino, "datos.js");
-fs.writeFileSync(datos, fs.readFileSync(datos, "utf8").replace(/^\s*catalogo:.*\n\n?/m, ""));
+let contenido = fs.readFileSync(datos, "utf8").replace(/^\s*catalogo:.*\n\n?/m, "");
+if (conPanel) contenido = contenido.replace(/evento:\s*null/, `evento: "${nombre}"`);
+fs.writeFileSync(datos, contenido);
 
 console.log(`
 Listo: se creó sitio/${nombre}
@@ -53,4 +57,7 @@ Listo: se creó sitio/${nombre}
   3. Cambia las fotos de sitio/${nombre}/fotos/ por las del cliente.
   4. Revísala en http://localhost:3000/${nombre}/
   5. Al publicarla quedará en https://localconnect.studio/${nombre}
-`);
+${conPanel ? `
+  PANEL: crea el evento en localconnect.studio/panel con el enlace "${nombre}"
+  y el correo de Google del anfitrión. Ahí se agregan los invitados.
+` : ""}`);

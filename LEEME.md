@@ -26,7 +26,20 @@ Diseños disponibles: boda, xv, bautizo, graduacion, cumpleanos
 4. Revisa en http://localhost:3000/juan-y-ana/
 5. Al publicar queda en https://localconnect.studio/juan-y-ana
 
-## Pases personalizados
+## Panel de invitados (paquete Exclusivo)
+Panel: https://localconnect.studio/panel (o http://localhost:3000/panel/)
+
+1. Crea la invitación con panel:  `node nuevo-evento.js boda juan-y-ana panel`
+2. En el panel (como administrador) crea el evento con el enlace `juan-y-ana`
+   y el correo de Google del anfitrión.
+3. El anfitrión entra al panel con su Google, agrega invitados (nombre, WhatsApp, pases)
+   y les envía su enlace personal. Ve en tiempo real quién confirmó, quién no,
+   quién la vio sin responder y quién no la ha abierto, y les manda recordatorios.
+
+Reglas de seguridad de la base de datos: `firestore.rules`
+(se pegan en Firebase → Firestore Database → Reglas → Publicar).
+
+## Pases personalizados sin panel
 Agrega al final del enlace el nombre del invitado y número de pases:
 ```
 https://localconnect.studio/juan-y-ana/?invitado=Familia%20Pérez&pases=4

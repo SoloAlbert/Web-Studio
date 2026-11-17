@@ -1,0 +1,90 @@
+rules_version = '2';
+
+// =====================================================================
+// Reglas de seguridad de LocalConnect.
+// Se pegan en Firebase → Firestore Database → Reglas → Publicar.
+//
+//  - Administrador: tiene un documento en la colección "admins" con su UID.
+//  - Anfitrión: su correo de Google está en eventos/{id}.anfitriones.
+//  - Invitado: no inicia sesión; solo puede leer y responder SU invitación
+//    usando el código aleatorio de su enlace personal.
+// =====================================================================
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function autenticado() {
+      return request.auth != null;
+    }
+    function esAdmin() {
+      return autenticado() && exists(/databases/$(database)/documents/admins/$(request.auth.uid));
+    }
+    function correo() {
+      return request.auth.token.email.lower();
+    }
+    function correoVerificado() {
+      return autenticado() && request.auth.token.email != null && request.auth.token.email_verified == true;
+    }
+    function esAnfitrion(eventoId) {
+      return correoVerificado()
+        && correo() in get(/databases/$(database)/documents/eventos/$(eventoId)).data.anfitriones;
+    }
+    function textoValido(t, max) {
+      return t is string && t.size() <= max;
+    }
+
+    match /admins/{uid} {
+      allow get: if autenticado() && request.auth.uid == uid;
+      allow list, write: if false;
+    }
+
+    match /eventos/{eventoId} {
+      allow get, list: if esAdmin() || (correoVerificado() && correo() in resource.data.anfitriones);
+      allow create, delete: if esAdmin();
+      allow update: if esAdmin()
+        || (correoVerificado() && correo() in resource.data.anfitriones
+            && request.resource.data.diff(resource.data).affectedKeys()
+                 .hasOnly(['mensajeInvitacion', 'mensajeRecordatorio'])
+            && textoValido(request.resource.data.mensajeInvitacion, 1000)
+            && textoValido(request.resource.data.mensajeRecordatorio, 1000));
+
+      match /invitados/{invitadoId} {
+        // Anfitrión y administrador: control total de su lista.
+        allow read, write: if esAdmin() || esAnfitrion(eventoId);
+
+        // Invitado: solo puede abrir su propia invitación (no listar las demás).
+        allow get: if true;
+
+        // Invitado: registrar que abrió la invitación…
+        allow update: if request.resource.data.diff(resource.data).affectedKeys()
+                           .hasOnly(['abierto', 'ultimaVista'])
+                      && request.resource.data.ultimaVista is timestamp;
+
+        // …o guardar su respuesta (sin poder cambiar nombre, pases, etc.).
+        allow update: if request.resource.data.diff(resource.data).affectedKeys()
+                           .hasOnly(['respuesta', 'personas', 'mensaje', 'respondido'])
+                      && request.resource.data.respuesta in ['si', 'no']
+                      && request.resource.data.personas is int
+                      && request.resource.data.personas >= 0
+                      && (request.resource.data.personas <= resource.data.pases
+                          || (resource.data.pases == 0 && request.resource.data.personas <= 20))
+                      && textoValido(request.resource.data.mensaje, 300)
+                      && request.resource.data.respondido is timestamp;
+      }
+
+      // Confirmaciones desde el enlace general (sin enlace personal).
+      match /respuestas/{respuestaId} {
+        allow read, delete: if esAdmin() || esAnfitrion(eventoId);
+        allow create: if exists(/databases/$(database)/documents/eventos/$(eventoId))
+          && request.resource.data.keys().hasOnly(['nombre', 'respuesta', 'personas', 'mensaje', 'creado'])
+          && request.resource.data.keys().hasAll(['nombre', 'respuesta', 'personas', 'creado'])
+          && request.resource.data.nombre is string
+          && request.resource.data.nombre.size() > 0 && request.resource.data.nombre.size() <= 80
+          && request.resource.data.respuesta in ['si', 'no']
+          && request.resource.data.personas is int
+          && request.resource.data.personas >= 0 && request.resource.data.personas <= 20
+          && (!('mensaje' in request.resource.data) || textoValido(request.resource.data.mensaje, 300))
+          && request.resource.data.creado is timestamp;
+      }
+    }
+  }
+}

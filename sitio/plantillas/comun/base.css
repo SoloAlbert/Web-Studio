@@ -301,6 +301,33 @@ a { color: var(--acento-oscuro); }
 .opciones input { accent-color: var(--acento-oscuro); width: 1.1rem; height: 1.1rem; }
 .formulario__error { color: #b3261e; margin: 0; font-size: 1rem; }
 
+/* Agradecimiento después de confirmar */
+.gracias {
+  max-width: 24rem;
+  margin: 1.4rem auto 0;
+  padding: 2rem 1.4rem;
+  background: var(--superficie);
+  border: 1px solid var(--acento-suave);
+  border-radius: var(--radio);
+  box-shadow: var(--sombra);
+}
+.gracias > .icono { width: 2.2rem; height: 2.2rem; color: var(--acento); }
+.gracias__titulo { font-family: var(--fuente-titulo); font-size: 1.5rem; font-weight: 600; margin: 0.4rem 0 0.3rem; }
+.gracias__texto { margin: 0 0 1.2rem; color: var(--texto-suave); }
+.gracias__cambiar {
+  display: block;
+  margin: 1rem auto 0;
+  background: none;
+  border: 0;
+  color: var(--acento-oscuro);
+  font-family: var(--fuente-etiqueta);
+  font-size: 0.8rem;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.formulario input[readonly] { background: var(--fondo-suave); }
+.boton:disabled { opacity: 0.6; cursor: wait; transform: none; }
+
 /* Despedida y pie */
 .despedida { padding-bottom: 2.5rem; }
 .despedida > .icono { width: 2rem; height: 2rem; color: var(--acento); }
