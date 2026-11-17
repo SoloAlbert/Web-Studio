@@ -43,6 +43,10 @@ window.EVENTO = {
 
   vestimenta: { codigo: "Casual · Toque neón", detalle: "Trae algo de color, ¡habrá fotos!", colores: ["#ff8a5c", "#ffd23f", "#4cc9f0", "#b388ff"], nota: null },
 
+  // Video (opcional): { youtube: "https://youtu.be/...", titulo: "Nuestra historia" }  o  { archivo: "video.mp4" }
+  // Agrega vertical: true si el video es vertical (grabado con el celular).
+  video: null,
+
   galeria: ["fotos/1.svg", "fotos/2.svg", "fotos/3.svg", "fotos/4.svg", "fotos/5.svg"],
 
   regalos: { mensaje: "Lo más importante es que vengas. Si quieres darme algo, habrá caja de sobres.", mesas: [], transferencia: null, nota: null },

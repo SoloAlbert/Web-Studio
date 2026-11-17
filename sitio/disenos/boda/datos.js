@@ -20,7 +20,7 @@ window.EVENTO = {
   duracionHoras: 7,
 
   intro: true, // pantalla de bienvenida "Abrir invitación"
-  portada: { imagen: null }, // ej. "fotos/portada.jpg"
+  portada: { imagen: null, video: null }, // imagen: "fotos/portada.jpg" · video de fondo: "portada.mp4" (corto y sin audio)
 
   mensaje: "Nuestra historia merece celebrarse contigo. Nos encantaría que fueras parte de este día tan especial.",
   cita: { texto: "El amor es paciente, es bondadoso… todo lo soporta.", autor: "1 Corintios 13" },
@@ -62,6 +62,10 @@ window.EVENTO = {
     colores: ["#d9c7a7", "#a8b5a0", "#c9a9a6", "#6b7a8f"],
     nota: "El color blanco está reservado para la novia.",
   },
+
+  // Video (opcional): { youtube: "https://youtu.be/...", titulo: "Nuestra historia" }  o  { archivo: "video.mp4" }
+  // Agrega vertical: true si el video es vertical (grabado con el celular).
+  video: null,
 
   galeria: ["fotos/1.svg", "fotos/2.svg", "fotos/3.svg", "fotos/4.svg", "fotos/5.svg"],
 

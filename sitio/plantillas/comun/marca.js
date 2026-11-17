@@ -7,7 +7,7 @@ window.MARCA = {
   sitio: "https://localconnect.studio",
 
   // WhatsApp del negocio: 52 + 10 dígitos, sin espacios. Ej.: "525512345678"
-  whatsapp: "",
+  whatsapp: "525544492118",
 
   // Redes sociales (dirección completa). Déjalas en "" para ocultarlas.
   instagram: "",

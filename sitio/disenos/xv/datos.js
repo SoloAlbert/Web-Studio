@@ -58,6 +58,10 @@ window.EVENTO = {
     nota: "El color rosa está reservado para la quinceañera.",
   },
 
+  // Video (opcional): { youtube: "https://youtu.be/...", titulo: "Nuestra historia" }  o  { archivo: "video.mp4" }
+  // Agrega vertical: true si el video es vertical (grabado con el celular).
+  video: null,
+
   galeria: ["fotos/1.svg", "fotos/2.svg", "fotos/3.svg", "fotos/4.svg", "fotos/5.svg"],
 
   regalos: {

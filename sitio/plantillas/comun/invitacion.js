@@ -70,10 +70,10 @@
     `<svg class="icono" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONOS[n] || ""}</svg>`;
 
   const seccion = (id, titulo, contenido, clase = "") =>
-    `<section id="${id}" class="seccion ${clase} revelar">` +
+    `<section id="${id}" class="seccion ${clase} revelar"><div class="seccion__contenido">` +
     (titulo ? `<h2 class="titulo">${esc(titulo)}</h2><div class="divisor" aria-hidden="true"></div>` : "") +
     contenido +
-    `</section>`;
+    `</div></section>`;
 
   // Pase personalizado por enlace: ?invitado=Familia%20Pérez&pases=4
   const params = new URLSearchParams(location.search);
@@ -86,11 +86,16 @@
     const nombres = n.segundo
       ? `<span>${esc(n.principal)}</span><span class="conector">${esc(n.conector || "&")}</span><span>${esc(n.segundo)}</span>`
       : `<span>${esc(n.principal)}</span>`;
-    const fondo = E.portada && E.portada.imagen
-      ? ` style="--portada-img:url('${encodeURI(E.portada.imagen)}')"`
+    const p = E.portada || {};
+    const fondo = p.imagen ? ` style="--portada-img:url('${encodeURI(p.imagen)}')"` : "";
+    const conFoto = p.imagen || p.video;
+    // Video de fondo en la portada: corto (10–20 s), sin audio y ligero (< 8 MB).
+    const videoFondo = p.video
+      ? `<video class="portada__video" autoplay muted loop playsinline preload="auto"${p.imagen ? ` poster="${esc(p.imagen)}"` : ""}><source src="${esc(p.video)}" type="video/mp4"></video>`
       : "";
     return `
-      <header class="portada${fondo ? " portada--foto" : ""}"${fondo}>
+      <header class="portada${conFoto ? " portada--foto" : ""}"${fondo}>
+        ${videoFondo}
         <div class="portada__contenido">
           ${E.emblema && ICONOS[E.emblema] ? `<div class="portada__emblema">${icono(E.emblema)}</div>` : ""}
           ${E.pretitulo ? `<p class="etiqueta">${esc(E.pretitulo)}</p>` : ""}
@@ -107,11 +112,11 @@
   function pase() {
     if (!invitado && !pases) return "";
     return `
-      <section class="seccion pase revelar">
+      <section class="seccion pase revelar"><div class="seccion__contenido">
         <p class="etiqueta">Esta invitación es para</p>
         ${invitado ? `<p class="pase__nombre">${esc(invitado)}</p>` : ""}
         ${pases ? `<p class="pase__numero">Pase válido para <strong>${pases}</strong> ${pases === 1 ? "persona" : "personas"}</p>` : ""}
-      </section>`;
+      </div></section>`;
   }
 
   function mensaje() {
@@ -205,6 +210,26 @@
     return seccion("galeria", E.textos?.galeria || "Nuestra historia", `<div class="galeria">${fotos}</div>`, "seccion--suave");
   }
 
+  // Video de presentación: YouTube (recomendado) o archivo MP4 en la carpeta del evento.
+  function video() {
+    const v = E.video;
+    if (!v || (!v.youtube && !v.archivo)) return "";
+    const vertical = v.vertical ? " video--vertical" : "";
+    let reproductor = "";
+    if (v.youtube) {
+      const m = String(v.youtube).match(/(?:youtu\.be\/|v=|embed\/|shorts\/)([\w-]{11})/);
+      if (!m) return "";
+      reproductor = `<iframe src="https://www.youtube-nocookie.com/embed/${m[1]}?rel=0&playsinline=1" title="${esc(v.titulo || "Video")}" loading="lazy" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen" allowfullscreen></iframe>`;
+    } else {
+      reproductor = `<video controls playsinline preload="metadata"${v.poster ? ` poster="${esc(v.poster)}"` : ""}><source src="${esc(v.archivo)}" type="video/mp4"></video>`;
+    }
+    return seccion(
+      "video",
+      v.titulo || E.textos?.video || "Nuestro video",
+      `${v.texto ? `<p>${esc(v.texto)}</p>` : ""}<div class="video${vertical}">${reproductor}</div>`
+    );
+  }
+
   function regalos() {
     const r = E.regalos;
     if (!r) return "";
@@ -284,12 +309,12 @@
 
   function despedida() {
     return `
-      <section class="seccion despedida revelar">
+      <section class="seccion despedida revelar"><div class="seccion__contenido">
         ${icono("corazon")}
         ${E.despedida ? `<p class="despedida__texto">${esc(E.despedida)}</p>` : ""}
         ${E.hashtag ? `<p class="hashtag">${esc(E.hashtag)}</p>` : ""}
         <p class="portada__nombres portada__nombres--chico">${esc(E.nombres?.principal)}${E.nombres?.segundo ? ` ${esc(E.nombres.conector || "&")} ${esc(E.nombres.segundo)}` : ""}</p>
-      </section>
+      </div></section>
       <footer class="pie">
         Invitación digital hecha por <a href="${esc(MARCA.sitio)}" target="_blank" rel="noopener">${esc(MARCA.nombre)}</a>
       </footer>`;
@@ -336,12 +361,41 @@
     portada() +
     `<div id="contenido">` +
     pase() + mensaje() + cuentaRegresiva() + familia() + lugares() + itinerario() +
-    vestimenta() + galeria() + regalos() + hospedaje() + confirmacion() + despedida() +
+    vestimenta() + video() + galeria() + regalos() + hospedaje() + confirmacion() + despedida() +
     `</div></main>` +
     (params.has("directo") ? "" : barraCatalogo()) +
     (E.musica ? `<button class="musica" aria-label="Música" hidden>${icono("musica")}</button><audio loop preload="none" src="${esc(E.musica)}"></audio>` : "");
 
   // ---------- comportamiento ----------
+  // Flecha discreta para bajar a la siguiente sección
+  (function flechas() {
+    const secciones = Array.from(app.querySelectorAll("#contenido > .seccion"));
+    const chevron = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>';
+    secciones.forEach((s, i) => {
+      const sig = secciones[i + 1];
+      if (!sig) return;
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = "siguiente";
+      b.setAttribute("aria-label", "Ir a la siguiente sección");
+      b.innerHTML = chevron;
+      b.addEventListener("click", () => sig.scrollIntoView({ behavior: "smooth", block: "start" }));
+      s.appendChild(b);
+    });
+    // Enlaces directos a una sección, ej. …/#confirmar
+    if (location.hash.length > 1) {
+      const destino = document.getElementById(decodeURIComponent(location.hash.slice(1)));
+      if (destino) setTimeout(() => destino.scrollIntoView({ block: "start" }), 50);
+    }
+    const bajar = app.querySelector(".portada__bajar");
+    if (bajar && secciones[0]) {
+      bajar.addEventListener("click", (e) => {
+        e.preventDefault();
+        secciones[0].scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    }
+  })();
+
   // Cuenta regresiva
   (function iniciarCuenta() {
     if (!fechaValida) return;
