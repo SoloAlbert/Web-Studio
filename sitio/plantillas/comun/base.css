@@ -670,10 +670,13 @@ a { color: var(--acento-oscuro); }
 .pj-img-cinta { z-index: 3; }
 .pj-img-pierna--a { z-index: 1; }
 .personaje--cruzar .pj-dividida { animation: pj-bote 0.18s ease-in-out infinite alternate; }
-.personaje--cruzar .pj-img-pierna--a { animation: pj-zancada 0.36s ease-in-out infinite alternate; }
-.personaje--cruzar .pj-img-pierna--b { animation: pj-zancada 0.36s ease-in-out infinite alternate-reverse; }
+.personaje--cruzar .pj-img-pierna--a { animation: pj-zancada-a 0.38s ease-in-out infinite alternate; }
+.personaje--cruzar .pj-img-pierna--b { animation: pj-zancada-b 0.38s ease-in-out infinite alternate; }
 .personaje--cruzar .pj-img-cinta { animation: pj-cola 0.16s ease-in-out infinite alternate; }
-@keyframes pj-zancada { from { transform: rotate(-20deg); } to { transform: rotate(22deg); } }
+/* La pierna de adelante se va hasta atrás y la de atrás pasa hasta adelante (y al revés).
+   Los giros están pensados para un dibujo que mira a la izquierda; al voltearlo se invierten solos. */
+@keyframes pj-zancada-a { from { transform: rotate(8deg); } to { transform: rotate(-92deg); } }
+@keyframes pj-zancada-b { from { transform: rotate(-8deg); } to { transform: rotate(96deg); } }
 @keyframes pj-cola { from { transform: rotate(-8deg); } to { transform: rotate(7deg) scaleX(1.05); } }
 
 /* Polvo en los pies y líneas de velocidad (detrás del personaje) */
