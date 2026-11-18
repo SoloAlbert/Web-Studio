@@ -10,13 +10,16 @@ import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/1
 import {
   getFirestore, doc, getDoc, setDoc, collection, query, where, getDocs, onSnapshot, serverTimestamp,
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
 
 const $ = (s) => document.querySelector(s);
 const esc = (t) =>
   String(t == null ? "" : t).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 const ID = (new URLSearchParams(location.search).get("e") || "").trim().toLowerCase();
 const CLAVE_NOMBRE = "lc-camara-nombre";
+const NUBE = window.CLOUDINARY || {};
+
+// Versión reducida de una foto de Cloudinary (miniaturas y pantalla).
+const version = (url, t) => (String(url || "").startsWith("https://res.cloudinary.com/") ? url.replace("/upload/", `/upload/${t}/`) : url);
 
 const S = { cam: null, uid: null, nombre: "", tomadas: new Set(), foto: null, guardando: false, albumActivo: false };
 
@@ -60,8 +63,7 @@ async function iniciar() {
   const app = initializeApp(window.FIREBASE_CONFIG);
   const db = getFirestore(app);
   const auth = getAuth(app);
-  const storage = getStorage(app);
-  Object.assign(S, { db, storage });
+  Object.assign(S, { db });
 
   let snap;
   try {
@@ -189,11 +191,16 @@ $("[data-accion=guardar]").addEventListener("click", async (e) => {
   boton.disabled = true;
   boton.textContent = "Guardando…";
   error("");
-  const ruta = `camaras/${ID}/${S.uid}/${n}.jpg`;
   try {
-    const r = ref(S.storage, ruta);
-    await uploadBytes(r, S.foto.blob, { contentType: "image/jpeg" });
-    const url = await getDownloadURL(r);
+    const datos = new FormData();
+    datos.append("file", S.foto.blob, `${n}.jpg`);
+    datos.append("upload_preset", NUBE.preset);
+    datos.append("tags", `evento-${ID}`);
+    const resp = await fetch(`https://api.cloudinary.com/v1_1/${NUBE.nube}/image/upload`, { method: "POST", body: datos });
+    if (!resp.ok) throw new Error("subida " + resp.status);
+    const subida = await resp.json();
+    const url = subida.secure_url;
+    const ruta = subida.public_id;
     await setDoc(doc(S.db, "camaras", ID, "fotos", `${S.uid}_${n}`), {
       uid: S.uid, nombre: S.nombre, n, ruta, url, creado: serverTimestamp(), oculta: false,
     });
@@ -231,7 +238,7 @@ function pintarAlbum() {
         .sort((a, b) => (a.creado?.toMillis?.() || 0) - (b.creado?.toMillis?.() || 0));
       $("[data-album-total]").textContent = `${fotosAlbum.length} ${fotosAlbum.length === 1 ? "foto" : "fotos"} tomadas por los invitados`;
       $("[data-album-fotos]").innerHTML = fotosAlbum
-        .map((f, i) => `<button type="button" data-i="${i}" aria-label="Foto de ${esc(f.nombre)}"><img src="${esc(f.url)}" alt="" loading="lazy"></button>`)
+        .map((f, i) => `<button type="button" data-i="${i}" aria-label="Foto de ${esc(f.nombre)}"><img src="${esc(version(f.url, "c_fill,w_400,h_400,g_auto,q_auto,f_auto"))}" alt="" loading="lazy"></button>`)
         .join("");
     },
     (e) => console.error(e)
@@ -242,7 +249,7 @@ $("[data-album-fotos]").addEventListener("click", (e) => {
   const b = e.target.closest("[data-i]");
   if (!b) return;
   const f = fotosAlbum[+b.dataset.i];
-  $("[data-visor-img]").src = f.url;
+  $("[data-visor-img]").src = version(f.url, "q_auto,f_auto");
   $("[data-visor-nombre]").textContent = `Foto de ${f.nombre}`;
   $("[data-visor]").hidden = false;
 });

@@ -13,6 +13,10 @@ const $ = (s) => document.querySelector(s);
 const ID = (new URLSearchParams(location.search).get("e") || "").trim().toLowerCase();
 const SEGUNDOS = 7;
 
+// Versión reducida de una foto de Cloudinary (miniaturas y pantalla).
+const version = (url, t) => (String(url || "").startsWith("https://res.cloudinary.com/") ? url.replace("/upload/", `/upload/${t}/`) : url);
+const grande = (url) => version(url, "q_auto,f_auto");
+
 const S = { cam: null, fotos: [], vistas: new Set(), actual: -1, timer: null, desFotos: null };
 
 const app = initializeApp(window.FIREBASE_CONFIG);
@@ -90,7 +94,7 @@ function escucharFotos() {
       S.fotos = snap.docs
         .map((d) => ({ id: d.id, ...d.data() }))
         .sort((a, b) => (a.creado?.toMillis?.() || 0) - (b.creado?.toMillis?.() || 0));
-      S.fotos.forEach((f) => new Image().src = f.url); // precarga
+      S.fotos.forEach((f) => new Image().src = grande(f.url)); // precarga
       $("[data-vacio]").hidden = S.fotos.length > 0;
       $("[data-carrusel]").hidden = S.fotos.length === 0;
       // Si la foto en pantalla se ocultó, pasa a la siguiente de inmediato.
@@ -120,8 +124,8 @@ function siguiente() {
   const div = document.createElement("div");
   div.className = "proy__foto";
   div.innerHTML = `<div class="proy__fondo"></div><img alt=""><p class="proy__autor"></p>`;
-  div.querySelector(".proy__fondo").style.backgroundImage = `url("${f.url}")`;
-  div.querySelector("img").src = f.url;
+  div.querySelector(".proy__fondo").style.backgroundImage = `url("${version(f.url, "w_200,q_auto,f_auto")}")`;
+  div.querySelector("img").src = grande(f.url);
   div.querySelector(".proy__autor").textContent = `📷 ${f.nombre}`;
   cont.appendChild(div);
   requestAnimationFrame(() => requestAnimationFrame(() => div.classList.add("activa")));

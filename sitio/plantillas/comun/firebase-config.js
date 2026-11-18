@@ -9,3 +9,7 @@ window.FIREBASE_CONFIG = {
   messagingSenderId: "847367700157",
   appId: "1:847367700157:web:aa6ae3548147df041b81d4",
 };
+
+// Fotos de la Cámara de invitados (Cloudinary, plan gratuito).
+// Datos públicos: solo permiten subir fotos con el permiso "localconnect-camara".
+window.CLOUDINARY = { nube: "y2usewje", preset: "localconnect-camara" };

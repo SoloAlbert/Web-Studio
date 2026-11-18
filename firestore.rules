@@ -130,8 +130,9 @@ service cloud.firestore {
           && nueva().uid == request.auth.uid
           && nueva().n is int && nueva().n >= 1 && nueva().n <= camara().fotos
           && fotoId == request.auth.uid + '_' + string(nueva().n)
-          && nueva().ruta == 'camaras/' + eventoId + '/' + request.auth.uid + '/' + string(nueva().n) + '.jpg'
-          && nueva().url is string && nueva().url.matches('https://firebasestorage[.]googleapis[.]com/.*')
+          && nueva().ruta is string && nueva().ruta.size() <= 200
+          && nueva().url is string && nueva().url.size() <= 300
+          && nueva().url.matches('https://res[.]cloudinary[.]com/y2usewje/image/upload/.*')
           && nueva().nombre is string && nueva().nombre.size() > 0 && nueva().nombre.size() <= 40
           && nueva().creado == request.time
           && nueva().oculta == false;

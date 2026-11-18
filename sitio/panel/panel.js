@@ -132,6 +132,9 @@ function urlEvento(ev) {
   const u = local((ev && ev.url) || `${SITIO}/${ev.id}/`);
   return u.endsWith("/") ? u : u + "/";
 }
+
+// Versión reducida de una foto de Cloudinary (miniaturas y pantalla).
+const version = (url, t) => (String(url || "").startsWith("https://res.cloudinary.com/") ? url.replace("/upload/", `/upload/${t}/`) : url);
 const enlaceCamara = (id) => local(`${SITIO}/camara/?e=${encodeURIComponent(id)}`);
 const enlaceProyeccion = (id) => local(`${SITIO}/camara/proyeccion.html?e=${encodeURIComponent(id)}`);
 const enlaceInvitado = (inv) => `${urlEvento(S.evento)}?i=${inv.id}`;
@@ -779,7 +782,7 @@ function pintarCamara() {
     ? S.fotos
         .map(
           (f) => `<figure class="foto-panel${f.oculta ? " foto-panel--oculta" : ""}" data-foto="${esc(f.id)}">
-            <a href="${esc(f.url)}" target="_blank" rel="noopener"><img src="${esc(f.url)}" alt="Foto de ${esc(f.nombre)}" loading="lazy"></a>
+            <a href="${esc(f.url)}" target="_blank" rel="noopener"><img src="${esc(version(f.url, "c_fill,w_300,h_300,g_auto,q_auto,f_auto"))}" alt="Foto de ${esc(f.nombre)}" loading="lazy"></a>
             <figcaption>
               <span>${esc(f.nombre)}</span>
               <button class="enlace" data-accion="ocultar-foto" type="button">${f.oculta ? "Mostrar" : "Ocultar"}</button>

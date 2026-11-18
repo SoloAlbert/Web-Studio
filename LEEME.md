@@ -51,8 +51,8 @@ Reglas de seguridad de la base de datos: `firestore.rules`
    - **Descargar todas** en un .zip.
 3. Para cerrar la cámara al terminar: Ajustes → "Sin cámara" (las fotos no se borran).
 
-Reglas del almacenamiento de fotos: `storage.rules`
-(se pegan en Firebase → Storage → Reglas → Publicar).
+Las fotos se guardan en Cloudinary (cuenta y2usewje, carpeta "camara", etiqueta evento-<evento>).
+Para liberar espacio después del evento: Cloudinary → Media Library → carpeta camara.
 
 ## Pases personalizados sin panel
 Agrega al final del enlace el nombre del invitado y número de pases:
