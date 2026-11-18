@@ -583,23 +583,23 @@ a { color: var(--acento-oscuro); }
 .personaje--lanzar .personaje__figura > * { animation: pj-girar 0.45s linear infinite; }
 
 /* Asomarse desde la orilla */
-.personaje--asomarse { --dur: 7s; }
+.personaje--asomarse { --dur: 7s; --asomo: 38%; --giro: 14deg; }
 .personaje--asomarse.personaje--izquierda { left: 0; }
 .personaje--asomarse.personaje--derecha { right: 0; }
 .personaje--asomarse .personaje__mover { animation: pj-asomar-i var(--dur) ease-in-out infinite; transform-origin: 50% 100%; }
 .personaje--asomarse.personaje--derecha .personaje__mover { animation-name: pj-asomar-d; }
 @keyframes pj-asomar-i {
   0%, 12% { transform: translateX(-105%) rotate(0); }
-  22%, 34% { transform: translateX(-38%) rotate(14deg); }
-  38% { transform: translateX(-42%) rotate(10deg); }
-  42%, 50% { transform: translateX(-38%) rotate(14deg); }
+  22%, 34% { transform: translateX(calc(-1 * var(--asomo))) rotate(var(--giro)); }
+  38% { transform: translateX(calc(-1 * var(--asomo) - 4%)) rotate(calc(var(--giro) * 0.7)); }
+  42%, 50% { transform: translateX(calc(-1 * var(--asomo))) rotate(var(--giro)); }
   60%, 100% { transform: translateX(-105%) rotate(0); }
 }
 @keyframes pj-asomar-d {
   0%, 12% { transform: translateX(105%) rotate(0); }
-  22%, 34% { transform: translateX(38%) rotate(-14deg); }
-  38% { transform: translateX(42%) rotate(-10deg); }
-  42%, 50% { transform: translateX(38%) rotate(-14deg); }
+  22%, 34% { transform: translateX(var(--asomo)) rotate(calc(-1 * var(--giro))); }
+  38% { transform: translateX(calc(var(--asomo) + 4%)) rotate(calc(-0.7 * var(--giro))); }
+  42%, 50% { transform: translateX(var(--asomo)) rotate(calc(-1 * var(--giro))); }
   60%, 100% { transform: translateX(105%) rotate(0); }
 }
 
@@ -664,7 +664,8 @@ a { color: var(--acento-oscuro); }
 /* Imagen fija dividida en cuerpo y piernas (piernas: 0.7) */
 .pj-dividida { position: relative; }
 .pj-dividida img { width: 100%; height: auto; display: block; }
-.pj-img-piernas { position: absolute; inset: 0; }
-.personaje--cruzar .pj-dividida { animation: pj-bote 0.28s ease-in-out infinite alternate; }
-.personaje--cruzar .pj-img-piernas { animation: pj-zancada 0.28s ease-in-out infinite alternate; }
-@keyframes pj-zancada { from { transform: skewX(24deg) scaleY(0.94); } to { transform: skewX(-24deg) scaleY(1); } }
+.pj-img-pierna { position: absolute; inset: 0; }
+.personaje--cruzar .pj-dividida { animation: pj-bote 0.17s ease-in-out infinite alternate; }
+.personaje--cruzar .pj-img-pierna--a { animation: pj-zancada 0.34s ease-in-out infinite alternate; }
+.personaje--cruzar .pj-img-pierna--b { animation: pj-zancada 0.34s ease-in-out infinite alternate-reverse; }
+@keyframes pj-zancada { from { transform: rotate(-26deg); } to { transform: rotate(26deg); } }

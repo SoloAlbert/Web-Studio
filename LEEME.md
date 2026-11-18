@@ -90,6 +90,7 @@ cliente, guarda su imagen en la carpeta `personajes/` de la invitación (PNG con
 transparente, GIF, SVG o animación Lottie .json) y cambia `imagen: "personajes/su-dibujo.png"`.
 Opciones extra para imágenes fijas:
 - `mira: "izquierda"` si el dibujo mira hacia la izquierda (para que corra hacia donde mira).
-- `piernas: 0.73` en un dibujo corriendo de lado: desde ese punto de la altura (73 %) la imagen
-  se mueve aparte para que parezca que corre moviendo las piernas.
+- `piernas: 0.73` y `separa: 0.45` en un dibujo corriendo de lado: las piernas (desde el 73 % de la
+  altura) se dividen en dos (al 45 % del ancho) y se mueven en direcciones contrarias.
+- `asomo: 0.04, giro: 0` en "asomarse": cuánto queda escondido (4 %) y sin inclinarse (para personajes acostados).
 Las imágenes con fondo blanco hay que dejarlas con fondo transparente antes de usarlas.

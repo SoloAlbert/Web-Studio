@@ -54,13 +54,13 @@ window.EVENTO = {
   // (PNG con fondo transparente, GIF, SVG o animación Lottie .json).
   // animacion: cruzar | asomarse | saltar | flotar | ninja | lanzar
   personajes: [
-    { imagen: "personajes/naruto-corriendo.png", mira: "izquierda", piernas: 0.73, animacion: "cruzar", seccion: "portada", tamano: "110px" },
-    { imagen: "personajes/kakashi.png", animacion: "asomarse", seccion: "mensaje", lado: "derecha", posicion: "abajo", tamano: "120px" },
+    { imagen: "personajes/naruto-corriendo.png", mira: "izquierda", piernas: 0.73, separa: 0.45, animacion: "cruzar", seccion: "portada", tamano: "110px" },
+    { imagen: "personajes/kakashi.png", mira: "izquierda", animacion: "asomarse", asomo: 0.04, giro: 0, seccion: "mensaje", lado: "derecha", posicion: "abajo", tamano: "130px" },
     { imagen: "personajes/shuriken.svg", animacion: "lanzar", seccion: "cuenta", posicion: "arriba" },
     { imagen: "personajes/naruto.png", animacion: "ninja", seccion: "lugares", tamano: "88px" },
-    { imagen: "personajes/kakashi.png", animacion: "asomarse", seccion: "vestimenta", lado: "izquierda", posicion: "centro", tamano: "130px" },
+    { imagen: "personajes/kakashi.png", mira: "izquierda", animacion: "asomarse", asomo: 0.04, giro: 0, seccion: "vestimenta", lado: "izquierda", posicion: "abajo", tamano: "130px" },
     { imagen: "personajes/naruto.png", animacion: "saltar", seccion: "confirmar", lado: "derecha", tamano: "80px" },
-    { imagen: "personajes/naruto-corriendo.png", mira: "izquierda", piernas: 0.73, animacion: "cruzar", seccion: "despedida", lado: "derecha", tamano: "100px" },
+    { imagen: "personajes/naruto-corriendo.png", mira: "izquierda", piernas: 0.73, separa: 0.45, animacion: "cruzar", seccion: "despedida", lado: "derecha", tamano: "100px" },
   ],
 
   // evento: id del evento en el panel de invitados (localconnect.studio/panel). null = sin panel.

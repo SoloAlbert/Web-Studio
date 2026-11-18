@@ -562,11 +562,20 @@
       // piernas: 0.7 = las piernas empiezan al 70 % de la altura de la imagen. Esa parte se mueve
       // por separado para que una imagen fija parezca correr.
       const corte = Number(p.piernas) > 0 && Number(p.piernas) < 1 ? Math.round(Number(p.piernas) * 100) : 0;
+      // separa: 0.45 = punto (de izquierda a derecha) donde se separan las dos piernas.
+      const separa = Number(p.separa) > 0 && Number(p.separa) < 1 ? Math.round(Number(p.separa) * 100) : 50;
+      const src = esc(p.imagen);
+      const pierna = (clase, recorte) =>
+        `<img class="pj-img-pierna ${clase}" src="${src}" alt="" style="clip-path: inset(${recorte}); transform-origin: ${separa}% ${corte}%">`;
       const comoImagen = () =>
         (fig.innerHTML = corte
-          ? `<div class="pj-dividida"><img class="pj-img-cuerpo" src="${esc(p.imagen)}" alt="" style="clip-path: inset(0 0 ${100 - corte - 2}% 0)">` +
-            `<img class="pj-img-piernas" src="${esc(p.imagen)}" alt="" style="clip-path: inset(${corte}% 0 0 0); transform-origin: 50% ${corte}%"></div>`
-          : `<img src="${esc(p.imagen)}" alt="">`);
+          ? `<div class="pj-dividida"><img class="pj-img-cuerpo" src="${src}" alt="" style="clip-path: inset(0 0 ${100 - corte - 2}% 0)">` +
+            pierna("pj-img-pierna--a", `${corte}% ${100 - separa}% 0 0`) +
+            pierna("pj-img-pierna--b", `${corte}% 0 0 ${separa}%`) +
+            `</div>`
+          : `<img src="${src}" alt="">`);
+      if (p.asomo != null) el.style.setProperty("--asomo", `${Math.round(Number(p.asomo) * 100)}%`);
+      if (p.giro != null) el.style.setProperty("--giro", `${Number(p.giro)}deg`);
       if (p.lottie) cargarLottie(fig, p.lottie);
       else if (/\.svg(\?|$)/i.test(p.imagen)) {
         // El SVG se inserta tal cual para poder mover piernas, brazos y cintas.
