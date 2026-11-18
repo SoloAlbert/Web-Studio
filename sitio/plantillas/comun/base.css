@@ -544,3 +544,116 @@ a { color: var(--acento-oscuro); }
   .revelar { opacity: 1; transform: none; transition: none; }
   .portada__bajar, .musica, .siguiente { animation: none; }
 }
+
+/* ---------- Personajes animados ---------- */
+.con-personaje { position: relative; }
+.seccion.con-personaje--abajo { padding-bottom: 9rem; }
+.personaje { --tam: 110px; --dur: 8s; position: absolute; z-index: 3; pointer-events: none; }
+.personaje--abajo { bottom: 0.4rem; }
+.personaje--centro { top: 42%; }
+.personaje--arriba { top: 0.8rem; }
+.personaje__mover { width: var(--tam); }
+.personaje__figura > svg, .personaje__figura > img { width: 100%; height: auto; display: block; }
+.personaje:not(.activo) *, .personaje:not(.activo) { animation-play-state: paused !important; }
+
+/* Piezas del personaje SVG */
+.pj-cinta, .pj-pierna, .pj-brazo { transform-box: fill-box; }
+.pj-cinta { transform-origin: 0% 50%; animation: pj-ondear 0.45s ease-in-out infinite alternate; }
+.pj-pierna, .pj-brazo { transform-origin: 50% 8%; }
+@keyframes pj-ondear { from { transform: rotate(-7deg); } to { transform: rotate(9deg); } }
+@keyframes pj-paso { from { transform: rotate(32deg); } to { transform: rotate(-32deg); } }
+@keyframes pj-bote { from { transform: translateY(0) rotate(7deg); } to { transform: translateY(-7%) rotate(7deg); } }
+@keyframes pj-girar { to { transform: rotate(360deg); } }
+
+/* Cruzar corriendo / lanzar (shuriken) */
+.personaje--cruzar, .personaje--lanzar { left: 0; right: 0; height: var(--tam); }
+.personaje--cruzar .personaje__mover, .personaje--lanzar .personaje__mover {
+  position: absolute; bottom: 0; left: calc(-1 * var(--tam));
+  animation: pj-cruzar var(--dur) linear infinite;
+}
+.personaje--derecha.personaje--cruzar .personaje__mover, .personaje--derecha.personaje--lanzar .personaje__mover { animation-direction: reverse; }
+.personaje--derecha .personaje__figura { transform: scaleX(-1); }
+@keyframes pj-cruzar { 0% { left: calc(-1 * var(--tam)); } 42% { left: 100%; } 100% { left: 100%; } }
+.personaje--cruzar .personaje__figura > * { animation: pj-bote 0.3s ease-in-out infinite alternate; }
+.personaje--cruzar .pj-pierna--a, .personaje--cruzar .pj-brazo--b { animation: pj-paso 0.3s ease-in-out infinite alternate; }
+.personaje--cruzar .pj-pierna--b, .personaje--cruzar .pj-brazo--a { animation: pj-paso 0.3s ease-in-out infinite alternate-reverse; }
+.personaje--cruzar .pj-sombra { display: none; }
+.personaje--lanzar { --tam: 48px; --dur: 5s; }
+.personaje--lanzar .personaje__mover { animation-timing-function: cubic-bezier(0.3, 0.2, 0.7, 0.9); }
+.personaje--lanzar .personaje__figura > * { animation: pj-girar 0.45s linear infinite; }
+
+/* Asomarse desde la orilla */
+.personaje--asomarse { --dur: 7s; }
+.personaje--asomarse.personaje--izquierda { left: 0; }
+.personaje--asomarse.personaje--derecha { right: 0; }
+.personaje--asomarse .personaje__mover { animation: pj-asomar-i var(--dur) ease-in-out infinite; transform-origin: 50% 100%; }
+.personaje--asomarse.personaje--derecha .personaje__mover { animation-name: pj-asomar-d; }
+@keyframes pj-asomar-i {
+  0%, 12% { transform: translateX(-105%) rotate(0); }
+  22%, 34% { transform: translateX(-38%) rotate(14deg); }
+  38% { transform: translateX(-42%) rotate(10deg); }
+  42%, 50% { transform: translateX(-38%) rotate(14deg); }
+  60%, 100% { transform: translateX(-105%) rotate(0); }
+}
+@keyframes pj-asomar-d {
+  0%, 12% { transform: translateX(105%) rotate(0); }
+  22%, 34% { transform: translateX(38%) rotate(-14deg); }
+  38% { transform: translateX(42%) rotate(-10deg); }
+  42%, 50% { transform: translateX(38%) rotate(-14deg); }
+  60%, 100% { transform: translateX(105%) rotate(0); }
+}
+
+/* Saltar y flotar */
+.personaje--saltar, .personaje--flotar { --dur: 2.4s; }
+.personaje--saltar.personaje--izquierda, .personaje--flotar.personaje--izquierda { left: 6%; }
+.personaje--saltar.personaje--derecha, .personaje--flotar.personaje--derecha { right: 6%; }
+.personaje--saltar .personaje__mover { animation: pj-saltar var(--dur) ease-in-out infinite; transform-origin: 50% 100%; }
+@keyframes pj-saltar {
+  0%, 38%, 100% { transform: translateY(0) scale(1, 1); }
+  46% { transform: translateY(0) scale(1.1, 0.88); }
+  60% { transform: translateY(-45%) scale(0.95, 1.06); }
+  72% { transform: translateY(0) scale(1.08, 0.92); }
+  80% { transform: translateY(0) scale(1, 1); }
+}
+.personaje--flotar { --dur: 3.2s; }
+.personaje--flotar .personaje__mover { animation: pj-flotar var(--dur) ease-in-out infinite alternate; }
+@keyframes pj-flotar { from { transform: translateY(0) rotate(-3deg); } to { transform: translateY(-14px) rotate(3deg); } }
+
+/* Ninja: aparece y desaparece en una nube de humo */
+.personaje--ninja { --dur: 6s; left: var(--x, 50%); transform: translateX(-50%); }
+.personaje--ninja .personaje__mover { animation: pj-ninja var(--dur) ease-out infinite; opacity: 0; }
+@keyframes pj-ninja {
+  0%, 7% { opacity: 0; transform: scale(0.5); }
+  12% { opacity: 1; transform: scale(1.06); }
+  16%, 60% { opacity: 1; transform: scale(1); }
+  66%, 100% { opacity: 0; transform: scale(0.5); }
+}
+.personaje__humo { position: absolute; left: 50%; bottom: 10%; width: calc(var(--tam) * 1.3); height: calc(var(--tam) * 0.9); transform: translateX(-50%); }
+.personaje__humo i {
+  position: absolute; width: 46%; aspect-ratio: 1; border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #fff, #e6e6ea 60%, #cfd0d8);
+  opacity: 0; animation: pj-humo var(--dur) ease-out infinite;
+}
+.personaje__humo i:nth-child(1) { left: 0; bottom: 0; }
+.personaje__humo i:nth-child(2) { left: 28%; bottom: 18%; width: 54%; }
+.personaje__humo i:nth-child(3) { right: 0; bottom: 0; }
+.personaje__humo i:nth-child(4) { left: 14%; bottom: 46%; width: 38%; }
+.personaje__humo i:nth-child(5) { right: 12%; bottom: 44%; width: 36%; }
+@keyframes pj-humo {
+  0% { opacity: 0; transform: scale(0.2); }
+  6% { opacity: 0.95; transform: scale(0.9); }
+  18% { opacity: 0; transform: scale(1.5); }
+  60% { opacity: 0; transform: scale(0.2); }
+  64% { opacity: 0.95; transform: scale(0.9); }
+  78% { opacity: 0; transform: scale(1.5); }
+  100% { opacity: 0; transform: scale(0.2); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .personaje *, .personaje { animation: none !important; }
+  .personaje--cruzar .personaje__mover, .personaje--lanzar .personaje__mover { left: 6%; }
+  .personaje--asomarse .personaje__mover { transform: translateX(-38%); }
+  .personaje--asomarse.personaje--derecha .personaje__mover { transform: translateX(38%); }
+  .personaje--ninja .personaje__mover { opacity: 1; }
+  .personaje__humo { display: none; }
+}

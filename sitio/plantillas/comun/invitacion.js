@@ -64,6 +64,7 @@
     nube: '<path d="M7 18h10a4 4 0 0 0 .6-7.96A6 6 0 0 0 6.1 9.1 4.5 4.5 0 0 0 7 18z"/><path d="M19.5 2.5v3M18 4h3M4 3v2M3 4h2"/>',
     birrete: '<path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11v5c3.5 2.6 8.5 2.6 12 0v-5M22 9v6"/>',
     globos: '<ellipse cx="9" cy="8" rx="4.2" ry="5.2"/><ellipse cx="16.2" cy="10" rx="3.4" ry="4.3"/><path d="M8.3 13.4h1.4M9 13.4c0 3 2.6 4.2 3 8.6M16.2 14.4c0 3-3.6 4.2-4.2 7.6"/>',
+    shuriken: '<path d="M12 2.5l2.1 7.4 7.4 2.1-7.4 2.1-2.1 7.4-2.1-7.4L2.5 12l7.4-2.1z"/><circle cx="12" cy="12" r="1.8"/>',
     flecha: '<path d="M15 18l-6-6 6-6"/>',
   };
   const icono = (n) =>
@@ -528,6 +529,70 @@
     );
     revelables.forEach((s) => io.observe(s));
   } else revelables.forEach((s) => s.classList.add("visible"));
+
+  // ---------- Personajes animados ----------
+  // E.personajes = [{ imagen: "personajes/ninja.svg" | "foto.png" | "anim.gif", (o lottie: "anim.json"),
+  //   animacion: "cruzar" | "asomarse" | "saltar" | "flotar" | "ninja" | "lanzar",
+  //   seccion: "portada" | "mensaje" | "cuenta" | "lugares" | ... , lado: "izquierda" | "derecha",
+  //   posicion: "abajo" | "centro" | "arriba", tamano: "120px", duracion: 8 }]
+  (function personajes() {
+    const lista = Array.isArray(E.personajes) ? E.personajes : [];
+    const ANIMACIONES = ["cruzar", "asomarse", "saltar", "flotar", "ninja", "lanzar"];
+    const visibles = "IntersectionObserver" in window
+      ? new IntersectionObserver((ents) => ents.forEach((e) => e.target.classList.toggle("activo", e.isIntersecting)), { threshold: 0.05 })
+      : null;
+    lista.forEach((p) => {
+      if (!p || !(p.imagen || p.lottie)) return;
+      const destino = p.seccion === "portada" || !p.seccion
+        ? app.querySelector(".portada")
+        : app.querySelector(`#${CSS.escape(p.seccion)}`) || app.querySelector(`.seccion.${CSS.escape(p.seccion)}`);
+      if (!destino) return;
+      const anim = ANIMACIONES.includes(p.animacion) ? p.animacion : "flotar";
+      const lado = p.lado === "derecha" ? "derecha" : "izquierda";
+      const pos = ["arriba", "centro"].includes(p.posicion) ? p.posicion : "abajo";
+      const el = document.createElement("div");
+      el.className = `personaje personaje--${anim} personaje--${lado} personaje--${pos}`;
+      el.setAttribute("aria-hidden", "true");
+      if (p.tamano) el.style.setProperty("--tam", p.tamano);
+      if (p.duracion) el.style.setProperty("--dur", `${p.duracion}s`);
+      el.innerHTML =
+        `<div class="personaje__mover"><div class="personaje__figura"></div></div>` +
+        (anim === "ninja" ? `<div class="personaje__humo"><i></i><i></i><i></i><i></i><i></i></div>` : "");
+      const fig = el.querySelector(".personaje__figura");
+      const comoImagen = () => (fig.innerHTML = `<img src="${esc(p.imagen)}" alt="">`);
+      if (p.lottie) cargarLottie(fig, p.lottie);
+      else if (/\.svg(\?|$)/i.test(p.imagen)) {
+        // El SVG se inserta tal cual para poder mover piernas, brazos y cintas.
+        fetch(p.imagen).then((r) => (r.ok ? r.text() : Promise.reject())).then((t) => (fig.innerHTML = t)).catch(comoImagen);
+      } else comoImagen();
+      destino.classList.add("con-personaje");
+      if (pos === "abajo" && destino.classList.contains("seccion") && anim !== "asomarse") destino.classList.add("con-personaje--abajo");
+      if (anim === "ninja") {
+        // Cada vez que desaparece, reaparece en otro lugar.
+        el.style.setProperty("--x", lado === "derecha" ? "70%" : "30%");
+        el.querySelector(".personaje__mover").addEventListener("animationiteration", () =>
+          el.style.setProperty("--x", `${18 + Math.round(Math.random() * 64)}%`)
+        );
+      }
+      destino.appendChild(el);
+      if (visibles) visibles.observe(el);
+      else el.classList.add("activo");
+    });
+
+    function cargarLottie(contenedor, ruta) {
+      const iniciar = () =>
+        window.lottie && window.lottie.loadAnimation({ container: contenedor, renderer: "svg", loop: true, autoplay: true, path: ruta });
+      if (window.lottie) return iniciar();
+      let s = document.querySelector("script[data-lottie]");
+      if (!s) {
+        s = document.createElement("script");
+        s.src = "https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js";
+        s.dataset.lottie = "1";
+        document.head.appendChild(s);
+      }
+      s.addEventListener("load", iniciar);
+    }
+  })();
 
   // Copiar CLABE
   app.querySelectorAll("[data-copiar]").forEach((b) =>

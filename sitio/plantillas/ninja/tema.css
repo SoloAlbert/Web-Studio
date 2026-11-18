@@ -1,0 +1,52 @@
+/* Tema: Pequeño Ninja — fiesta infantil en naranja y azul noche */
+@import url("https://fonts.googleapis.com/css2?family=Bangers&family=Nunito:ital,wght@0,400;0,700;0,800;1,400&display=swap");
+
+:root {
+  --fondo: #fff8ee;
+  --fondo-suave: #ffeedb;
+  --fondo-pagina: #1f2a44;
+  --superficie: #ffffff;
+  --texto: #1f2a44;
+  --texto-suave: #55607a;
+  --acento: #f26b1d;
+  --acento-oscuro: #1f2a44;
+  --acento-suave: #ffd9bf;
+  --boton-texto: #ffffff;
+  --fuente-display: "Bangers", "Impact", system-ui, sans-serif;
+  --fuente-titulo: "Nunito", system-ui, sans-serif;
+  --fuente-texto: "Nunito", system-ui, sans-serif;
+  --fuente-etiqueta: "Nunito", system-ui, sans-serif;
+  --radio: 20px;
+}
+body { font-size: 1.02rem; }
+
+.portada {
+  background:
+    repeating-conic-gradient(from 0deg at 50% 115%, rgba(242, 107, 29, 0.09) 0deg 9deg, transparent 9deg 18deg),
+    radial-gradient(circle at 50% 115%, #ffe2c9 0, transparent 60%),
+    var(--fondo);
+}
+.portada::before, .portada::after { border-color: var(--acento); border-radius: 26px; }
+.portada::after { border-style: dashed; }
+.portada__emblema { color: var(--acento); }
+.portada__emblema .icono { animation: pj-girar 6s linear infinite; }
+.portada__nombres {
+  font-size: clamp(4rem, 19vw, 6rem);
+  letter-spacing: 0.04em;
+  color: var(--acento);
+  line-height: 1;
+  text-shadow: 3px 3px 0 var(--acento-oscuro), -1px -1px 0 var(--acento-oscuro), 1px -1px 0 var(--acento-oscuro), -1px 1px 0 var(--acento-oscuro);
+}
+.portada__frase { font-family: var(--fuente-display); font-style: normal; font-size: 1.7rem; letter-spacing: 0.04em; color: var(--acento-oscuro); }
+.titulo { font-size: 2.5rem; letter-spacing: 0.05em; color: var(--acento-oscuro); }
+.titulo::after { background: var(--acento); }
+.etiqueta { font-weight: 800; color: var(--acento); }
+.tarjeta__titulo, .regalo__tienda, .vestimenta__codigo, .pase__nombre { font-weight: 800; }
+.portada__frase, .mensaje__texto, .despedida__texto { font-style: normal; }
+.mensaje__texto { font-weight: 700; }
+.cuenta__caja { background: var(--acento-oscuro); border: 0; color: #fff; }
+.cuenta__num { color: var(--acento); }
+.cuenta__txt { color: rgba(255, 255, 255, 0.8); }
+.despedida__texto, .portada__nombres--chico { font-family: var(--fuente-display); letter-spacing: 0.04em; }
+.boton { box-shadow: 0 4px 0 #b84c10; }
+.boton:active { transform: translateY(2px); box-shadow: 0 2px 0 #b84c10; }

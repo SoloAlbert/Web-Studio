@@ -17,7 +17,7 @@ y se actualizan en todo el sitio y en todas las invitaciones.
 ```
 node nuevo-evento.js boda juan-y-ana
 ```
-Diseños disponibles: boda, xv, bautizo, graduacion, cumpleanos
+Diseños disponibles: boda, xv, bautizo, graduacion, cumpleanos, ninja
 
 1. Edita `sitio/juan-y-ana/datos.js` (textos, fecha, lugares y su WhatsApp en `confirmacion`).
 2. Cambia el `<title>` y las etiquetas `og:` en `sitio/juan-y-ana/index.html`
@@ -82,3 +82,9 @@ nuevo-evento.js              ← crea la invitación de un cliente
 docs/                        ← documentos privados (no se suben)
 .github/workflows/           ← publicación automática
 ```
+
+## Personajes animados
+En `datos.js` de la invitación, la lista `personajes` indica qué personaje sale, en qué sección
+y cómo se mueve (cruzar, asomarse, saltar, flotar, ninja, lanzar). Para usar el dibujo del
+cliente, guarda su imagen en la carpeta `personajes/` de la invitación (PNG con fondo
+transparente, GIF, SVG o animación Lottie .json) y cambia `imagen: "personajes/su-dibujo.png"`.
