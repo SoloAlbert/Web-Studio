@@ -17,13 +17,13 @@ window.EVENTO = {
   duracionHoras: 5,
 
   intro: true,
-  textos: { intro: "Tienes una misión secreta", galeria: "Mis fotos", cuentaFin: "¡Hoy es la misión!" },
+  textos: { intro: "Tienes una misión secreta", familia: "¡Te esperamos!", galeria: "Mis fotos", cuentaFin: "¡Hoy es la misión!" },
   portada: { imagen: null },
 
   mensaje: "¡Atención, ninjas! Santiago cumple 4 años y te invita a una misión muy especial: jugar, reír, romper la piñata y comer mucho pastel.",
   cita: null,
 
-  familia: [{ titulo: "Te esperan sus papás", nombres: ["Ana López", "Luis Martínez"] }],
+  familia: [{ titulo: "Sus papás", nombres: ["Ana López", "Luis Martínez"] }],
 
   lugares: [
     {

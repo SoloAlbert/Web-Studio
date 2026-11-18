@@ -88,3 +88,8 @@ En `datos.js` de la invitación, la lista `personajes` indica qué personaje sal
 y cómo se mueve (cruzar, asomarse, saltar, flotar, ninja, lanzar). Para usar el dibujo del
 cliente, guarda su imagen en la carpeta `personajes/` de la invitación (PNG con fondo
 transparente, GIF, SVG o animación Lottie .json) y cambia `imagen: "personajes/su-dibujo.png"`.
+Opciones extra para imágenes fijas:
+- `mira: "izquierda"` si el dibujo mira hacia la izquierda (para que corra hacia donde mira).
+- `piernas: 0.73` en un dibujo corriendo de lado: desde ese punto de la altura (73 %) la imagen
+  se mueve aparte para que parezca que corre moviendo las piernas.
+Las imágenes con fondo blanco hay que dejarlas con fondo transparente antes de usarlas.

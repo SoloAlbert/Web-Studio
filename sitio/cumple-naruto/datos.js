@@ -15,13 +15,13 @@ window.EVENTO = {
   duracionHoras: 5,
 
   intro: true,
-  textos: { intro: "Tienes una misión secreta", galeria: "Mis fotos", cuentaFin: "¡Hoy es la misión!" },
+  textos: { intro: "Tienes una misión secreta", familia: "¡Te esperamos!", galeria: "Mis fotos", cuentaFin: "¡Hoy es la misión!" },
   portada: { imagen: null },
 
   mensaje: "¡Atención, ninjas! Santiago cumple 4 años y te invita a una misión muy especial: jugar, reír, romper la piñata y comer mucho pastel.",
   cita: null,
 
-  familia: [{ titulo: "Te esperan sus papás", nombres: ["Ana López", "Luis Martínez"] }],
+  familia: [{ titulo: "Sus papás", nombres: ["Ana López", "Luis Martínez"] }],
 
   lugares: [
     {
@@ -54,13 +54,13 @@ window.EVENTO = {
   // (PNG con fondo transparente, GIF, SVG o animación Lottie .json).
   // animacion: cruzar | asomarse | saltar | flotar | ninja | lanzar
   personajes: [
-    { imagen: "personajes/naruto.png", animacion: "cruzar", seccion: "portada", tamano: "84px" },
-    { imagen: "personajes/naruto.png", animacion: "asomarse", seccion: "mensaje", lado: "derecha", posicion: "centro", tamano: "88px" },
+    { imagen: "personajes/naruto-corriendo.png", mira: "izquierda", piernas: 0.73, animacion: "cruzar", seccion: "portada", tamano: "110px" },
+    { imagen: "personajes/kakashi.png", animacion: "asomarse", seccion: "mensaje", lado: "derecha", posicion: "abajo", tamano: "120px" },
     { imagen: "personajes/shuriken.svg", animacion: "lanzar", seccion: "cuenta", posicion: "arriba" },
     { imagen: "personajes/naruto.png", animacion: "ninja", seccion: "lugares", tamano: "88px" },
-    { imagen: "personajes/naruto.png", animacion: "asomarse", seccion: "vestimenta", lado: "izquierda", posicion: "centro", tamano: "88px" },
+    { imagen: "personajes/kakashi.png", animacion: "asomarse", seccion: "vestimenta", lado: "izquierda", posicion: "centro", tamano: "130px" },
     { imagen: "personajes/naruto.png", animacion: "saltar", seccion: "confirmar", lado: "derecha", tamano: "80px" },
-    { imagen: "personajes/naruto.png", animacion: "cruzar", seccion: "despedida", lado: "derecha", tamano: "80px" },
+    { imagen: "personajes/naruto-corriendo.png", mira: "izquierda", piernas: 0.73, animacion: "cruzar", seccion: "despedida", lado: "derecha", tamano: "100px" },
   ],
 
   // evento: id del evento en el panel de invitados (localconnect.studio/panel). null = sin panel.

@@ -551,7 +551,7 @@
       const lado = p.lado === "derecha" ? "derecha" : "izquierda";
       const pos = ["arriba", "centro"].includes(p.posicion) ? p.posicion : "abajo";
       const el = document.createElement("div");
-      el.className = `personaje personaje--${anim} personaje--${lado} personaje--${pos}`;
+      el.className = `personaje personaje--${anim} personaje--${lado} personaje--${pos}${p.mira === "izquierda" ? " personaje--mira-izq" : ""}`;
       el.setAttribute("aria-hidden", "true");
       if (p.tamano) el.style.setProperty("--tam", p.tamano);
       if (p.duracion) el.style.setProperty("--dur", `${p.duracion}s`);
@@ -559,14 +559,21 @@
         `<div class="personaje__mover"><div class="personaje__figura"></div></div>` +
         (anim === "ninja" ? `<div class="personaje__humo"><i></i><i></i><i></i><i></i><i></i></div>` : "");
       const fig = el.querySelector(".personaje__figura");
-      const comoImagen = () => (fig.innerHTML = `<img src="${esc(p.imagen)}" alt="">`);
+      // piernas: 0.7 = las piernas empiezan al 70 % de la altura de la imagen. Esa parte se mueve
+      // por separado para que una imagen fija parezca correr.
+      const corte = Number(p.piernas) > 0 && Number(p.piernas) < 1 ? Math.round(Number(p.piernas) * 100) : 0;
+      const comoImagen = () =>
+        (fig.innerHTML = corte
+          ? `<div class="pj-dividida"><img class="pj-img-cuerpo" src="${esc(p.imagen)}" alt="" style="clip-path: inset(0 0 ${100 - corte - 2}% 0)">` +
+            `<img class="pj-img-piernas" src="${esc(p.imagen)}" alt="" style="clip-path: inset(${corte}% 0 0 0); transform-origin: 50% ${corte}%"></div>`
+          : `<img src="${esc(p.imagen)}" alt="">`);
       if (p.lottie) cargarLottie(fig, p.lottie);
       else if (/\.svg(\?|$)/i.test(p.imagen)) {
         // El SVG se inserta tal cual para poder mover piernas, brazos y cintas.
         fetch(p.imagen).then((r) => (r.ok ? r.text() : Promise.reject())).then((t) => (fig.innerHTML = t)).catch(comoImagen);
       } else comoImagen();
       destino.classList.add("con-personaje");
-      if (pos === "abajo" && destino.classList.contains("seccion") && anim !== "asomarse") destino.classList.add("con-personaje--abajo");
+      if (pos === "abajo" && destino.classList.contains("seccion")) destino.classList.add("con-personaje--abajo");
       if (anim === "ninja") {
         // Cada vez que desaparece, reaparece en otro lugar.
         el.style.setProperty("--x", lado === "derecha" ? "70%" : "30%");
