@@ -565,14 +565,33 @@
       // separa: 0.45 = punto (de izquierda a derecha) donde se separan las dos piernas.
       const separa = Number(p.separa) > 0 && Number(p.separa) < 1 ? Math.round(Number(p.separa) * 100) : 50;
       const src = esc(p.imagen);
+      const miraIzq = p.mira === "izquierda";
       const pierna = (clase, recorte) =>
         `<img class="pj-img-pierna ${clase}" src="${src}" alt="" style="clip-path: inset(${recorte}); transform-origin: ${separa}% ${corte}%">`;
+      // cinta: { desde: 0.58, arriba: 0.31, abajo: 0.45 } = zona de la cinta de la banda (o capa, cola…),
+      // que va del punto "desde" hasta la orilla de atrás del personaje. Se mueve aparte, como con viento.
+      const c = p.cinta && Number(p.cinta.desde) > 0 ? {
+        x: Math.round(p.cinta.desde * 100), a: Math.round(p.cinta.arriba * 100), b: Math.round(p.cinta.abajo * 100),
+      } : null;
+      const pie = corte + 4; // el cuerpo baja un poco más para tapar la unión con las piernas
+      const recorteCuerpo = !c
+        ? `inset(0 0 ${100 - pie}% 0)`
+        : miraIzq
+        ? `polygon(0 0, 100% 0, 100% ${c.a}%, ${c.x}% ${c.a}%, ${c.x}% ${c.b}%, 100% ${c.b}%, 100% ${pie}%, 0 ${pie}%)`
+        : `polygon(0 0, 100% 0, 100% ${pie}%, 0 ${pie}%, 0 ${c.b}%, ${c.x}% ${c.b}%, ${c.x}% ${c.a}%, 0 ${c.a}%)`;
+      const cinta = !c ? "" :
+        `<img class="pj-img-cinta" src="${src}" alt="" style="clip-path: inset(${c.a}% ${miraIzq ? 0 : 100 - c.x}% ${100 - c.b}% ${miraIzq ? c.x : 0}%); transform-origin: ${c.x}% ${Math.round((c.a + c.b) / 2)}%">`;
+      // La pierna de atrás se dibuja primero (queda detrás); el cuerpo encima tapa la unión.
+      const piernaAdelante = pierna("pj-img-pierna--a", miraIzq ? `${corte}% ${100 - separa}% 0 0` : `${corte}% 0 0 ${separa}%`);
+      const piernaAtras = pierna("pj-img-pierna--b", miraIzq ? `${corte}% 0 0 ${separa}%` : `${corte}% ${100 - separa}% 0 0`);
+      const efectos = anim === "cruzar"
+        ? `<div class="pj-polvo"><i></i><i></i><i></i></div><div class="pj-lineas"><i></i><i></i><i></i></div>` : "";
       const comoImagen = () =>
         (fig.innerHTML = corte
-          ? `<div class="pj-dividida"><img class="pj-img-cuerpo" src="${src}" alt="" style="clip-path: inset(0 0 ${100 - corte - 2}% 0)">` +
-            pierna("pj-img-pierna--a", `${corte}% ${100 - separa}% 0 0`) +
-            pierna("pj-img-pierna--b", `${corte}% 0 0 ${separa}%`) +
-            `</div>`
+          ? `<div class="pj-dividida ${miraIzq ? "pj-detras-der" : "pj-detras-izq"}">${efectos}` +
+            piernaAtras + piernaAdelante +
+            `<img class="pj-img-cuerpo" src="${src}" alt="" style="clip-path: ${recorteCuerpo}">` +
+            cinta + `</div>`
           : `<img src="${src}" alt="">`);
       if (p.asomo != null) el.style.setProperty("--asomo", `${Math.round(Number(p.asomo) * 100)}%`);
       if (p.giro != null) el.style.setProperty("--giro", `${Number(p.giro)}deg`);
