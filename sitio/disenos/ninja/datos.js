@@ -3,15 +3,15 @@
    Fiesta infantil temática con personajes animados.
    ===================================================================== */
 window.EVENTO = {
-  catalogo: { nombre: "Pequeño Ninja", detalle: "Infantil · Personajes animados" },
+  catalogo: { nombre: "Fiesta Naruto", detalle: "Infantil · Personajes animados" },
 
   tipo: "ninja",
   emblema: "shuriken",
 
   pretitulo: "¡Cumplo 4 años!",
   nombres: { principal: "Santiago" },
-  frase: "¡Misión: fiesta ninja!",
-  tituloCorto: "la fiesta ninja de Santiago",
+  frase: "¡Fiesta ninja de Naruto!",
+  tituloCorto: "la fiesta de Naruto de Santiago",
 
   fecha: "2027-03-20T14:00:00-06:00",
   duracionHoras: 5,
@@ -56,13 +56,13 @@ window.EVENTO = {
   // (PNG con fondo transparente, GIF, SVG o animación Lottie .json).
   // animacion: cruzar | asomarse | saltar | flotar | ninja | lanzar
   personajes: [
-    { imagen: "personajes/ninja.svg", animacion: "cruzar", seccion: "portada", tamano: "96px" },
-    { imagen: "personajes/ninja.svg", animacion: "asomarse", seccion: "mensaje", lado: "derecha", posicion: "centro", tamano: "100px" },
+    { imagen: "personajes/naruto-corriendo.png", mira: "izquierda", piernas: 0.77, separa: 0.45, cinta: { desde: 0.56, arriba: 0.3, abajo: 0.46 }, animacion: "cruzar", seccion: "portada", tamano: "110px" },
+    { imagen: "personajes/kakashi.png", mira: "izquierda", animacion: "asomarse", asomo: 0.04, giro: 0, seccion: "mensaje", lado: "derecha", posicion: "abajo", tamano: "130px" },
     { imagen: "personajes/shuriken.svg", animacion: "lanzar", seccion: "cuenta", posicion: "arriba" },
-    { imagen: "personajes/ninja.svg", animacion: "ninja", seccion: "lugares", tamano: "100px" },
-    { imagen: "personajes/ninja.svg", animacion: "asomarse", seccion: "vestimenta", lado: "izquierda", posicion: "centro", tamano: "100px" },
-    { imagen: "personajes/ninja.svg", animacion: "saltar", seccion: "confirmar", lado: "derecha", tamano: "90px" },
-    { imagen: "personajes/ninja.svg", animacion: "cruzar", seccion: "despedida", lado: "derecha", tamano: "90px" },
+    { imagen: "personajes/naruto.png", animacion: "ninja", seccion: "lugares", tamano: "88px" },
+    { imagen: "personajes/kakashi.png", mira: "izquierda", animacion: "asomarse", asomo: 0.04, giro: 0, seccion: "vestimenta", lado: "izquierda", posicion: "abajo", tamano: "130px" },
+    { imagen: "personajes/naruto.png", animacion: "saltar", seccion: "confirmar", lado: "derecha", tamano: "80px" },
+    { imagen: "personajes/naruto-corriendo.png", mira: "izquierda", piernas: 0.77, separa: 0.45, cinta: { desde: 0.56, arriba: 0.3, abajo: 0.46 }, animacion: "cruzar", seccion: "despedida", lado: "derecha", tamano: "100px" },
   ],
 
   // evento: id del evento en el panel de invitados (localconnect.studio/panel). null = sin panel.
