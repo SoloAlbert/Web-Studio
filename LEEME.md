@@ -71,7 +71,11 @@ En 1–2 minutos el cambio aparece en el sitio (avance en GitHub → pestaña "A
 ## Estructura
 ```
 sitio/                       ← todo lo que se publica
-  index.html                 ← página principal de LocalConnect
+  index.html                 ← página principal (las 4 líneas de negocio)
+  invitaciones/              ← página de ventas de invitaciones
+  negocios/                  ← páginas web para negocios (paquetes)
+  sistemas/                  ← punto de venta y otros sistemas
+  portafolio/<negocio>/      ← páginas de negocio del portafolio
   assets/                    ← estilos, logo y vistas previas del sitio
   disenos/<tipo>/            ← colección de diseños (base para cada cliente)
   plantillas/comun/          ← motor de invitaciones, estilos base y marca.js
