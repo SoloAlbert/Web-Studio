@@ -1,0 +1,27 @@
+/* Base común de las páginas del portafolio de LocalConnect */
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; line-height: 1.55; -webkit-font-smoothing: antialiased; }
+img { max-width: 100%; display: block; }
+[hidden] { display: none !important; }
+.caja { width: 100%; max-width: 1120px; margin: 0 auto; padding-inline: 20px; }
+
+/* Barra inferior: "Hecha por LocalConnect" */
+.barra-lc {
+  position: fixed; left: 50%; bottom: calc(14px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%);
+  z-index: 50; width: min(560px, calc(100% - 24px));
+  display: flex; align-items: center; gap: 0.7rem;
+  background: #1b2033; color: #fff; border-radius: 999px; padding: 0.45rem 0.45rem 0.45rem 0.55rem;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3); font-family: "Inter", system-ui, sans-serif;
+}
+.barra-lc__volver {
+  flex: none; width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center;
+  background: rgba(255, 255, 255, 0.1); color: #fff; text-decoration: none; font-size: 1.2rem;
+}
+.barra-lc__info { flex: 1; min-width: 0; line-height: 1.2; }
+.barra-lc__info strong { display: block; font-size: 0.9rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.barra-lc__info span { font-size: 0.74rem; color: rgba(255, 255, 255, 0.65); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: block; }
+.barra-lc__boton {
+  flex: none; background: #e8b4a0; color: #1b2033; font-weight: 700; font-size: 0.85rem;
+  padding: 0.7rem 1.1rem; border-radius: 999px; text-decoration: none; white-space: nowrap;
+}

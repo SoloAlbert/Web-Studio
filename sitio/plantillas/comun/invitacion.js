@@ -384,7 +384,7 @@
     if (!CAT) return "";
     return `
       <nav class="barra-catalogo" aria-label="Opciones del diseño">
-        <a class="barra-catalogo__volver" href="${esc(CAT.volver || "../../#disenos")}" aria-label="Ver todos los diseños">${icono("flecha")}</a>
+        <a class="barra-catalogo__volver" href="${esc(CAT.volver || "../../invitaciones/#disenos")}" aria-label="Ver todos los diseños">${icono("flecha")}</a>
         <div class="barra-catalogo__info">
           <strong>${esc(CAT.nombre)}</strong>
           <span>${esc(CAT.detalle || "Personalízalo con tus datos")}</span>

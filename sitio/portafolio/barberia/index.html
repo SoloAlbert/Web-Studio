@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="robots" content="noindex">
+  <title>Barbería Navaja · Cortes y barba</title>
+  <meta name="description" content="Página web para barbería hecha por LocalConnect: servicios con precios, barberos y citas por WhatsApp.">
+  <meta property="og:title" content="Barbería Navaja · Página web por LocalConnect">
+  <meta property="og:image" content="https://localconnect.studio/assets/portafolio/barberia.png">
+  <meta name="theme-color" content="#121212">
+  <link rel="icon" href="../../assets/icono.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="../portafolio.css">
+  <style>
+    :root { --fondo: #121212; --panel: #1c1c1c; --texto: #f2efe9; --suave: #a19d95; --oro: #c9a45c; --linea: #2c2c2c; }
+    body { background: var(--fondo); color: var(--texto); font-family: "Inter", system-ui, sans-serif; }
+    h1, h2, h3, .marca { font-family: "Bebas Neue", "Impact", sans-serif; font-weight: 400; letter-spacing: 0.04em; }
+    .cab { position: sticky; top: 0; z-index: 10; background: rgba(18, 18, 18, 0.9); backdrop-filter: blur(10px); border-bottom: 1px solid var(--linea); }
+    .cab .fila { display: flex; align-items: center; justify-content: space-between; height: 66px; }
+    .marca { font-size: 1.9rem; color: var(--texto); text-decoration: none; }
+    .marca span { color: var(--oro); }
+    .nav { display: flex; gap: 1.5rem; }
+    .nav a { color: var(--suave); text-decoration: none; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.08em; }
+    @media (max-width: 640px) { .nav { display: none; } }
+    .btn { display: inline-flex; align-items: center; justify-content: center; padding: 0.85rem 1.5rem; background: var(--oro); color: #121212; font-weight: 700; text-decoration: none; text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.85rem; border-radius: 4px; }
+    .btn--linea { background: transparent; color: var(--texto); border: 1px solid var(--oro); }
+    .hero { position: relative; min-height: 82vh; display: grid; align-items: center; overflow: hidden;
+      background: radial-gradient(ellipse at 80% 30%, rgba(201, 164, 92, 0.18), transparent 55%), repeating-linear-gradient(135deg, #151515 0 14px, #121212 14px 28px); }
+    .hero .fila { display: grid; gap: 2.5rem; align-items: center; padding: 4rem 0; }
+    @media (min-width: 860px) { .hero .fila { grid-template-columns: 1.2fr 0.8fr; } }
+    .hero .eti { color: var(--oro); letter-spacing: 0.3em; text-transform: uppercase; font-size: 0.78rem; margin: 0 0 0.6rem; }
+    .hero h1 { font-size: clamp(3.4rem, 12vw, 7rem); line-height: 0.92; margin: 0 0 1rem; }
+    .hero h1 span { color: var(--oro); }
+    .hero p.sub { color: var(--suave); font-size: 1.08rem; max-width: 30rem; margin: 0 0 2rem; }
+    .hero .acc { display: flex; flex-wrap: wrap; gap: 0.8rem; }
+    .poste { justify-self: center; width: 120px; height: 340px; border-radius: 60px; padding: 10px; background: linear-gradient(#d9d4c9, #8a857a); box-shadow: 0 30px 60px rgba(0,0,0,0.5); }
+    .poste div { width: 100%; height: 100%; border-radius: 50px; background: repeating-linear-gradient(-35deg, #b0232a 0 22px, #f2efe9 22px 44px, #1f3f8a 44px 66px, #f2efe9 66px 88px); background-size: 100% 176px; animation: girar-poste 3s linear infinite; }
+    @keyframes girar-poste { to { background-position: 0 176px; } }
+    @media (max-width: 859px) { .poste { display: none; } }
+    .sec { padding: 5rem 0; }
+    .titulo { text-align: center; margin-bottom: 2.6rem; }
+    .titulo h2 { font-size: clamp(2.6rem, 7vw, 3.6rem); margin: 0; }
+    .titulo p { color: var(--suave); margin: 0.3rem 0 0; }
+    .servicios { display: grid; gap: 1px; background: var(--linea); border: 1px solid var(--linea); grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+    .servicio { background: var(--fondo); padding: 1.8rem; display: grid; gap: 0.4rem; }
+    .servicio .fila2 { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; }
+    .servicio h3 { font-size: 1.7rem; margin: 0; }
+    .servicio b { font-family: "Bebas Neue", sans-serif; font-weight: 400; font-size: 1.8rem; color: var(--oro); }
+    .servicio p { margin: 0; color: var(--suave); font-size: 0.92rem; }
+    .servicio small { color: var(--oro); font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase; }
+    .equipo { display: grid; gap: 1.2rem; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+    .barbero { background: var(--panel); border: 1px solid var(--linea); padding: 2rem 1.5rem; text-align: center; border-radius: 6px; }
+    .avatar { width: 96px; height: 96px; border-radius: 50%; margin: 0 auto 1rem; display: grid; place-items: center; font-family: "Bebas Neue", sans-serif; font-size: 2.4rem; color: #121212; background: linear-gradient(135deg, #e3c88e, var(--oro)); }
+    .barbero h3 { font-size: 1.7rem; margin: 0; }
+    .barbero p { color: var(--suave); margin: 0.2rem 0 0; font-size: 0.9rem; }
+    .cita { background: var(--oro); color: #121212; text-align: center; }
+    .cita h2 { font-size: clamp(2.6rem, 8vw, 4.2rem); margin: 0 0 0.4rem; }
+    .cita p { margin: 0 0 1.6rem; font-size: 1.05rem; }
+    .cita .btn { background: #121212; color: var(--oro); }
+    .info { display: grid; gap: 2rem; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+    .info h3 { font-size: 1.7rem; margin: 0 0 0.6rem; color: var(--oro); }
+    .info p, .info li { color: var(--suave); }
+    .info ul { list-style: none; padding: 0; margin: 0; }
+    .info li { display: flex; justify-content: space-between; padding: 0.4rem 0; border-bottom: 1px solid var(--linea); }
+    .info li b { color: var(--texto); font-weight: 500; }
+    .pie-negocio { border-top: 1px solid var(--linea); color: var(--suave); text-align: center; padding: 2rem 0 6rem; font-size: 0.85rem; }
+  </style>
+</head>
+<body>
+
+<header class="cab">
+  <div class="caja fila">
+    <a class="marca" href="#">Barbería <span>Navaja</span></a>
+    <nav class="nav"><a href="#servicios">Servicios</a><a href="#equipo">Equipo</a><a href="#ubicacion">Ubicación</a></nav>
+    <a class="btn" data-wa="¡Hola LocalConnect! Vi la página de Barbería Navaja y quiero una así para mi negocio." href="#">Agendar</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="caja fila">
+    <div>
+      <p class="eti">Barbería clásica · Desde 2015</p>
+      <h1>Corte fino.<br><span>Barba perfecta.</span></h1>
+      <p class="sub">Cortes clásicos y modernos, afeitado con toalla caliente y arreglo de barba. Agenda tu cita en un minuto y llega directo a la silla.</p>
+      <div class="acc">
+        <a class="btn" data-wa="¡Hola LocalConnect! Vi la página de Barbería Navaja y quiero una así para mi negocio." href="#">Agendar mi cita</a>
+        <a class="btn btn--linea" href="#servicios">Ver precios</a>
+      </div>
+    </div>
+    <div class="poste" aria-hidden="true"><div></div></div>
+  </div>
+</section>
+
+<section class="sec" id="servicios">
+  <div class="caja">
+    <div class="titulo"><h2>Servicios</h2><p>Precios fijos, sin sorpresas.</p></div>
+    <div class="servicios">
+      <div class="servicio"><div class="fila2"><h3>Corte clásico</h3><b>$180</b></div><p>Tijera y máquina, lavado y peinado.</p><small>40 min</small></div>
+      <div class="servicio"><div class="fila2"><h3>Fade / Degradado</h3><b>$200</b></div><p>Desvanecido a navaja con diseño opcional.</p><small>45 min</small></div>
+      <div class="servicio"><div class="fila2"><h3>Barba completa</h3><b>$150</b></div><p>Perfilado, toalla caliente y aceite para barba.</p><small>30 min</small></div>
+      <div class="servicio"><div class="fila2"><h3>Corte + barba</h3><b>$300</b></div><p>El servicio completo, el favorito de la casa.</p><small>70 min</small></div>
+      <div class="servicio"><div class="fila2"><h3>Afeitado clásico</h3><b>$170</b></div><p>Navaja, espuma caliente y bálsamo.</p><small>35 min</small></div>
+      <div class="servicio"><div class="fila2"><h3>Corte infantil</h3><b>$140</b></div><p>Para niños de hasta 12 años.</p><small>30 min</small></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="equipo" style="padding-top:0">
+  <div class="caja">
+    <div class="titulo"><h2>Nuestro equipo</h2><p>Elige con quién agendar.</p></div>
+    <div class="equipo">
+      <div class="barbero"><div class="avatar">RM</div><h3>Ramón</h3><p>Fundador · Cortes clásicos</p></div>
+      <div class="barbero"><div class="avatar">DA</div><h3>Diego</h3><p>Fades y diseños</p></div>
+      <div class="barbero"><div class="avatar">LC</div><h3>Luis</h3><p>Barba y afeitado</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec cita">
+  <div class="caja">
+    <h2>Tu silla te espera</h2>
+    <p>Elige servicio, día y hora. Te confirmamos al instante por WhatsApp.</p>
+    <a class="btn" data-wa="¡Hola LocalConnect! Vi la página de Barbería Navaja y quiero una así para mi negocio." href="#">Agendar por WhatsApp</a>
+  </div>
+</section>
+
+<section class="sec" id="ubicacion">
+  <div class="caja info">
+    <div><h3>Ubicación</h3><p>Calle Hidalgo 120, local 3, Centro. Estacionamiento en la esquina.</p></div>
+    <div><h3>Horario</h3>
+      <ul><li><span>Lunes a viernes</span><b>10:00 – 20:00</b></li><li><span>Sábado</span><b>9:00 – 18:00</b></li><li><span>Domingo</span><b>10:00 – 14:00</b></li></ul>
+    </div>
+    <div><h3>Pagos</h3><p>Efectivo, tarjeta y transferencia. Paquetes mensuales con descuento.</p></div>
+  </div>
+</section>
+
+<footer class="pie-negocio">Barbería Navaja</footer>
+
+<script src="../../plantillas/comun/marca.js"></script>
+<script src="../portafolio.js" data-proyecto="Barbería Navaja" data-tipo="Página para barbería · Citas en línea"></script>
+</body>
+</html>

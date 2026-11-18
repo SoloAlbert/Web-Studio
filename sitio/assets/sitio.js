@@ -52,7 +52,7 @@
   marcar();
 
   // Animación de entrada
-  const items = document.querySelectorAll(".diseno, .funcion, .paquete, .pasos li");
+  const items = document.querySelectorAll(".diseno, .funcion, .paquete, .pasos li, .servicio-lc, .proyecto, .sistema-lc");
   if ("IntersectionObserver" in window) {
     items.forEach((el) => el.classList.add("aparecer"));
     const io = new IntersectionObserver(

@@ -386,3 +386,77 @@ h1, h2 { font-family: var(--serif); font-weight: 600; letter-spacing: -0.01em; }
   html { scroll-behavior: auto; }
   .aparecer { opacity: 1; transform: none; transition: none; }
 }
+
+/* =====================================================================
+   Estudio digital: página principal, negocios y sistemas
+   ===================================================================== */
+/* Marco de navegador */
+.navegador { border-radius: 14px; overflow: hidden; background: var(--blanco); box-shadow: 0 24px 50px rgba(27, 32, 51, 0.16); border: 1px solid var(--linea); }
+.navegador__barra { display: flex; gap: 6px; padding: 9px 12px; background: #eee7dd; }
+.navegador__barra i { width: 9px; height: 9px; border-radius: 50%; background: #d8cdbf; }
+.navegador img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; object-position: top; }
+
+.hero__mockup { position: relative; padding: 0 0 2.5rem; }
+.hero__mockup .navegador { transform: rotate(-1.5deg); }
+.hero__mockup .telefono--flotante { position: absolute; right: -4px; bottom: -6px; width: min(150px, 34vw); transform: rotate(5deg); border-radius: 26px; padding: 7px; }
+.hero__mockup .telefono--flotante::before { top: 12px; height: 12px; }
+.hero__mockup .telefono--flotante img { border-radius: 20px; }
+
+/* Tarjetas de servicios */
+.servicios-lc { display: grid; gap: 1.2rem; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
+.servicio-lc {
+  display: flex; flex-direction: column; gap: 0.6rem; text-decoration: none;
+  background: var(--blanco); border: 1px solid var(--linea); border-radius: var(--radio); padding: 1.7rem;
+  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+}
+.servicio-lc:hover { transform: translateY(-4px); box-shadow: var(--sombra); border-color: var(--rosa); }
+.servicio-lc__icono { width: 48px; height: 48px; border-radius: 14px; background: var(--crema-2); display: grid; place-items: center; color: var(--rosa-oscuro); }
+.servicio-lc__icono svg { width: 26px; height: 26px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+.servicio-lc h3 { font-family: var(--serif); font-size: 1.35rem; margin-top: 0.4rem; }
+.servicio-lc p { margin: 0; color: var(--tinta-suave); font-size: 0.94rem; flex: 1; }
+.servicio-lc__precio { font-weight: 700; color: var(--tinta); }
+.servicio-lc__ir { font-weight: 600; font-size: 0.9rem; color: var(--rosa-oscuro); }
+
+/* Portafolio */
+.portafolio { display: grid; gap: 2.2rem 1.6rem; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+.proyecto { text-decoration: none; display: block; }
+.proyecto .navegador { transition: transform 0.25s, box-shadow 0.25s; }
+.proyecto:hover .navegador { transform: translateY(-5px); box-shadow: 0 30px 60px rgba(27, 32, 51, 0.2); }
+.proyecto h3 { font-family: var(--serif); font-size: 1.25rem; margin-top: 1rem; }
+.proyecto p { margin: 0.2rem 0 0; color: var(--gris); font-size: 0.9rem; }
+.navegador--invitaciones { background: linear-gradient(135deg, #f6ebe2, #efe2f0); }
+.mini-telefonos { aspect-ratio: 16 / 10; display: flex; justify-content: center; align-items: center; gap: 4%; padding: 4% 6%; }
+.mini-telefonos img { width: 26%; aspect-ratio: 9 / 18.5; height: auto; object-fit: cover; object-position: top; border-radius: 12px; border: 4px solid #15171f; }
+
+/* Ventajas y razones */
+.ventajas { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
+.ventajas div { background: var(--blanco); border: 1px solid var(--linea); border-radius: var(--radio); padding: 1.3rem; text-align: center; }
+.ventajas strong { display: block; font-family: var(--serif); font-size: 1.2rem; }
+.ventajas span { color: var(--gris); font-size: 0.9rem; }
+.razones { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+.razones div { background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: var(--radio); padding: 1.6rem; }
+.razones h3 { font-size: 1.1rem; font-weight: 600; color: var(--rosa); }
+.razones p { margin: 0.4rem 0 0; color: rgba(255, 255, 255, 0.72); font-size: 0.93rem; }
+
+/* Pasos sobre fondo claro */
+.pasos--claros li { background: var(--blanco); border-color: var(--linea); }
+.pasos--claros p { color: var(--tinta-suave); }
+
+/* Pie con enlaces */
+.pie__enlaces { display: flex; flex-wrap: wrap; gap: 0.5rem 1.4rem; }
+.pie__enlaces a { color: rgba(255, 255, 255, 0.8); text-decoration: none; }
+.pie__enlaces a:hover { color: var(--blanco); }
+
+/* Tabla de paquetes de negocio y mensualidad */
+.paquete__mes { font-size: 0.9rem; color: var(--gris); margin: -0.4rem 0 0.8rem; }
+.etiqueta-lc { display: inline-block; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--rosa-oscuro); margin-bottom: 0.4rem; }
+.lista-sistema { list-style: none; padding: 0; margin: 1rem 0 0; display: grid; gap: 0.45rem; }
+.lista-sistema li { padding-left: 1.5rem; position: relative; color: var(--tinta-suave); font-size: 0.94rem; }
+.lista-sistema li::before { content: "✓"; position: absolute; left: 0; color: var(--rosa-oscuro); font-weight: 700; }
+.sistemas-lc { display: grid; gap: 1.4rem; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+.sistema-lc { background: var(--blanco); border: 1px solid var(--linea); border-radius: var(--radio); padding: 1.8rem; }
+.sistema-lc--grande { border: 2px solid var(--rosa); box-shadow: var(--sombra); }
+.sistema-lc h3 { font-family: var(--serif); font-size: 1.45rem; }
+.sistema-lc > p { color: var(--tinta-suave); margin: 0.5rem 0 0; }
+.aviso-lc { max-width: 720px; margin: 2rem auto 0; text-align: center; color: var(--tinta-suave); font-size: 0.93rem; }
+@media (min-width: 760px) { .portafolio--4 { grid-template-columns: repeat(2, 1fr); max-width: 940px; margin: 0 auto; } }

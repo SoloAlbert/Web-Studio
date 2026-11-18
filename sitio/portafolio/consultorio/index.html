@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="robots" content="noindex">
+  <title>Sonríe Clínica Dental · Tu sonrisa en buenas manos</title>
+  <meta name="description" content="Página web para consultorio hecha por LocalConnect: servicios, especialista, opiniones, preguntas y citas por WhatsApp.">
+  <meta property="og:title" content="Sonríe Clínica Dental · Página web por LocalConnect">
+  <meta property="og:image" content="https://localconnect.studio/assets/portafolio/consultorio.png">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="icon" href="../../assets/icono.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="../portafolio.css">
+  <style>
+    :root { --fondo: #ffffff; --suave-fondo: #f1f8f8; --tinta: #0f2a33; --suave: #557079; --acento: #0e9f9a; --acento-osc: #0b7c78; --linea: #dcebed; }
+    body { background: var(--fondo); color: var(--tinta); font-family: "Manrope", system-ui, sans-serif; }
+    h1, h2, h3 { font-weight: 800; letter-spacing: -0.02em; }
+    .cab { position: sticky; top: 0; z-index: 10; background: rgba(255,255,255,0.92); backdrop-filter: blur(10px); border-bottom: 1px solid var(--linea); }
+    .cab .fila { display: flex; align-items: center; justify-content: space-between; height: 68px; }
+    .marca { display: flex; align-items: center; gap: 0.55rem; font-weight: 800; font-size: 1.2rem; color: var(--tinta); text-decoration: none; }
+    .marca i { width: 34px; height: 34px; border-radius: 10px; background: var(--acento); display: grid; place-items: center; }
+    .marca i svg { width: 20px; height: 20px; }
+    .nav { display: flex; gap: 1.5rem; }
+    .nav a { color: var(--suave); text-decoration: none; font-weight: 600; font-size: 0.92rem; }
+    @media (max-width: 700px) { .nav { display: none; } }
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.85rem 1.4rem; border-radius: 12px; background: var(--acento); color: #fff; font-weight: 700; text-decoration: none; }
+    .btn--claro { background: #fff; color: var(--tinta); border: 1px solid var(--linea); }
+    .hero { background: linear-gradient(180deg, var(--suave-fondo), #fff); }
+    .hero .fila { display: grid; gap: 2.5rem; align-items: center; padding: 4rem 0 4.5rem; }
+    @media (min-width: 880px) { .hero .fila { grid-template-columns: 1.1fr 0.9fr; padding: 5.5rem 0; } }
+    .sello { display: inline-flex; align-items: center; gap: 0.5rem; background: #fff; border: 1px solid var(--linea); border-radius: 999px; padding: 0.35rem 0.9rem; font-size: 0.82rem; font-weight: 700; color: var(--acento-osc); }
+    .hero h1 { font-size: clamp(2.4rem, 6.5vw, 3.8rem); line-height: 1.05; margin: 1rem 0; }
+    .hero h1 span { color: var(--acento); }
+    .hero p.sub { color: var(--suave); font-size: 1.1rem; max-width: 31rem; margin: 0 0 1.8rem; }
+    .hero .acc { display: flex; flex-wrap: wrap; gap: 0.7rem; }
+    .cifras { display: flex; gap: 2rem; margin-top: 2.2rem; flex-wrap: wrap; }
+    .cifras b { display: block; font-size: 1.7rem; font-weight: 800; }
+    .cifras span { color: var(--suave); font-size: 0.85rem; }
+    .tarjeta-cita { background: #fff; border: 1px solid var(--linea); border-radius: 24px; padding: 1.8rem; box-shadow: 0 30px 60px rgba(15, 42, 51, 0.08); }
+    .tarjeta-cita h3 { margin: 0 0 1rem; font-size: 1.2rem; }
+    .dias { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.4rem; margin-bottom: 1rem; }
+    .dias span { text-align: center; padding: 0.55rem 0; border-radius: 10px; border: 1px solid var(--linea); font-size: 0.8rem; font-weight: 700; color: var(--suave); }
+    .dias span.si { background: var(--acento); border-color: var(--acento); color: #fff; }
+    .horas { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.4rem; margin-bottom: 1.2rem; }
+    .horas span { text-align: center; padding: 0.6rem 0; border-radius: 10px; background: var(--suave-fondo); font-size: 0.85rem; font-weight: 600; }
+    .horas span.no { opacity: 0.35; text-decoration: line-through; }
+    .tarjeta-cita .btn { width: 100%; }
+    .sec { padding: 5rem 0; }
+    .titulo { text-align: center; max-width: 36rem; margin: 0 auto 2.6rem; }
+    .titulo h2 { font-size: clamp(2rem, 5vw, 2.6rem); margin: 0 0 0.5rem; }
+    .titulo p { color: var(--suave); margin: 0; }
+    .servicios { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); }
+    .servicio { border: 1px solid var(--linea); border-radius: 20px; padding: 1.6rem; transition: border-color 0.2s, box-shadow 0.2s; }
+    .servicio:hover { border-color: var(--acento); box-shadow: 0 14px 30px rgba(14, 159, 154, 0.08); }
+    .servicio i { width: 46px; height: 46px; border-radius: 14px; background: var(--suave-fondo); display: grid; place-items: center; margin-bottom: 1rem; color: var(--acento); }
+    .servicio i svg { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+    .servicio h3 { margin: 0 0 0.4rem; font-size: 1.1rem; }
+    .servicio p { margin: 0; color: var(--suave); font-size: 0.92rem; }
+    .doctora { background: var(--suave-fondo); }
+    .doctora .fila { display: grid; gap: 2rem; align-items: center; }
+    @media (min-width: 820px) { .doctora .fila { grid-template-columns: 0.8fr 1.2fr; } }
+    .retrato { aspect-ratio: 4 / 5; border-radius: 28px; background: linear-gradient(160deg, #bfe7e5, #e9f6f6); display: grid; place-items: center; max-width: 360px; width: 100%; justify-self: center; }
+    .retrato span { width: 140px; height: 140px; border-radius: 50%; background: #fff; display: grid; place-items: center; font-size: 3rem; font-weight: 800; color: var(--acento); }
+    .doctora h2 { font-size: clamp(2rem, 5vw, 2.4rem); margin: 0 0 0.3rem; }
+    .doctora .cargo { color: var(--acento-osc); font-weight: 700; margin: 0 0 1rem; }
+    .doctora p { color: var(--suave); }
+    .lista-ok { list-style: none; padding: 0; margin: 1.2rem 0 0; display: grid; gap: 0.5rem; }
+    .lista-ok li::before { content: "✓"; color: var(--acento); font-weight: 800; margin-right: 0.6rem; }
+    .opiniones { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
+    .opinion { border: 1px solid var(--linea); border-radius: 20px; padding: 1.5rem; }
+    .opinion p { margin: 0.6rem 0 1rem; }
+    .opinion small { color: var(--suave); font-weight: 600; }
+    .estrellas { color: #f2a93b; letter-spacing: 0.1em; }
+    .faq { max-width: 760px; margin: 0 auto; display: grid; gap: 0.7rem; }
+    .faq details { border: 1px solid var(--linea); border-radius: 16px; padding: 1.1rem 1.3rem; }
+    .faq summary { font-weight: 700; cursor: pointer; }
+    .faq p { color: var(--suave); margin: 0.7rem 0 0; }
+    .final { background: var(--tinta); color: #fff; text-align: center; border-radius: 28px; padding: 3.5rem 1.5rem; }
+    .final h2 { font-size: clamp(2rem, 5vw, 2.6rem); margin: 0 0 0.6rem; }
+    .final p { color: rgba(255,255,255,0.7); margin: 0 0 1.6rem; }
+    .pie-negocio { text-align: center; color: var(--suave); padding: 2.5rem 0 6rem; font-size: 0.85rem; }
+  </style>
+</head>
+<body>
+
+<header class="cab">
+  <div class="caja fila">
+    <a class="marca" href="#"><i><svg viewBox="0 0 24 24" fill="#fff"><path d="M7 3c-2.5 0-4 2-4 4.6 0 2.4 1 4 1.6 6.4.6 2.6.9 7 2.9 7 1.6 0 1.6-4.8 4.5-4.8s2.9 4.8 4.5 4.8c2 0 2.3-4.4 2.9-7 .6-2.4 1.6-4 1.6-6.4C21 5 19.5 3 17 3c-2 0-3 1-5 1S9 3 7 3z"/></svg></i>Sonríe</a>
+    <nav class="nav"><a href="#servicios">Servicios</a><a href="#especialista">Especialista</a><a href="#preguntas">Preguntas</a></nav>
+    <a class="btn" data-wa="¡Hola LocalConnect! Vi la página de Sonríe Clínica Dental y quiero una así para mi consultorio." href="#">Agendar cita</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="caja fila">
+    <div>
+      <span class="sello">● Primera valoración sin costo</span>
+      <h1>Tu sonrisa, en <span>buenas manos</span></h1>
+      <p class="sub">Odontología general, ortodoncia y estética dental con tecnología moderna y trato amable. Agenda en línea y recibe recordatorio de tu cita.</p>
+      <div class="acc">
+        <a class="btn" data-wa="¡Hola LocalConnect! Vi la página de Sonríe Clínica Dental y quiero una así para mi consultorio." href="#">Agendar mi cita</a>
+        <a class="btn btn--claro" href="#servicios">Ver servicios</a>
+      </div>
+      <div class="cifras"><div><b>12 años</b><span>de experiencia</span></div><div><b>4,800+</b><span>pacientes</span></div><div><b>4.9 ★</b><span>en Google</span></div></div>
+    </div>
+    <div class="tarjeta-cita" aria-label="Agenda en línea">
+      <h3>Agenda en línea</h3>
+      <div class="dias"><span>LUN</span><span class="si">MAR</span><span>MIÉ</span><span>JUE</span><span>VIE</span></div>
+      <div class="horas"><span>9:00</span><span class="no">10:00</span><span>11:00</span><span class="no">12:00</span><span>16:00</span><span>17:30</span></div>
+      <a class="btn" data-wa="¡Hola LocalConnect! Vi la página de Sonríe Clínica Dental y quiero una así para mi consultorio." href="#">Confirmar martes 11:00</a>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="servicios">
+  <div class="caja">
+    <div class="titulo"><h2>Servicios</h2><p>Todo el cuidado de tu boca en un solo lugar.</p></div>
+    <div class="servicios">
+      <div class="servicio"><i><svg viewBox="0 0 24 24"><path d="M12 3v18M3 12h18"/></svg></i><h3>Limpieza dental</h3><p>Profilaxis y eliminación de sarro en una sola cita.</p></div>
+      <div class="servicio"><i><svg viewBox="0 0 24 24"><rect x="3" y="9" width="18" height="6" rx="3"/><path d="M8 9v6M12 9v6M16 9v6"/></svg></i><h3>Ortodoncia</h3><p>Brackets metálicos, estéticos y alineadores transparentes.</p></div>
+      <div class="servicio"><i><svg viewBox="0 0 24 24"><path d="M12 3l2.5 5 5.5.8-4 3.9.9 5.5L12 15.6 7.1 18.2l.9-5.5-4-3.9 5.5-.8z"/></svg></i><h3>Blanqueamiento</h3><p>Resultados visibles desde la primera sesión.</p></div>
+      <div class="servicio"><i><svg viewBox="0 0 24 24"><path d="M12 3v6M9 6h6M5 13h14l-1.5 8h-11z"/></svg></i><h3>Implantes</h3><p>Recupera piezas perdidas con implantes de titanio.</p></div>
+      <div class="servicio"><i><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></i><h3>Urgencias</h3><p>Atención el mismo día para dolor o fracturas.</p></div>
+      <div class="servicio"><i><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 5.5-7 10-7 10z"/></svg></i><h3>Odontopediatría</h3><p>Consultas amigables para los más pequeños.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec doctora" id="especialista">
+  <div class="caja fila">
+    <div class="retrato" aria-hidden="true"><span>LM</span></div>
+    <div>
+      <h2>Dra. Laura Méndez</h2>
+      <p class="cargo">Cirujana dentista · Especialista en ortodoncia</p>
+      <p>Egresada de la UNAM con especialidad en ortodoncia. Mi objetivo es que cada paciente se sienta tranquilo y salga con una sonrisa sana y segura.</p>
+      <ul class="lista-ok"><li>Cédula profesional y de especialidad</li><li>Equipo de rayos X digital</li><li>Esterilización certificada</li></ul>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="caja">
+    <div class="titulo"><h2>Pacientes felices</h2><p>Opiniones de Google.</p></div>
+    <div class="opiniones">
+      <div class="opinion"><span class="estrellas">★★★★★</span><p>“Me daba miedo ir al dentista y aquí me sentí muy tranquila. Totalmente recomendada.”</p><small>Mariana G.</small></div>
+      <div class="opinion"><span class="estrellas">★★★★★</span><p>“Agendé en línea un domingo y el martes ya tenía mi limpieza. Súper práctico.”</p><small>Alberto P.</small></div>
+      <div class="opinion"><span class="estrellas">★★★★★</span><p>“Mi hijo ahora quiere ir al dentista. Excelente trato con los niños.”</p><small>Sofía T.</small></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="preguntas" style="padding-top:0">
+  <div class="caja">
+    <div class="titulo"><h2>Preguntas frecuentes</h2></div>
+    <div class="faq">
+      <details><summary>¿La primera valoración tiene costo?</summary><p>No. En la primera cita revisamos tu caso y te damos un plan de tratamiento con presupuesto.</p></details>
+      <details><summary>¿Aceptan tarjeta y meses sin intereses?</summary><p>Sí, aceptamos tarjetas y ofrecemos meses sin intereses en tratamientos de ortodoncia e implantes.</p></details>
+      <details><summary>¿Puedo cambiar mi cita?</summary><p>Claro. Escríbenos por WhatsApp con al menos 24 horas de anticipación y la cambiamos sin costo.</p></details>
+    </div>
+  </div>
+</section>
+
+<section class="sec" style="padding-top:0">
+  <div class="caja">
+    <div class="final">
+      <h2>Agenda tu valoración sin costo</h2>
+      <p>Lunes a viernes de 9:00 a 19:00 · Sábados de 9:00 a 14:00</p>
+      <a class="btn" data-wa="¡Hola LocalConnect! Vi la página de Sonríe Clínica Dental y quiero una así para mi consultorio." href="#">Agendar por WhatsApp</a>
+    </div>
+  </div>
+</section>
+
+<footer class="pie-negocio">Sonríe Clínica Dental</footer>
+
+<script src="../../plantillas/comun/marca.js"></script>
+<script src="../portafolio.js" data-proyecto="Sonríe Clínica Dental" data-tipo="Página para consultorio · Agenda de citas"></script>
+</body>
+</html>
