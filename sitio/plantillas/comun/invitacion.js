@@ -595,6 +595,8 @@
           : `<img src="${src}" alt="">`);
       if (p.asomo != null) el.style.setProperty("--asomo", `${Math.round(Number(p.asomo) * 100)}%`);
       if (p.giro != null) el.style.setProperty("--giro", `${Number(p.giro)}deg`);
+      // Si la imagen no carga, se quita el personaje (nunca se muestra un cuadro roto).
+      fig.addEventListener("error", () => el.remove(), true);
       if (p.lottie) cargarLottie(fig, p.lottie);
       else if (/\.svg(\?|$)/i.test(p.imagen)) {
         // El SVG se inserta tal cual para poder mover piernas, brazos y cintas.
