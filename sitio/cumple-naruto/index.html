@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="robots" content="noindex, nofollow">
+  <script>
+    // Asegura la "/" final para que las rutas relativas funcionen en cualquier servidor.
+    (function (p) { if (!/\/$|\.html$/.test(p)) location.replace(p + "/" + location.search + location.hash); })(location.pathname);
+  </script>
+
+  <!-- Lo que se ve al compartir el enlace por WhatsApp / Facebook.
+       WhatsApp NO lee datos.js, por eso estos textos se escriben aquí. -->
+  <title>¡Santiago cumple 4! · Fiesta de Naruto</title>
+  <meta name="description" content="¡Fiesta de Naruto! Santiago cumple 4 años el 20 de marzo. Toca para ver los detalles y confirmar.">
+  <meta property="og:title" content="¡Santiago cumple 4! · Fiesta de Naruto">
+  <meta property="og:description" content="¡Fiesta de Naruto! Santiago cumple 4 años el 20 de marzo. Toca para ver los detalles y confirmar.">
+  <meta property="og:type" content="website">
+  <!-- Foto al compartir por WhatsApp (dirección completa):
+  <meta property="og:image" content="https://localconnect.studio/cumple-naruto/fotos/portada.jpg"> -->
+  <meta name="theme-color" content="#fff8ee">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="../plantillas/comun/base.css">
+  <link rel="stylesheet" href="../plantillas/ninja/tema.css">
+</head>
+<body>
+  <div id="app"></div>
+  <noscript><p style="padding:2rem;text-align:center">Activa JavaScript para ver la invitación.</p></noscript>
+  <script src="../plantillas/comun/marca.js"></script>
+  <script src="../plantillas/comun/firebase-config.js"></script>
+  <script src="datos.js"></script>
+  <script src="../plantillas/comun/invitacion.js"></script>
+</body>
+</html>
