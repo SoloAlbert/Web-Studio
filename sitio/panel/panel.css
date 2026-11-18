@@ -224,3 +224,21 @@
   max-width: calc(100% - 2rem);
 }
 .aviso-flotante--error { background: #b3261e; }
+
+/* Cámara de invitados */
+.formulario-panel select { font: inherit; font-weight: 400; color: var(--tinta); background: var(--crema); border: 1px solid var(--linea); border-radius: 10px; padding: 0.7rem 0.8rem; width: 100%; }
+.camara-panel__cabeza { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+.camara-panel__cabeza h2 { margin: 0; }
+.camara-panel__acciones { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 1rem 0 1.2rem; }
+.camara-panel__revelar { border-top: 1px solid var(--linea); padding-top: 1.1rem; gap: 0.7rem; }
+.camara-panel__revelar input { max-width: 320px; }
+.camara-panel__botones { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.fotos-panel { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 0.7rem; margin-top: 1.2rem; }
+.fotos-panel .vacio { grid-column: 1 / -1; }
+.foto-panel { margin: 0; background: var(--crema); border: 1px solid var(--linea); border-radius: 12px; overflow: hidden; }
+.foto-panel img { width: 100%; aspect-ratio: 1; object-fit: cover; display: block; }
+.foto-panel figcaption { display: flex; justify-content: space-between; align-items: center; gap: 0.4rem; padding: 0.45rem 0.6rem; font-size: 0.8rem; }
+.foto-panel figcaption span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.foto-panel--oculta img { opacity: 0.3; filter: grayscale(1); }
+.foto-panel--oculta figcaption span::after { content: " · oculta"; color: #b3261e; }
+.foto-panel .enlace { background: none; border: 0; padding: 0; font: inherit; font-size: 0.8rem; font-weight: 600; color: var(--rosa-oscuro); cursor: pointer; }

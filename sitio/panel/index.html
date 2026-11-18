@@ -138,6 +138,29 @@
       <p class="nota">Personas que confirmaron desde el enlace general de la invitación.</p>
       <div data-lista-respuestas></div>
     </section>
+    <section class="caja camara-panel" data-camara hidden>
+      <div class="camara-panel__cabeza">
+        <h2>Cámara de invitados</h2>
+        <span class="estado" data-camara-estado></span>
+      </div>
+      <p class="nota" data-camara-resumen></p>
+      <div class="camara-panel__acciones">
+        <button class="boton boton--chico" data-accion="camara-qr" type="button">QR para las mesas</button>
+        <a class="boton boton--chico boton--borde" data-camara-proyeccion target="_blank" rel="noopener">Abrir proyección</a>
+        <button class="boton boton--chico boton--borde" data-accion="camara-descargar" type="button">Descargar todas</button>
+      </div>
+      <form class="formulario-panel camara-panel__revelar" data-form="revelar">
+        <label>Hora del revelado <small>antes de esa hora nadie ve las fotos, solo ustedes</small>
+          <input type="datetime-local" name="revelar">
+        </label>
+        <div class="camara-panel__botones">
+          <button class="boton boton--chico" type="submit">Guardar hora</button>
+          <button class="boton boton--chico boton--borde" data-accion="revelar-ahora" type="button">Revelar ahora</button>
+        </div>
+      </form>
+      <p class="nota" data-camara-revelado></p>
+      <div class="fotos-panel" data-camara-fotos></div>
+    </section>
   </section>
 </main>
 
@@ -179,6 +202,14 @@
     <label>Dirección de la invitación <input name="url" required></label>
     <label>Correo(s) de Google del anfitrión <small>separados por coma</small>
       <input name="anfitriones" required>
+    </label>
+    <label>Cámara de invitados
+      <select name="camara">
+        <option value="0">Sin cámara</option>
+        <option value="3">3 fotos por invitado</option>
+        <option value="7">7 fotos por invitado</option>
+        <option value="12">12 fotos por invitado</option>
+      </select>
     </label>
     <div class="ventana__acciones">
       <button class="boton boton--borde" value="cancelar" type="submit" formnovalidate>Cancelar</button>

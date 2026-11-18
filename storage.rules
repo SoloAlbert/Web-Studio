@@ -1,0 +1,35 @@
+rules_version = '2';
+
+// =====================================================================
+// Reglas del almacenamiento de fotos de LocalConnect.
+// Se pegan en Firebase → Storage → Reglas → Publicar.
+//
+// Cada invitado (sesión anónima) solo puede subir a su propia carpeta,
+// fotos JPG de menos de 4 MB, numeradas 1..N según el paquete del evento.
+// Una foto ya guardada (con su registro en Firestore) no se puede reemplazar.
+// Las fotos se muestran con su enlace guardado en Firestore, cuyas reglas
+// deciden quién las ve y cuándo (hora del revelado).
+// =====================================================================
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /camaras/{eventoId}/{uid}/{archivo} {
+      function numero() {
+        return archivo.split('[.]')[0];
+      }
+      function camara() {
+        return firestore.get(/databases/(default)/documents/camaras/$(eventoId)).data;
+      }
+
+      allow read: if request.auth != null && request.auth.uid == uid;
+
+      allow create, update: if request.auth != null
+        && request.auth.uid == uid
+        && archivo.matches('^([1-9]|1[0-9]|20)[.]jpg$')
+        && request.resource.size < 4 * 1024 * 1024
+        && request.resource.contentType == 'image/jpeg'
+        && camara().activa == true
+        && int(numero()) <= camara().fotos
+        && !firestore.exists(/databases/(default)/documents/camaras/$(eventoId)/fotos/$(uid + '_' + numero()));
+    }
+  }
+}

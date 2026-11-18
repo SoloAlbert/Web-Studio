@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Proyección · Cámara del evento</title>
+  <link rel="icon" href="../assets/icono.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,500;1,500&display=swap">
+  <link rel="stylesheet" href="camara.css">
+</head>
+<body class="proy">
+
+<!-- Antes del revelado: invitación a tomar fotos -->
+<section class="proy__espera" data-espera>
+  <div>
+    <p class="cam__marca">Cámara del evento</p>
+    <h1 data-titulo>&nbsp;</h1>
+    <div class="proy__qr" data-qr hidden></div>
+    <p class="proy__texto">Escanea el código con tu celular y toma tus fotos<small>Se revelarán todas juntas en esta pantalla</small></p>
+    <p class="proy__cuenta" data-cuenta></p>
+  </div>
+</section>
+
+<!-- Después del revelado: carrusel -->
+<section class="proy__carrusel" data-carrusel hidden></section>
+<p class="proy__vacio" data-vacio hidden>Aún no hay fotos. ¡Escanea el código y toma la primera!</p>
+<aside class="proy__esquina" data-esquina hidden>
+  <img data-qr-chico alt="">
+  <p>Escanea y <strong>toma tus fotos</strong></p>
+</aside>
+
+<button class="proy__pantalla" type="button" data-accion="pantalla">Pantalla completa</button>
+
+<script src="../plantillas/comun/marca.js"></script>
+<script src="../plantillas/comun/firebase-config.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.js"></script>
+<script type="module" src="proyeccion.js"></script>
+</body>
+</html>

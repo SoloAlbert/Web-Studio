@@ -39,6 +39,21 @@ Panel: https://localconnect.studio/panel (o http://localhost:3000/panel/)
 Reglas de seguridad de la base de datos: `firestore.rules`
 (se pegan en Firebase → Firestore Database → Reglas → Publicar).
 
+## Cámara de invitados (extra o incluida en Exclusivo)
+1. En el panel, entra al evento → **Ajustes** → "Cámara de invitados" → 3, 7 o 12 fotos por invitado.
+2. Aparece la sección **Cámara de invitados** en el panel del evento:
+   - **QR para las mesas**: descárgalo e imprímelo en tarjetas.
+     Enlace: `localconnect.studio/camara/?e=<evento>`
+   - **Hora del revelado**: antes de esa hora los invitados no ven ninguna foto.
+   - **Ocultar** fotos que no quieran mostrar (no salen en la proyección ni en el álbum).
+   - **Abrir proyección**: en la compu del salón, pantalla completa. Antes del revelado
+     muestra el QR y la cuenta regresiva; después, el carrusel de fotos en vivo.
+   - **Descargar todas** en un .zip.
+3. Para cerrar la cámara al terminar: Ajustes → "Sin cámara" (las fotos no se borran).
+
+Reglas del almacenamiento de fotos: `storage.rules`
+(se pegan en Firebase → Storage → Reglas → Publicar).
+
 ## Pases personalizados sin panel
 Agrega al final del enlace el nombre del invitado y número de pases:
 ```

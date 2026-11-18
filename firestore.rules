@@ -86,5 +86,56 @@ service cloud.firestore {
           && request.resource.data.creado is timestamp;
       }
     }
+
+    // ------------------------------------------------------------------
+    // Cámara del evento (fotos de los invitados).
+    // camaras/{eventoId}: nombre, fotos (por invitado), revelar, activa.
+    // Las fotos se guardan con id "<uid>_<n>": cada invitado tiene n = 1..fotos,
+    // así nadie puede subir más fotos de las que incluye su paquete.
+    // ------------------------------------------------------------------
+    match /camaras/{eventoId} {
+      allow get: if true;
+      allow list: if esAdmin();
+      allow create, delete: if esAdmin();
+      allow update: if esAdmin()
+        || (esAnfitrion(eventoId)
+            && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['revelar'])
+            && (request.resource.data.revelar == null || request.resource.data.revelar is timestamp));
+
+      match /fotos/{fotoId} {
+        function camara() {
+          return get(/databases/$(database)/documents/camaras/$(eventoId)).data;
+        }
+        function nueva() {
+          return request.resource.data;
+        }
+
+        // Anfitrión y administrador: siempre. Invitado: las suyas.
+        // Todos: después de la hora del revelado, las que no estén ocultas.
+        allow read: if esAdmin() || esAnfitrion(eventoId)
+          || (autenticado() && resource.data.uid == request.auth.uid)
+          || (camara().revelar != null && request.time >= camara().revelar && resource.data.oculta == false);
+
+        // Anfitrión: ocultar o mostrar fotos, o borrarlas.
+        allow update: if (esAdmin() || esAnfitrion(eventoId))
+          && nueva().diff(resource.data).affectedKeys().hasOnly(['oculta'])
+          && nueva().oculta is bool;
+        allow delete: if esAdmin() || esAnfitrion(eventoId);
+
+        // Invitado: guardar una foto de su rollo.
+        allow create: if autenticado()
+          && camara().activa == true
+          && nueva().keys().hasOnly(['uid', 'nombre', 'n', 'ruta', 'url', 'creado', 'oculta'])
+          && nueva().keys().hasAll(['uid', 'nombre', 'n', 'ruta', 'url', 'creado', 'oculta'])
+          && nueva().uid == request.auth.uid
+          && nueva().n is int && nueva().n >= 1 && nueva().n <= camara().fotos
+          && fotoId == request.auth.uid + '_' + string(nueva().n)
+          && nueva().ruta == 'camaras/' + eventoId + '/' + request.auth.uid + '/' + string(nueva().n) + '.jpg'
+          && nueva().url is string && nueva().url.matches('https://firebasestorage[.]googleapis[.]com/.*')
+          && nueva().nombre is string && nueva().nombre.size() > 0 && nueva().nombre.size() <= 40
+          && nueva().creado == request.time
+          && nueva().oculta == false;
+      }
+    }
   }
 }

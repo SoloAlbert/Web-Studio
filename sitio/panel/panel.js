@@ -10,7 +10,7 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 import {
   getFirestore, collection, doc, getDoc, getDocs, addDoc, setDoc, updateDoc, deleteDoc,
-  onSnapshot, query, where, serverTimestamp, writeBatch,
+  onSnapshot, query, where, serverTimestamp, writeBatch, Timestamp,
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const app = initializeApp(window.FIREBASE_CONFIG);
@@ -50,6 +50,9 @@ const S = {
   filtro: "todos",
   busqueda: "",
   desuscribir: [],
+  camara: null,
+  fotos: [],
+  desFotos: null,
 };
 
 // ---------- utilidades ----------
@@ -120,13 +123,17 @@ function estado(inv) {
   return "sin-enviar";
 }
 
+// En la compu (servidor local) los enlaces apuntan a la versión local para revisarlos antes de publicar.
+function local(u) {
+  const esLocal = /^(localhost|127\.0\.0\.1|192\.168\.\d+\.\d+|10\.\d+\.\d+\.\d+)$/.test(location.hostname);
+  return esLocal && u.startsWith(SITIO) ? location.origin + u.slice(SITIO.length) : u;
+}
 function urlEvento(ev) {
-  let u = (ev && ev.url) || `${SITIO}/${ev.id}/`;
-  // En la compu (servidor local) los enlaces apuntan a la versión local para revisarlos antes de publicar.
-  const local = /^(localhost|127\.0\.0\.1|192\.168\.\d+\.\d+|10\.\d+\.\d+\.\d+)$/.test(location.hostname);
-  if (local && u.startsWith(SITIO)) u = location.origin + u.slice(SITIO.length);
+  const u = local((ev && ev.url) || `${SITIO}/${ev.id}/`);
   return u.endsWith("/") ? u : u + "/";
 }
+const enlaceCamara = (id) => local(`${SITIO}/camara/?e=${encodeURIComponent(id)}`);
+const enlaceProyeccion = (id) => local(`${SITIO}/camara/proyeccion.html?e=${encodeURIComponent(id)}`);
 const enlaceInvitado = (inv) => `${urlEvento(S.evento)}?i=${inv.id}`;
 
 function llenarMensaje(plantilla, inv) {
@@ -317,7 +324,33 @@ function abrirEvento(ev) {
         pintarEvento();
       },
       (e) => avisar(errorAmigable(e), true)
-    )
+    ),
+    onSnapshot(
+      doc(db, "camaras", ev.id),
+      (s) => {
+        S.camara = s.exists() ? s.data() : null;
+        if (S.camara && !S.desFotos) {
+          S.desFotos = onSnapshot(
+            collection(db, "camaras", ev.id, "fotos"),
+            (snap) => {
+              S.fotos = snap.docs
+                .map((d) => ({ id: d.id, ...d.data() }))
+                .sort((x, y) => (fecha(y.creado) || 0) - (fecha(x.creado) || 0));
+              pintarCamara();
+            },
+            (e) => console.error(e)
+          );
+        }
+        pintarCamara();
+      },
+      (e) => console.error(e)
+    ),
+    () => {
+      if (S.desFotos) S.desFotos();
+      S.desFotos = null;
+      S.camara = null;
+      S.fotos = [];
+    }
   );
 }
 
@@ -585,9 +618,12 @@ function abrirVentana(nombre) {
   return new Promise((ok) => v.addEventListener("close", () => ok(v.returnValue), { once: true }));
 }
 
-function confirmar(titulo, texto) {
+function confirmar(titulo, texto, boton = "Eliminar") {
   $("[data-confirmar-titulo]").textContent = titulo;
   $("[data-confirmar-texto]").textContent = texto;
+  const b = $("[data-ventana=confirmar] [value=si]");
+  b.textContent = boton;
+  b.classList.toggle("boton--peligro", boton === "Eliminar");
   return abrirVentana("confirmar").then((r) => r === "si");
 }
 
@@ -627,7 +663,9 @@ $("[data-accion=ajustes]").addEventListener("click", async () => {
   f.nombre.value = S.evento.nombre || "";
   f.url.value = urlEvento(S.evento);
   f.anfitriones.value = (S.evento.anfitriones || []).join(", ");
+  f.camara.value = S.camara && S.camara.activa !== false ? String(S.camara.fotos) : "0";
   if ((await abrirVentana("ajustes")) !== "guardar") return;
+  guardarCamara(parseInt(f.camara.value, 10) || 0, f.nombre.value.trim());
   const anfitriones = correos(f.anfitriones.value);
   if (!anfitriones.length) return avisar("Escribe al menos un correo válido.", true);
   const cambios = { nombre: f.nombre.value.trim(), url: f.url.value.trim(), anfitriones };
@@ -641,9 +679,11 @@ $("[data-accion=ajustes]").addEventListener("click", async () => {
   );
 });
 
-function abrirQR(inv) {
-  const enlace = enlaceInvitado(inv);
-  $("[data-qr-nombre]").textContent = inv.nombre;
+function abrirQR(inv, enlace, titulo, archivo) {
+  enlace = enlace || enlaceInvitado(inv);
+  titulo = titulo || inv.nombre;
+  archivo = archivo || `QR-${(inv.nombre || "invitado").replace(/[^\wáéíóúñ-]+/gi, "-")}`;
+  $("[data-qr-nombre]").textContent = titulo;
   $("[data-qr-enlace]").textContent = enlace;
   if (typeof window.qrcode !== "function") {
     $("[data-qr]").textContent = "No se pudo cargar el generador de QR. Revisa tu conexión.";
@@ -652,10 +692,10 @@ function abrirQR(inv) {
     qr.addData(enlace);
     qr.make();
     const url = qr.createDataURL(10, 20);
-    $("[data-qr]").innerHTML = `<img src="${url}" alt="Código QR de la invitación de ${esc(inv.nombre)}">`;
+    $("[data-qr]").innerHTML = `<img src="${url}" alt="Código QR: ${esc(titulo)}">`;
     const a = $("[data-qr-descargar]");
     a.href = url;
-    a.download = `QR-${(inv.nombre || "invitado").replace(/[^\wáéíóúñ-]+/gi, "-")}.gif`;
+    a.download = `${archivo}.gif`;
   }
   abrirVentana("qr");
 }
@@ -688,4 +728,144 @@ $("[data-accion=exportar]").addEventListener("click", () => {
     URL.revokeObjectURL(a.href);
     a.remove();
   }, 1000);
+});
+
+// ---------- cámara de invitados ----------
+async function guardarCamara(fotos, nombre) {
+  const ref = doc(db, "camaras", S.evento.id);
+  try {
+    if (fotos > 0) {
+      await setDoc(ref, { nombre: nombre || S.evento.nombre, fotos, activa: true, ...(S.camara ? {} : { revelar: null }) }, { merge: true });
+    } else if (S.camara) {
+      await updateDoc(ref, { activa: false });
+    }
+  } catch (x) {
+    avisar(errorAmigable(x), true);
+  }
+}
+
+const aFechaLocal = (d) => {
+  const p = (n) => String(n).padStart(2, "0");
+  return `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())}T${p(d.getHours())}:${p(d.getMinutes())}`;
+};
+
+function pintarCamara() {
+  const caja = $("[data-camara]");
+  const c = S.camara;
+  caja.hidden = !c;
+  if (!c) return;
+  const activa = c.activa !== false;
+  const est = $("[data-camara-estado]");
+  est.className = `estado estado--${activa ? "si" : "sin-enviar"}`;
+  est.textContent = activa ? "Activa" : "Cerrada";
+
+  const personas = new Set(S.fotos.map((f) => f.uid)).size;
+  const ocultas = S.fotos.filter((f) => f.oculta).length;
+  $("[data-camara-resumen]").textContent =
+    `${c.fotos} fotos por invitado · ${S.fotos.length} ${S.fotos.length === 1 ? "foto" : "fotos"} de ${personas} ${personas === 1 ? "invitado" : "invitados"}` +
+    (ocultas ? ` · ${ocultas} ${ocultas === 1 ? "oculta" : "ocultas"}` : "");
+  $("[data-camara-proyeccion]").href = enlaceProyeccion(S.evento.id);
+
+  const r = fecha(c.revelar);
+  const input = $("[data-form=revelar]").revelar;
+  if (document.activeElement !== input) input.value = r ? aFechaLocal(r) : "";
+  $("[data-camara-revelado]").textContent = !r
+    ? "Aún no eligen la hora del revelado: las fotos siguen ocultas para los invitados."
+    : r <= new Date()
+    ? "✓ Las fotos ya están reveladas: los invitados y la proyección pueden verlas."
+    : `Se revelan el ${r.toLocaleString("es-MX", { weekday: "long", day: "numeric", month: "long", hour: "numeric", minute: "2-digit" })}.`;
+
+  $("[data-camara-fotos]").innerHTML = S.fotos.length
+    ? S.fotos
+        .map(
+          (f) => `<figure class="foto-panel${f.oculta ? " foto-panel--oculta" : ""}" data-foto="${esc(f.id)}">
+            <a href="${esc(f.url)}" target="_blank" rel="noopener"><img src="${esc(f.url)}" alt="Foto de ${esc(f.nombre)}" loading="lazy"></a>
+            <figcaption>
+              <span>${esc(f.nombre)}</span>
+              <button class="enlace" data-accion="ocultar-foto" type="button">${f.oculta ? "Mostrar" : "Ocultar"}</button>
+            </figcaption>
+          </figure>`
+        )
+        .join("")
+    : `<p class="vacio">Aún no hay fotos. Imprime el QR para las mesas y los invitados empezarán a tomarlas.</p>`;
+}
+
+$("[data-form=revelar]").addEventListener("submit", (e) => {
+  e.preventDefault();
+  const v = e.target.revelar.value;
+  const valor = v ? Timestamp.fromDate(new Date(v)) : null;
+  updateDoc(doc(db, "camaras", S.evento.id), { revelar: valor }).then(
+    () => avisar(v ? "Hora del revelado guardada" : "Hora del revelado quitada"),
+    (x) => avisar(errorAmigable(x), true)
+  );
+});
+
+$("[data-accion=revelar-ahora]").addEventListener("click", async () => {
+  if (!(await confirmar("¿Revelar las fotos ahora?", "Todos los invitados y la pantalla de proyección podrán verlas desde este momento.", "Revelar"))) return;
+  updateDoc(doc(db, "camaras", S.evento.id), { revelar: serverTimestamp() }).then(
+    () => avisar("¡Fotos reveladas!"),
+    (x) => avisar(errorAmigable(x), true)
+  );
+});
+
+$("[data-accion=camara-qr]").addEventListener("click", () =>
+  abrirQR(null, enlaceCamara(S.evento.id), "Cámara del evento", `QR-camara-${S.evento.id}`)
+);
+
+$("[data-camara-fotos]").addEventListener("click", (e) => {
+  const b = e.target.closest("[data-accion=ocultar-foto]");
+  if (!b) return;
+  const f = S.fotos.find((x) => x.id === b.closest("[data-foto]").dataset.foto);
+  if (!f) return;
+  updateDoc(doc(db, "camaras", S.evento.id, "fotos", f.id), { oculta: !f.oculta }).then(
+    () => avisar(f.oculta ? "La foto se volverá a mostrar" : "Foto oculta: no aparecerá en la proyección"),
+    (x) => avisar(errorAmigable(x), true)
+  );
+});
+
+$("[data-accion=camara-descargar]").addEventListener("click", async (e) => {
+  const fotos = S.fotos.filter((f) => !f.oculta);
+  if (!fotos.length) return avisar("Aún no hay fotos para descargar.");
+  const b = e.currentTarget;
+  b.disabled = true;
+  const texto = b.textContent;
+  try {
+    if (!window.JSZip) {
+      await new Promise((ok, mal) => {
+        const s = document.createElement("script");
+        s.src = "https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js";
+        s.onload = ok;
+        s.onerror = mal;
+        document.head.appendChild(s);
+      });
+    }
+    const zip = new window.JSZip();
+    const usados = {};
+    for (let i = 0; i < fotos.length; i++) {
+      b.textContent = `Descargando ${i + 1} de ${fotos.length}…`;
+      const f = fotos[i];
+      const base = (f.nombre || "invitado").replace(/[^\wáéíóúñ-]+/gi, "-");
+      usados[base] = (usados[base] || 0) + 1;
+      const r = await fetch(f.url);
+      if (!r.ok) throw new Error("descarga");
+      zip.file(`${base}-${usados[base]}.jpg`, await r.blob());
+    }
+    b.textContent = "Preparando archivo…";
+    const blob = await zip.generateAsync({ type: "blob" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = `fotos-${S.evento.id}.zip`;
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(() => {
+      URL.revokeObjectURL(a.href);
+      a.remove();
+    }, 2000);
+  } catch (x) {
+    console.error(x);
+    avisar("No se pudieron descargar las fotos. Revisa tu conexión e inténtalo de nuevo.", true);
+  } finally {
+    b.disabled = false;
+    b.textContent = texto;
+  }
 });

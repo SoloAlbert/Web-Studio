@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="robots" content="noindex, nofollow">
+  <script>
+    (function (p) { if (!/\/$|\.html$/.test(p)) location.replace(p + "/" + location.search + location.hash); })(location.pathname);
+  </script>
+  <title>Cámara del evento · LocalConnect</title>
+  <meta name="theme-color" content="#14151b">
+  <link rel="icon" href="../assets/icono.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;1,500&display=swap">
+  <link rel="stylesheet" href="camara.css">
+</head>
+<body class="cam">
+
+<main class="cam__main">
+  <header class="cam__cabeza">
+    <p class="cam__marca">Cámara del evento</p>
+    <h1 class="cam__titulo" data-titulo>&nbsp;</h1>
+  </header>
+
+  <!-- Cargando -->
+  <section class="vista" data-vista="cargando">
+    <div class="giro" aria-hidden="true"></div>
+  </section>
+
+  <!-- Aviso / error -->
+  <section class="vista" data-vista="aviso" hidden>
+    <p class="cam__aviso" data-aviso></p>
+  </section>
+
+  <!-- Nombre -->
+  <section class="vista" data-vista="nombre" hidden>
+    <form class="tarjeta" data-form="nombre">
+      <h2>¡Bienvenido!</h2>
+      <p>Tienes un rollo de <strong data-total></strong> fotos para capturar los mejores momentos. Se revelarán todas juntas al final.</p>
+      <label>¿Cómo te llamas?
+        <input name="nombre" required maxlength="40" autocomplete="given-name" placeholder="Tu nombre">
+      </label>
+      <button class="boton" type="submit">Empezar</button>
+    </form>
+  </section>
+
+  <!-- Cámara -->
+  <section class="vista" data-vista="camara" hidden>
+    <div class="rollo" data-rollo aria-hidden="true"></div>
+    <p class="contador" data-contador></p>
+
+    <div class="disparo" data-disparo>
+      <button class="obturador" type="button" data-accion="disparar" aria-label="Tomar foto">
+        <svg viewBox="0 0 24 24"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>
+      </button>
+      <p class="nota">Toca para abrir la cámara</p>
+    </div>
+
+    <div class="vista-previa" data-previa hidden>
+      <img data-previa-img alt="Tu foto">
+      <p class="nota">¿Te gustó? Si no, repítela: solo cuenta la que guardes.</p>
+      <div class="vista-previa__botones">
+        <button class="boton boton--borde" type="button" data-accion="repetir">Repetir</button>
+        <button class="boton" type="button" data-accion="guardar">Guardar esta</button>
+      </div>
+    </div>
+
+    <div class="terminado" data-terminado hidden>
+      <p class="terminado__icono" aria-hidden="true">🎞️</p>
+      <h2>¡Usaste todo tu rollo!</h2>
+      <p>Gracias por compartir tus fotos.</p>
+    </div>
+
+    <p class="revelado" data-revelado></p>
+    <p class="cam__error" data-error hidden></p>
+    <input type="file" accept="image/*" capture="environment" data-entrada hidden>
+  </section>
+
+  <!-- Álbum (después del revelado) -->
+  <section class="album" data-album hidden>
+    <h2>Las fotos del evento</h2>
+    <p class="nota" data-album-total></p>
+    <div class="album__fotos" data-album-fotos></div>
+  </section>
+
+  <p class="cam__pie">Hecho por <a href="../">LocalConnect</a></p>
+</main>
+
+<div class="visor" data-visor hidden>
+  <button class="visor__cerrar" type="button" data-accion="cerrar-visor" aria-label="Cerrar">×</button>
+  <img data-visor-img alt="">
+  <p data-visor-nombre></p>
+</div>
+
+<script src="../plantillas/comun/firebase-config.js"></script>
+<script type="module" src="camara.js"></script>
+</body>
+</html>

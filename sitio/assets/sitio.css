@@ -288,6 +288,9 @@ h1, h2 { font-family: var(--serif); font-weight: 600; letter-spacing: -0.01em; }
 .extras ul { list-style: none; padding: 0; margin: 0; }
 .extras li { display: flex; justify-content: space-between; gap: 1rem; padding: 0.6rem 0; border-top: 1px solid var(--linea); font-size: 0.95rem; }
 .extras li:first-child { border-top: 0; }
+.extras--camara { margin-top: 1.2rem; border-color: var(--rosa); }
+.extras--camara > p { margin: 0 0 0.8rem; font-size: 0.93rem; color: var(--tinta-suave); }
+.extras--camara .extras__nota { margin: 0.8rem 0 1rem; font-size: 0.88rem; color: var(--rosa-oscuro); font-weight: 600; }
 
 /* ---------- Pasos ---------- */
 .pasos { list-style: none; padding: 0; margin: 0; display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); }

@@ -1,5 +1,6 @@
 User-agent: *
 Allow: /
 Disallow: /panel/
+Disallow: /camara/
 
 Sitemap: https://localconnect.studio/sitemap.xml
