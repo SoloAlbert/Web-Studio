@@ -74,8 +74,9 @@ sitio/                       ← todo lo que se publica
   index.html                 ← página principal (las 4 líneas de negocio)
   invitaciones/              ← página de ventas de invitaciones
   negocios/                  ← páginas web para negocios (paquetes)
-  sistemas/                  ← punto de venta y otros sistemas
-  portafolio/<negocio>/      ← páginas de negocio del portafolio
+  sistemas/                  ← página de sistemas (precios)
+  sistemas/<sistema>/        ← 6 sistemas que se pueden usar (punto-de-venta, restaurante, agenda, inventario, creditos, membresias)
+  portafolio/<negocio>/      ← 6 páginas de negocio (restaurante, boutique, barberia, consultorio, gimnasio, taller)
   assets/                    ← estilos, logo y vistas previas del sitio
   disenos/<tipo>/            ← colección de diseños (base para cada cliente)
   plantillas/comun/          ← motor de invitaciones, estilos base y marca.js

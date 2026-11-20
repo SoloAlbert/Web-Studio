@@ -1,0 +1,942 @@
+<!doctype html>
+<html lang="es-MX">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Estética Bella Luz · Agenda de citas</title>
+<link rel="icon" href="../../assets/icono.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../portafolio/portafolio.css">
+<style>
+:root{--fondo:#f4f5f8;--panel:#fff;--texto:#1b2033;--suave:#5b6178;--linea:#e3e5ec;--acento:#c97f66;--acento-o:#b36a52;--acento-c:#f7ebe6;--exito:#2e9d6a;--aviso:#d9822b;--peligro:#c94a4a;--oscuro:#1b2033;--sombra:0 1px 2px rgba(27,32,51,.04),0 8px 24px rgba(27,32,51,.06)}
+html{-webkit-text-size-adjust:100%}
+body{font-family:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;background:var(--fondo);color:var(--texto);font-size:15px;line-height:1.45}
+button,input,select,textarea{font:inherit;color:inherit}
+h1,h2,h3,p{margin:0}
+h1,h2,h3{line-height:1.2;letter-spacing:-.015em}
+svg{flex:none}
+.app{display:grid;grid-template-columns:248px minmax(0,1fr);min-height:100vh}
+.lateral{position:sticky;top:0;height:100vh;background:var(--oscuro);color:#fff;padding:24px 14px;display:flex;flex-direction:column;gap:28px}
+.neg{display:flex;gap:12px;align-items:center;padding:0 8px}
+.neg-logo{width:42px;height:42px;border-radius:13px;background:var(--acento);display:grid;place-items:center;font-weight:800;font-size:1rem;flex:none;color:#fff}
+.neg strong{display:block;font-size:1rem;line-height:1.2}
+.neg small{display:block;font-size:.72rem;color:rgba(255,255,255,.55);margin-top:3px}
+.menu{display:flex;flex-direction:column;gap:4px}
+.menu button{display:flex;gap:12px;align-items:center;width:100%;padding:11px 12px;border-radius:11px;background:none;border:0;color:rgba(255,255,255,.7);font-weight:500;cursor:pointer;text-align:left;font-size:.93rem}
+.menu button:hover{background:rgba(255,255,255,.06);color:#fff}
+.menu button.activo{background:rgba(255,255,255,.12);color:#fff}
+.menu button.activo svg{color:#e8b4a0}
+.menu svg,.navmov svg{width:20px;height:20px}
+.lateral-pie{margin-top:auto;padding:14px 10px 0;border-top:1px solid rgba(255,255,255,.08);font-size:.78rem;color:rgba(255,255,255,.55);display:flex;gap:10px;align-items:center}
+.lateral-pie .avatar{width:34px;height:34px;font-size:.78rem}
+.lateral-pie b{display:block;color:#fff;font-weight:600}
+.superior,.navmov{display:none}
+.principal{min-width:0;padding:28px 32px 120px}
+.encabezado{display:flex;justify-content:space-between;align-items:flex-end;gap:14px;flex-wrap:wrap;margin-bottom:20px}
+.encabezado h1{font-size:1.55rem;font-weight:700}
+.encabezado p{margin-top:4px;color:var(--suave)}
+.panel{background:#fff;border:1px solid var(--linea);border-radius:16px;box-shadow:var(--sombra)}
+.panel-cab{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:16px 18px;border-bottom:1px solid var(--linea)}
+.panel-cab h2{font-size:1rem}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:10px 16px;border-radius:12px;border:1px solid var(--linea);background:#fff;font-weight:600;font-size:.88rem;cursor:pointer;text-decoration:none;color:var(--texto);white-space:nowrap;transition:background .15s,border-color .15s}
+.btn:hover{border-color:#c9ccd7}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn.prim{background:var(--acento);border-color:var(--acento);color:#fff}
+.btn.prim:hover{background:var(--acento-o);border-color:var(--acento-o)}
+.btn.ok{background:var(--exito);border-color:var(--exito);color:#fff}
+.btn.mal{color:var(--peligro);border-color:#efcdcd}
+.btn.wa{background:#e6f5ee;border-color:#c7e8d7;color:#1d7a4e}
+.btn.wa:hover{background:#d8f0e4}
+.btn.chico{padding:7px 12px;font-size:.8rem;border-radius:10px}
+.btn.icono{padding:9px;width:40px;height:40px}
+.btn svg{width:17px;height:17px}
+.campo{display:flex;flex-direction:column;gap:6px;margin-bottom:14px;min-width:0}
+.campo label{font-size:.78rem;font-weight:600;color:var(--suave)}
+.campo input,.campo select,.campo textarea,.buscador input{border:1px solid var(--linea);border-radius:11px;padding:10px 12px;background:#fff;width:100%;outline:none;min-width:0;font-size:.92rem}
+.campo input:focus,.campo select:focus,.buscador input:focus{border-color:var(--acento);box-shadow:0 0 0 3px rgba(201,127,102,.16)}
+.fila2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.buscador{position:relative}
+.buscador svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);width:17px;height:17px;color:var(--suave)}
+.buscador input{padding-left:38px}
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-bottom:20px}
+.kpi{padding:16px 18px}
+.kpi span{font-size:.78rem;color:var(--suave);font-weight:500}
+.kpi strong{display:block;font-size:1.45rem;margin-top:4px;letter-spacing:-.02em}
+.kpi small{color:var(--suave);font-size:.76rem}
+.etq{display:inline-flex;align-items:center;gap:5px;padding:3px 9px;border-radius:999px;font-size:.72rem;font-weight:600;white-space:nowrap}
+.etq.ok{background:#e2f4eb;color:#1f7a50}.etq.av{background:#fcefdf;color:#a35a12}.etq.mal{background:#f9e3e3;color:#a63636}.etq.neu{background:#eef0f4;color:var(--suave)}.etq.ac{background:var(--acento-c);color:#9a553f}
+.seg{display:inline-flex;background:#e9ebf1;border-radius:12px;padding:4px}
+.seg button{border:0;background:none;padding:7px 14px;border-radius:9px;font-weight:600;font-size:.84rem;color:var(--suave);cursor:pointer}
+.seg button.activo{background:#fff;color:var(--texto);box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{border:1px solid var(--linea);background:#fff;border-radius:999px;padding:7px 14px;font-size:.84rem;font-weight:600;cursor:pointer;color:var(--suave);white-space:nowrap}
+.chip.activo{background:var(--texto);color:#fff;border-color:var(--texto)}
+.tabla-cont{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:.9rem}
+th{text-align:left;font-size:.72rem;text-transform:uppercase;letter-spacing:.05em;color:var(--suave);font-weight:600;padding:12px 16px;border-bottom:1px solid var(--linea);white-space:nowrap;background:#fafbfc}
+td{padding:12px 16px;border-bottom:1px solid var(--linea);vertical-align:middle}
+tr:last-child td{border-bottom:0}
+.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.vacio{padding:42px 20px;text-align:center;color:var(--suave)}
+.avatar{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;font-weight:700;color:#fff;flex:none;font-size:.85rem;letter-spacing:.02em}
+.sub{color:var(--suave);font-size:.85rem}
+.velo{position:fixed;inset:0;z-index:80;background:rgba(27,32,51,.5);display:flex;align-items:center;justify-content:center;padding:20px;animation:aparece .15s ease-out}
+.hoja{background:#fff;border-radius:18px;width:min(520px,100%);max-height:calc(100vh - 40px);overflow:auto;box-shadow:0 24px 60px rgba(0,0,0,.25);animation:sube .2s ease-out}
+.hoja.ancha{width:min(720px,100%)}
+.hoja-cab{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;padding:20px 22px 4px}
+.hoja-cab h2{font-size:1.2rem;margin-top:6px}
+.hoja-cuerpo{padding:14px 22px 6px}
+.hoja-pie{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end;padding:12px 22px 22px}
+.cerrar{border:0;background:#f1f2f6;width:36px;height:36px;border-radius:50%;cursor:pointer;display:grid;place-items:center;flex:none;color:var(--suave)}
+.cerrar svg{width:18px;height:18px}
+.datos{display:grid;grid-template-columns:1fr 1fr;gap:12px 16px;background:#f8f9fb;border-radius:14px;padding:14px 16px}
+.datos span{display:block;font-size:.74rem;color:var(--suave);font-weight:500}
+.datos strong{font-size:.92rem;font-weight:600}
+.toast{position:fixed;top:18px;left:50%;transform:translateX(-50%);z-index:95;background:var(--texto);color:#fff;padding:12px 18px;border-radius:12px;font-weight:600;font-size:.9rem;box-shadow:0 14px 34px rgba(0,0,0,.25);display:flex;gap:10px;align-items:center;width:max-content;max-width:calc(100% - 32px);animation:baja .2s ease-out}
+.toast svg{width:18px;height:18px;color:#7fd8a9}
+@keyframes aparece{from{opacity:0}}
+@keyframes sube{from{transform:translateY(14px);opacity:0}}
+@keyframes baja{from{transform:translate(-50%,-10px);opacity:0}}
+@media (max-width:899px){
+  .app{display:block}
+  .lateral{display:none}
+  .superior{display:flex;position:sticky;top:0;z-index:30;background:var(--oscuro);color:#fff;padding:10px 16px;align-items:center;gap:11px;min-height:58px}
+  .superior .neg-logo{width:36px;height:36px;border-radius:11px;font-size:.88rem}
+  .superior strong{display:block;font-size:.98rem;line-height:1.15}
+  .superior small{display:block;font-size:.7rem;color:rgba(255,255,255,.55)}
+  .principal{padding:18px 16px 190px}
+  .navmov{display:flex;position:fixed;left:12px;right:12px;bottom:calc(80px + env(safe-area-inset-bottom,0px));z-index:40;background:#fff;border:1px solid var(--linea);border-radius:18px;box-shadow:0 10px 30px rgba(27,32,51,.16);padding:5px;gap:2px;max-width:560px;margin:0 auto}
+  .navmov button{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;gap:3px;font-size:.66rem;font-weight:600;color:var(--suave);background:none;border:0;padding:7px 2px;border-radius:13px;cursor:pointer}
+  .navmov button span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+  .navmov button.activo{color:var(--acento-o);background:var(--acento-c)}
+  body.directo .navmov{bottom:calc(12px + env(safe-area-inset-bottom,0px))}
+  body.directo .principal{padding-bottom:110px}
+  .encabezado{margin-bottom:16px}
+  .encabezado h1{font-size:1.3rem}
+  .kpis{grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
+  .kpi{padding:13px 14px}
+  .kpi strong{font-size:1.18rem}
+  .velo{align-items:flex-end;padding:0}
+  .hoja,.hoja.ancha{width:100%;border-radius:20px 20px 0 0;max-height:92vh;padding-bottom:env(safe-area-inset-bottom,0px)}
+  .hoja-cab{padding:18px 18px 4px}.hoja-cuerpo{padding:12px 18px 6px}.hoja-pie{padding:12px 18px 20px}
+  .hoja-pie .btn{flex:1}
+}
+
+/* ---------- Agenda ---------- */
+.barra-ag{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.barra-ag .fecha-ag{font-weight:700;font-size:1.05rem;margin-right:auto;min-width:0}
+.nav-fecha{display:flex;gap:6px}
+.resumen-ag{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.resumen-ag .etq{font-size:.78rem;padding:5px 11px}
+.ag-cont{overflow:auto;max-height:calc(100vh - 270px);min-height:440px;background:#fff;border:1px solid var(--linea);border-radius:16px;box-shadow:var(--sombra);overscroll-behavior:contain}
+.ag{display:grid;grid-template-columns:58px repeat(var(--cols),minmax(var(--min),1fr))}
+.ag-esq{position:sticky;top:0;left:0;z-index:5;background:#fff;border-bottom:1px solid var(--linea)}
+.ag-th{position:sticky;top:0;z-index:4;background:#fff;border-bottom:1px solid var(--linea);border-left:1px solid var(--linea);padding:10px 8px;text-align:center;min-width:0}
+.ag-th.hoy{background:#fdf6f3}
+.ag-th .dia{font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;color:var(--suave);font-weight:600}
+.ag-th .num-dia{font-size:1.2rem;font-weight:700;display:block;line-height:1.2}
+.ag-th.hoy .num-dia{color:var(--acento-o)}
+.th-carriles{display:flex;margin-top:4px}
+.th-carriles i{flex:1;font-style:normal;font-size:.66rem;font-weight:700}
+.th-est{display:flex;gap:9px;align-items:center;justify-content:center;text-align:left}
+.th-est i{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;color:#fff;font-style:normal;font-weight:700;font-size:.8rem;flex:none}
+.th-est b{display:block;font-size:.9rem}
+.th-est small{display:block;font-size:.72rem;color:var(--suave)}
+.ag-horas{position:sticky;left:0;z-index:3;background:#fff;height:var(--alto)}
+.ag-horas span{position:absolute;right:8px;font-size:.68rem;color:var(--suave);transform:translateY(-50%);white-space:nowrap;font-weight:500}
+.ag-horas span:first-child{transform:none;top:4px!important}
+.ag-col{display:flex;height:var(--alto);border-left:1px solid var(--linea);position:relative;background-image:repeating-linear-gradient(to bottom,#e9ebf0 0 1px,transparent 1px 39px,#f3f4f7 39px 40px,transparent 40px 78px)}
+.ag-col.hoy{background-color:#fffbf9}
+.ag-col.cerrado{background:repeating-linear-gradient(45deg,#f6f7f9 0 10px,#fff 10px 20px)}
+.ag-carril{position:relative;flex:1;min-width:0;cursor:copy}
+.ag-carril+.ag-carril{border-left:1px dashed #eceef3}
+.ag-carril:hover{background:rgba(201,127,102,.04)}
+.ag-ahora{position:absolute;left:0;right:0;height:2px;background:var(--peligro);z-index:2;pointer-events:none}
+.ag-ahora::before{content:"";position:absolute;left:-5px;top:-4px;width:10px;height:10px;border-radius:50%;background:var(--peligro)}
+.cita{position:absolute;left:3px;right:3px;border-radius:8px;padding:4px 7px;font-size:.74rem;line-height:1.25;overflow:hidden;border-left:3px solid var(--c);background:color-mix(in srgb,var(--c) 20%,#fff);cursor:pointer;color:#1b2033;transition:box-shadow .15s,transform .15s;z-index:1}
+.cita:hover{box-shadow:0 4px 14px rgba(27,32,51,.16);z-index:3}
+.cita b{display:block;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cita span{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#3d4357}
+.cita .h{font-size:.68rem;color:#4a5068;font-weight:500;display:flex;gap:4px;align-items:center}
+.cita .h svg{width:12px;height:12px;color:var(--exito)}
+.cita.est-pendiente{background-image:repeating-linear-gradient(135deg,transparent 0 6px,rgba(255,255,255,.6) 6px 11px)}
+.cita.est-falto{opacity:.5}
+.cita.est-falto b{text-decoration:line-through}
+.cita.est-llego{border-left-color:var(--exito)}
+.cita.compacta{left:2px;right:2px;padding:3px 4px;font-size:.66rem;border-left-width:2px}
+.cita.resaltada{animation:resalta 1.2s ease-in-out 2;z-index:4}
+@keyframes resalta{50%{box-shadow:0 0 0 4px rgba(201,127,102,.55)}}
+.cerrado-msg{position:sticky;top:120px;text-align:center;color:var(--suave);font-weight:600;padding:20px}
+.leyenda{display:flex;flex-wrap:wrap;gap:8px 16px;margin-top:14px;font-size:.78rem;color:var(--suave)}
+.leyenda span{display:inline-flex;align-items:center;gap:6px}
+.leyenda i{width:12px;height:12px;border-radius:4px;display:inline-block}
+.info-svc{background:var(--acento-c);border-radius:12px;padding:11px 14px;font-size:.86rem;color:#7d4533;margin-bottom:6px}
+.aviso-form{color:var(--peligro);font-size:.84rem;font-weight:600;margin-bottom:8px}
+
+/* ---------- Reserva en línea ---------- */
+.res-aviso{display:flex;gap:12px;align-items:center;background:#fff;border:1px dashed #d8c3ba;border-radius:14px;padding:12px 16px;margin-bottom:18px;font-size:.86rem;color:var(--suave)}
+.res-aviso svg{width:20px;height:20px;color:var(--acento)}
+.res{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:20px;align-items:start}
+.res-hero{background:linear-gradient(135deg,#2a2236,#5a3b3f 60%,#c97f66);color:#fff;border-radius:18px;padding:26px 24px;margin-bottom:16px}
+.res-hero small{opacity:.75;font-size:.8rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase}
+.res-hero h2{font-size:1.5rem;margin-top:6px}
+.res-hero p{opacity:.85;margin-top:6px;font-size:.92rem}
+.paso{padding:18px;margin-bottom:14px}
+.paso h3{font-size:1rem;display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.paso h3 i{width:26px;height:26px;border-radius:50%;background:var(--texto);color:#fff;font-style:normal;font-size:.78rem;display:grid;place-items:center}
+.paso.bloq{opacity:.5;pointer-events:none}
+.svc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:10px}
+.svc-op{border:1.5px solid var(--linea);border-radius:13px;padding:12px 14px;background:#fff;cursor:pointer;text-align:left;display:flex;gap:10px;align-items:flex-start}
+.svc-op i{width:10px;height:10px;border-radius:50%;margin-top:6px;flex:none}
+.svc-op b{display:block;font-size:.9rem}
+.svc-op small{color:var(--suave);font-size:.78rem}
+.svc-op.activo,.est-op.activo,.dia-op.activo{border-color:var(--acento);background:var(--acento-c)}
+.est-grid{display:flex;gap:10px;flex-wrap:wrap}
+.est-op{border:1.5px solid var(--linea);border-radius:13px;padding:10px 14px;background:#fff;cursor:pointer;display:flex;gap:10px;align-items:center;text-align:left}
+.est-op .avatar{width:34px;height:34px;font-size:.78rem}
+.est-op b{display:block;font-size:.88rem}.est-op small{display:block;color:var(--suave);font-size:.74rem}
+.dias{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;scrollbar-width:thin}
+.dia-op{flex:none;width:74px;border:1.5px solid var(--linea);border-radius:13px;padding:9px 4px;background:#fff;cursor:pointer;text-align:center}
+.dia-op span{display:block;font-size:.7rem;text-transform:uppercase;color:var(--suave);font-weight:600}
+.dia-op b{display:block;font-size:1.2rem}
+.dia-op small{display:block;font-size:.66rem;color:var(--exito);font-weight:600}
+.dia-op:disabled{opacity:.4;cursor:not-allowed}
+.dia-op:disabled small{color:var(--suave)}
+.horas-grupo{margin-bottom:12px}
+.horas-grupo > span{font-size:.75rem;font-weight:600;color:var(--suave);display:block;margin-bottom:7px}
+.horas{display:grid;grid-template-columns:repeat(auto-fill,minmax(92px,1fr));gap:8px}
+.hora-op{border:1.5px solid var(--linea);background:#fff;border-radius:11px;padding:9px 4px;font-weight:600;font-size:.86rem;cursor:pointer}
+.hora-op.activo{background:var(--acento);color:#fff;border-color:var(--acento)}
+.res-resumen{position:sticky;top:24px;padding:18px}
+.res-resumen h3{font-size:1rem;margin-bottom:12px}
+.res-linea{display:flex;justify-content:space-between;gap:10px;padding:9px 0;border-bottom:1px solid var(--linea);font-size:.88rem}
+.res-linea span{color:var(--suave)}
+.res-linea b{text-align:right}
+.exito-res{text-align:center;padding:36px 24px}
+.exito-res .ok-ico{width:64px;height:64px;border-radius:50%;background:#e2f4eb;color:var(--exito);display:grid;place-items:center;margin:0 auto 14px}
+.exito-res .ok-ico svg{width:32px;height:32px}
+.exito-res h2{font-size:1.4rem}
+.exito-res p{color:var(--suave);margin:8px auto 20px;max-width:420px}
+
+/* ---------- Recordatorios / clientes / servicios ---------- */
+.lista{display:flex;flex-direction:column}
+.rec{display:grid;grid-template-columns:84px minmax(0,1fr) auto;gap:14px;align-items:center;padding:14px 18px;border-bottom:1px solid var(--linea)}
+.rec:last-child{border-bottom:0}
+.rec .h{font-weight:700;font-size:.95rem}
+.rec .h small{display:block;font-weight:500;color:var(--suave);font-size:.74rem}
+.rec b{display:block}
+.rec details{margin-top:6px;font-size:.8rem;color:var(--suave)}
+.rec summary{cursor:pointer;font-weight:600;color:var(--acento-o)}
+.rec pre{white-space:pre-wrap;font-family:inherit;background:#f6f7f9;border-radius:10px;padding:10px 12px;margin:8px 0 0;color:var(--texto)}
+.rec-acc{display:flex;flex-direction:column;align-items:flex-end;gap:6px}
+.cli-dos{display:grid;grid-template-columns:360px minmax(0,1fr);gap:18px;align-items:start}
+.cli-fila{display:flex;gap:12px;align-items:center;padding:12px 16px;border-bottom:1px solid var(--linea);cursor:pointer;width:100%;background:none;border-left:0;border-right:0;border-top:0;text-align:left}
+.cli-fila:hover{background:#fafbfc}
+.cli-fila.activo{background:var(--acento-c)}
+.cli-fila > div:not(.avatar){flex:1;min-width:0}
+.cli-fila b{display:block;font-size:.92rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cli-fila small{color:var(--suave);font-size:.78rem}
+.cli-lista{max-height:calc(100vh - 290px);overflow:auto}
+.cli-det{padding:20px}
+.cli-cab{display:flex;gap:14px;align-items:center;margin-bottom:18px;flex-wrap:wrap}
+.cli-cab .avatar{width:56px;height:56px;font-size:1.1rem}
+.cli-cab h2{font-size:1.25rem}
+.mini-kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:18px}
+.mini-kpis div{background:#f8f9fb;border-radius:12px;padding:11px 13px}
+.mini-kpis span{display:block;font-size:.72rem;color:var(--suave)}
+.mini-kpis b{font-size:1.05rem}
+.fav{display:flex;align-items:center;gap:10px;margin-bottom:9px;font-size:.86rem}
+.fav > span{width:140px;flex:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.fav .barra{flex:1;height:8px;background:#eef0f4;border-radius:99px;overflow:hidden}
+.fav .barra i{display:block;height:100%;border-radius:99px}
+.fav small{width:52px;text-align:right;color:var(--suave)}
+.sec-t{font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--suave);margin:18px 0 10px}
+.hist{display:flex;gap:10px;align-items:center;padding:9px 0;border-bottom:1px solid var(--linea);font-size:.86rem}
+.hist:last-child{border-bottom:0}
+.hist i{width:9px;height:9px;border-radius:50%;flex:none}
+.hist div{flex:1;min-width:0}
+.hist small{color:var(--suave)}
+.punto{display:inline-block;width:11px;height:11px;border-radius:50%;vertical-align:middle;margin-right:8px}
+
+@media (max-width:899px){
+  .barra-ag{gap:8px}
+  .barra-ag .fecha-ag{flex-basis:100%;order:-1;font-size:1rem}
+  .barra-ag .nueva{margin-left:auto}
+  .ag-cont{max-height:calc(100vh - 340px);min-height:380px}
+  #p-agenda .encabezado p{display:none}
+  .th-est{flex-direction:column;gap:3px;text-align:center}
+  .th-est i{width:26px;height:26px}
+  .res{grid-template-columns:1fr}
+  .res-resumen{position:static}
+  .res-hero{padding:20px 18px}
+  .res-hero h2{font-size:1.25rem}
+  .svc-grid{grid-template-columns:1fr 1fr}
+  .svc-op{padding:10px 11px}
+  .rec{grid-template-columns:62px minmax(0,1fr);padding:14px}
+  .rec-acc{grid-column:1/-1;flex-direction:row;align-items:center;justify-content:space-between;flex-wrap:wrap}
+  .rec-acc .btn{white-space:normal;flex:1 1 auto;max-width:100%}
+  .cli-dos{grid-template-columns:1fr}
+  .cli-lista{max-height:none}
+  .cli-det-panel{display:none}
+  .mini-kpis b{font-size:.95rem}
+  .fav > span{width:110px}
+  .tab-svc td:nth-child(2),.tab-svc th:nth-child(2){display:none}
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="lateral">
+    <div class="neg"><div class="neg-logo">BL</div><div><strong>Estética Bella Luz</strong><small>LocalConnect · Agenda de citas</small></div></div>
+    <nav class="menu" id="menu" aria-label="Pantallas"></nav>
+    <div class="lateral-pie"><div class="avatar" style="background:#c97f66">RG</div><div><b>Rocío González</b>Dueña · Recepción</div></div>
+  </aside>
+  <header class="superior">
+    <div class="neg-logo">BL</div>
+    <div><strong>Estética Bella Luz</strong><small>LocalConnect · Agenda de citas</small></div>
+  </header>
+  <main class="principal">
+    <section class="pantalla" id="p-agenda" hidden></section>
+    <section class="pantalla" id="p-reservar" hidden></section>
+    <section class="pantalla" id="p-recordatorios" hidden></section>
+    <section class="pantalla" id="p-clientes" hidden></section>
+    <section class="pantalla" id="p-servicios" hidden></section>
+  </main>
+  <nav class="navmov" id="navmov" aria-label="Pantallas"></nav>
+</div>
+
+<script>
+"use strict";
+/* ================= Utilidades comunes ================= */
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const dinero = (n) => "$" + Number(n).toLocaleString("es-MX", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+const svg = (p) => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${p}</svg>`;
+const ICON = {
+  cal: svg('<rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>'),
+  globo: svg('<circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/>'),
+  campana: svg('<path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/>'),
+  gente: svg('<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/>'),
+  tijeras: svg('<circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M20 4 8.1 15.9M14.5 14.5 20 20M8.1 8.1 12 12"/>'),
+  wa: svg('<path d="M21 11.5a8.4 8.4 0 0 1-12.4 7.4L3 21l2.1-5.6A8.4 8.4 0 1 1 21 11.5z"/>'),
+  mas: svg('<path d="M12 5v14M5 12h14"/>'),
+  izq: svg('<path d="m15 18-6-6 6-6"/>'),
+  der: svg('<path d="m9 18 6-6-6-6"/>'),
+  check: svg('<path d="M20 6 9 17l-5-5"/>'),
+  x: svg('<path d="M18 6 6 18M6 6l12 12"/>'),
+  buscar: svg('<circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>'),
+  reloj: svg('<circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>'),
+  lapiz: svg('<path d="M17 3a2.8 2.8 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5z"/>'),
+  enlace: svg('<path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/>'),
+};
+const wa = (texto) => `https://wa.me/${(window.MARCA && window.MARCA.whatsapp) || ""}?text=${encodeURIComponent(texto)}`;
+const HOY = new Date(); HOY.setHours(0, 0, 0, 0);
+const addD = (d, n) => { const x = new Date(d); x.setDate(x.getDate() + n); return x; };
+const clave = (d) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+const deClave = (k) => { const [y, m, d] = k.split("-").map(Number); return new Date(y, m - 1, d); };
+const cap = (s) => s.charAt(0).toUpperCase() + s.slice(1);
+const fLarga = (d) => d.toLocaleDateString("es-MX", { weekday: "long", day: "numeric", month: "long" }).replace(",", "");
+const fCorta = (d) => d.toLocaleDateString("es-MX", { day: "numeric", month: "short", year: "numeric" });
+const iniciales = (n) => n.split(" ").filter(Boolean).slice(0, 2).map((p) => p[0]).join("").toUpperCase();
+const COLORES_AV = ["#c97f66", "#5b7bd5", "#2e9d6a", "#9a6fd0", "#d9822b", "#3a9fb8", "#c9587a", "#6b7a3f"];
+const colorDe = (n) => COLORES_AV[[...n].reduce((a, c) => a + c.charCodeAt(0), 0) % COLORES_AV.length];
+function azar(semilla) { return () => { semilla |= 0; semilla = (semilla + 0x6d2b79f5) | 0; let t = Math.imul(semilla ^ (semilla >>> 15), 1 | semilla); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
+const rnd = azar(20261);
+const elegir = (arr) => arr[Math.floor(rnd() * arr.length)];
+
+function toast(msg) {
+  $$(".toast").forEach((t) => t.remove());
+  const t = document.createElement("div");
+  t.className = "toast"; t.innerHTML = ICON.check + `<span>${esc(msg)}</span>`;
+  document.body.appendChild(t);
+  setTimeout(() => t.remove(), 2600);
+}
+function modal(html, clase = "") {
+  cerrarModal();
+  const v = document.createElement("div");
+  v.className = "velo";
+  v.innerHTML = `<div class="hoja ${clase}" role="dialog" aria-modal="true">${html}</div>`;
+  v.addEventListener("click", (e) => { if (e.target === v || e.target.closest("[data-cerrar]")) cerrarModal(); });
+  document.body.appendChild(v);
+  return v.firstElementChild;
+}
+function cerrarModal() { $$(".velo").forEach((v) => v.remove()); }
+document.addEventListener("keydown", (e) => { if (e.key === "Escape") cerrarModal(); });
+const cabModal = (titulo, sup = "") => `<div class="hoja-cab"><div>${sup}<h2>${titulo}</h2></div><button class="cerrar" data-cerrar aria-label="Cerrar">${ICON.x}</button></div>`;
+
+let actual = "";
+const RENDER = {};
+function armarNav() {
+  const html = PANTALLAS.map((p) => `<button data-ir="${p.id}">${ICON[p.i]}<span>${p.t}</span></button>`).join("");
+  $("#menu").innerHTML = html; $("#navmov").innerHTML = html;
+}
+function ir(id) {
+  if (!PANTALLAS.some((p) => p.id === id)) id = PANTALLAS[0].id;
+  actual = id;
+  $$(".pantalla").forEach((s) => (s.hidden = s.id !== "p-" + id));
+  $$("#menu [data-ir], #navmov [data-ir]").forEach((b) => b.classList.toggle("activo", b.dataset.ir === id));
+  RENDER[id]();
+  window.scrollTo(0, 0);
+  history.replaceState(null, "", location.pathname + location.search + "#" + id);
+}
+document.addEventListener("click", (e) => { const b = e.target.closest("[data-ir]"); if (b) { e.preventDefault(); ir(b.dataset.ir); } });
+if (new URLSearchParams(location.search).has("directo")) document.body.classList.add("directo");
+const esMovil = () => matchMedia("(max-width: 899px)").matches;
+
+/* ================= Datos del negocio ================= */
+const PANTALLAS = [
+  { id: "agenda", t: "Agenda", i: "cal" },
+  { id: "reservar", t: "Reserva en línea", i: "globo" },
+  { id: "recordatorios", t: "Recordatorios", i: "campana" },
+  { id: "clientes", t: "Clientes", i: "gente" },
+  { id: "servicios", t: "Servicios", i: "tijeras" },
+];
+const AP = 9 * 60, CI = 20 * 60, PX = 1.3;
+const NEGOCIO = "Estética Bella Luz";
+const SERVICIOS = [
+  { id: "corte", nombre: "Corte de dama", cat: "Cabello", dur: 45, precio: 280, color: "#e58f73" },
+  { id: "cab", nombre: "Corte de caballero", cat: "Cabello", dur: 30, precio: 160, color: "#6f97d6" },
+  { id: "tinte", nombre: "Tinte completo", cat: "Color", dur: 120, precio: 950, color: "#a77bd3" },
+  { id: "luces", nombre: "Luces / Balayage", cat: "Color", dur: 150, precio: 1650, color: "#e0aa3e" },
+  { id: "kera", nombre: "Keratina", cat: "Tratamientos", dur: 150, precio: 1500, color: "#8fa35a" },
+  { id: "peinado", nombre: "Peinado", cat: "Cabello", dur: 60, precio: 380, color: "#ec7fa6" },
+  { id: "maqui", nombre: "Maquillaje social", cat: "Rostro", dur: 60, precio: 650, color: "#cf6a80" },
+  { id: "cejas", nombre: "Diseño de cejas", cat: "Rostro", dur: 30, precio: 150, color: "#a8897a" },
+  { id: "mani", nombre: "Manicure", cat: "Uñas", dur: 45, precio: 220, color: "#4fbf9b" },
+  { id: "pedi", nombre: "Pedicure spa", cat: "Uñas", dur: 60, precio: 320, color: "#4aa6c4" },
+  { id: "acri", nombre: "Uñas acrílicas", cat: "Uñas", dur: 90, precio: 480, color: "#ef9a52" },
+];
+const PESO = { corte: 4, cab: 2, tinte: 2, luces: 1, kera: 1, peinado: 2, maqui: 1, cejas: 2, mani: 4, pedi: 2, acri: 2 };
+const ESTILISTAS = [
+  { id: "mariana", nombre: "Mariana", puesto: "Colorista", color: "#c97f66", hace: ["corte", "tinte", "luces", "kera", "peinado"] },
+  { id: "fernanda", nombre: "Fernanda", puesto: "Estilista", color: "#5b7bd5", hace: ["corte", "cab", "peinado", "maqui", "cejas"] },
+  { id: "lupita", nombre: "Lupita", puesto: "Manicurista", color: "#2e9d6a", hace: ["mani", "pedi", "acri", "cejas"] },
+];
+const ESTADOS = { pendiente: ["Por confirmar", "av"], confirmada: ["Confirmada", "ok"], llego: ["Llegó", "ok"], falto: ["No llegó", "mal"], cancelada: ["Cancelada", "neu"] };
+const svc = (id) => SERVICIOS.find((s) => s.id === id);
+const est = (id) => ESTILISTAS.find((e) => e.id === id);
+const abierto = (d) => d.getDay() !== 0;
+const ahoraMin = () => { const n = new Date(); return n.getHours() * 60 + n.getMinutes(); };
+function hora(m, corta) {
+  const h = Math.floor(m / 60), mm = String(m % 60).padStart(2, "0"), h12 = h % 12 || 12;
+  return corta ? `${h12}:${mm}` : `${h12}:${mm} ${h < 12 ? "a. m." : "p. m."}`;
+}
+
+const NOM_M = ["Ana Sofía", "Daniela", "Valeria", "Ximena", "Regina", "Paola", "Andrea", "Carolina", "Gabriela", "Alejandra", "Natalia", "Lucía", "Sofía", "Renata", "Camila", "Isabel", "Patricia", "Verónica", "Claudia", "Adriana", "Mónica", "Laura", "Karla", "Diana", "Rosa María", "Teresa", "Beatriz", "Elena", "Jimena", "Brenda", "Yolanda", "Silvia", "Fátima", "Itzel", "Montserrat", "Guadalupe", "Leticia", "Marisol", "Araceli", "Alma", "Mayra", "Lorena", "Norma", "Pamela", "Vanessa", "Miriam", "Cecilia", "Abril", "Nayeli", "Susana"];
+const APE = ["Ramírez", "Torres", "Gutiérrez", "Morales", "Castillo", "Hernández", "Jiménez", "Vázquez", "Ortiz", "Mendoza", "Romero", "Aguilar", "Delgado", "Flores", "Reyes", "Navarro", "Salinas", "Cruz", "Estrada", "Pineda", "Cervantes", "Domínguez", "Ibarra", "Espinoza", "León", "Villalobos", "Montes", "Cabrera", "Soto", "Lara", "Rangel", "Arriaga", "Medina", "Fuentes", "Salazar", "Castañeda", "Treviño", "Garza", "Zamora", "Ochoa"];
+const NOM_H = ["Jorge", "Luis", "Ricardo", "Diego", "Óscar", "Emilio", "Arturo", "Fernando", "Raúl", "Sergio", "Andrés", "Héctor", "Iván", "Rodrigo"];
+const MUJERES = [...new Set(Array.from({ length: 260 }, () => `${elegir(NOM_M)} ${elegir(APE)}`))].slice(0, 190);
+const HOMBRES = [...new Set(Array.from({ length: 60 }, () => `${elegir(NOM_H)} ${elegir(APE)}`))].slice(0, 34);
+const GUSTOS = {};
+MUJERES.forEach((n) => { const op = ["corte", "tinte", "luces", "kera", "peinado", "maqui", "cejas", "mani", "pedi", "acri"]; GUSTOS[n] = [elegir(op), elegir(op)]; });
+
+let citas = [], sigId = 1;
+(function generar() {
+  const ahora = ahoraMin();
+  for (let off = -49; off <= 13; off++) {
+    const d = addD(HOY, off);
+    if (!abierto(d)) continue;
+    const k = clave(d);
+    let dens = off < 0 ? 0.7 : off === 0 ? 0.68 : off <= 2 ? 0.6 : off <= 6 ? 0.48 : 0.28;
+    if (d.getDay() === 6) dens += 0.08;
+    for (const e of ESTILISTAS) {
+      let t = AP + (rnd() < 0.5 ? 0 : 30);
+      while (t < CI - 30) {
+        if (rnd() > dens) { t += rnd() < 0.5 ? 30 : 60; continue; }
+        const ops = e.hace.filter((id) => t + svc(id).dur <= CI);
+        if (!ops.length) break;
+        const bolsa = []; ops.forEach((id) => { for (let i = 0; i < PESO[id]; i++) bolsa.push(id); });
+        const s = svc(elegir(bolsa));
+        let cliente;
+        if (s.id === "cab") cliente = elegir(HOMBRES);
+        else { const fans = MUJERES.filter((n) => GUSTOS[n].includes(s.id)); cliente = fans.length && rnd() < 0.55 ? elegir(fans) : elegir(MUJERES); }
+        let estado;
+        const r = rnd();
+        if (off < 0 || (off === 0 && t + 10 < ahora)) estado = r < 0.92 ? "llego" : r < 0.96 ? "falto" : "cancelada";
+        else if (off <= 1) estado = r < 0.7 ? "confirmada" : "pendiente";
+        else estado = r < 0.4 ? "confirmada" : "pendiente";
+        citas.push({ id: sigId++, cliente, servicio: s.id, estilista: e.id, fecha: k, ini: t, dur: s.dur, estado, origen: rnd() < 0.3 ? "Reserva en línea" : "Recepción", aviso: false });
+        t += s.dur + (rnd() < 0.3 ? 15 : 0);
+      }
+    }
+  }
+})();
+
+const activa = (c) => c.estado !== "cancelada";
+function libre(eid, fecha, ini, dur, ignorar) {
+  if (ini < AP || ini + dur > CI) return false;
+  return !citas.some((c) => c.id !== ignorar && activa(c) && c.estilista === eid && c.fecha === fecha && c.ini < ini + dur && ini < c.ini + c.dur);
+}
+function horasLibres(eid, fecha, dur, opc = {}) {
+  const d = deClave(fecha), out = [];
+  if (!abierto(d)) return out;
+  const esHoy = fecha === clave(HOY);
+  if (fecha < clave(HOY) && !opc.pasado) return out;
+  for (let t = AP; t + dur <= CI; t += 30) {
+    if (esHoy && !opc.pasado && t <= ahoraMin()) continue;
+    if (libre(eid, fecha, t, dur, opc.ignorar)) out.push(t);
+  }
+  return out;
+}
+const sigAbierto = (d) => { let x = addD(d, 1); while (!abierto(x)) x = addD(x, 1); return x; };
+
+/* ================= Agenda ================= */
+const A = { vista: esMovil() ? "dia" : "semana", fecha: abierto(HOY) ? new Date(HOY) : sigAbierto(HOY), est: "todas", resaltar: 0, scroll: true };
+const lunes = (d) => addD(d, -((d.getDay() + 6) % 7));
+
+function bloque(c, compacta) {
+  const s = svc(c.servicio);
+  const alto = Math.max(c.dur * PX - 3, 18);
+  const tit = `${c.cliente} · ${s.nombre} · ${hora(c.ini)} – ${hora(c.ini + c.dur)} · ${est(c.estilista).nombre} · ${ESTADOS[c.estado][0]}`;
+  const icono = c.estado === "llego" ? ICON.check : "";
+  if (compacta) return `<div class="cita compacta est-${c.estado}${A.resaltar === c.id ? " resaltada" : ""}" data-cita="${c.id}" style="top:${(c.ini - AP) * PX + 1}px;height:${alto}px;--c:${s.color}" title="${esc(tit)}"><span class="h">${hora(c.ini, 1)}</span><b>${esc(c.cliente.split(" ")[0])}</b></div>`;
+  return `<div class="cita est-${c.estado}${A.resaltar === c.id ? " resaltada" : ""}" data-cita="${c.id}" style="top:${(c.ini - AP) * PX + 1}px;height:${alto}px;--c:${s.color}" title="${esc(tit)}">${c.dur <= 30 ? `<b>${esc(c.cliente)}</b><span class="h">${icono}${hora(c.ini, 1)} · ${esc(s.nombre)}</span>` : `<span class="h">${icono}${hora(c.ini, 1)} – ${hora(c.ini + c.dur, 1)}</span><b>${esc(c.cliente)}</b><span>${esc(s.nombre)}</span>`}</div>`;
+}
+
+RENDER.agenda = function () {
+  const p = $("#p-agenda");
+  const viejo = $(".ag-cont", p);
+  const prevTop = viejo ? viejo.scrollTop : 0, prevLeft = viejo ? viejo.scrollLeft : 0;
+  let cols = [], etiqueta, delRango;
+  if (A.vista === "dia") {
+    const k = clave(A.fecha);
+    etiqueta = cap(fLarga(A.fecha)) + (k === clave(HOY) ? " · Hoy" : "");
+    cols = ESTILISTAS.map((e) => ({ fecha: A.fecha, carriles: [e.id], cab: `<div class="th-est"><i style="background:${e.color}">${e.nombre[0]}</i><div><b>${e.nombre}</b><small>${citas.filter((c) => c.fecha === k && c.estilista === e.id && activa(c)).length} citas</small></div></div>` }));
+    delRango = citas.filter((c) => c.fecha === k && activa(c));
+  } else {
+    const l = lunes(A.fecha), s = addD(l, 5);
+    etiqueta = `Semana del ${l.getDate()}${l.getMonth() !== s.getMonth() ? " de " + l.toLocaleDateString("es-MX", { month: "long" }) : ""} al ${s.getDate()} de ${s.toLocaleDateString("es-MX", { month: "long", year: "numeric" })}`;
+    const carr = A.est === "todas" ? ESTILISTAS.map((e) => e.id) : [A.est];
+    for (let i = 0; i < 6; i++) {
+      const d = addD(l, i);
+      cols.push({ fecha: d, carriles: carr, cab: `<span class="dia">${d.toLocaleDateString("es-MX", { weekday: "short" }).replace(".", "")}</span><span class="num-dia">${d.getDate()}</span>${carr.length > 1 ? `<div class="th-carriles">${carr.map((id) => `<i style="color:${est(id).color}">${est(id).nombre[0]}</i>`).join("")}</div>` : ""}` });
+    }
+    const ks = cols.map((c) => clave(c.fecha));
+    delRango = citas.filter((c) => ks.includes(c.fecha) && activa(c) && (A.est === "todas" || c.estilista === A.est));
+  }
+  const compacta = A.vista === "semana" && A.est === "todas";
+  const minCol = A.vista === "dia" ? (esMovil() ? 94 : 118) : compacta ? 140 : 120;
+  const hoyK = clave(HOY), ahora = ahoraMin();
+  let horas = "";
+  for (let m = AP; m <= CI - 30; m += 60) horas += `<span style="top:${(m - AP) * PX}px">${hora(m).replace(":00", "")}</span>`;
+  const cuerpo = cols.map((c) => {
+    const k = clave(c.fecha), cerrado = !abierto(c.fecha);
+    const linea = k === hoyK && ahora >= AP && ahora <= CI ? `<div class="ag-ahora" style="top:${(ahora - AP) * PX}px"></div>` : "";
+    if (cerrado) return `<div class="ag-col cerrado"><div class="cerrado-msg" style="flex:1">Cerrado</div></div>`;
+    return `<div class="ag-col${k === hoyK ? " hoy" : ""}">${c.carriles.map((id) => `<div class="ag-carril" data-f="${k}" data-e="${id}">${citas.filter((x) => x.fecha === k && x.estilista === id && activa(x)).map((x) => bloque(x, compacta)).join("")}</div>`).join("")}${linea}</div>`;
+  }).join("");
+  const porConf = delRango.filter((c) => c.estado === "pendiente").length;
+  const llegaron = delRango.filter((c) => c.estado === "llego").length;
+  const total = delRango.filter((c) => c.estado !== "falto").reduce((a, c) => a + svc(c.servicio).precio, 0);
+  p.innerHTML = `
+    <div class="encabezado"><div><h1>Agenda</h1><p>Toca un espacio libre para agendar o una cita para atenderla.</p></div></div>
+    <div class="barra-ag">
+      <div class="fecha-ag">${etiqueta}</div>
+      <div class="nav-fecha"><button class="btn icono" data-ag="ant" aria-label="Anterior">${ICON.izq}</button><button class="btn" data-ag="hoy">Hoy</button><button class="btn icono" data-ag="sig" aria-label="Siguiente">${ICON.der}</button></div>
+      <div class="seg"><button data-vista="dia" class="${A.vista === "dia" ? "activo" : ""}">Día</button><button data-vista="semana" class="${A.vista === "semana" ? "activo" : ""}">Semana</button></div>
+      ${A.vista === "semana" ? `<div class="campo" style="margin:0"><select id="ag-est" aria-label="Estilista"><option value="todas">Todas las estilistas</option>${ESTILISTAS.map((e) => `<option value="${e.id}" ${A.est === e.id ? "selected" : ""}>${e.nombre}</option>`).join("")}</select></div>` : ""}
+      <button class="btn prim nueva" data-ag="nueva">${ICON.mas}Nueva cita</button>
+    </div>
+    <div class="resumen-ag">
+      <span class="etq neu">${delRango.length} citas</span>
+      <span class="etq av">${porConf} por confirmar</span>
+      <span class="etq ok">${llegaron} llegaron</span>
+      <span class="etq ac">${dinero(total)} en servicios</span>
+    </div>
+    <div class="ag-cont"><div class="ag" style="--cols:${cols.length};--min:${minCol}px;--alto:${(CI - AP) * PX}px">
+      <div class="ag-esq"></div>
+      ${cols.map((c) => `<div class="ag-th${clave(c.fecha) === hoyK ? " hoy" : ""}">${c.cab}</div>`).join("")}
+      <div class="ag-horas">${horas}</div>
+      ${cuerpo}
+    </div></div>
+    <div class="leyenda">${SERVICIOS.map((s) => `<span><i style="background:${s.color}"></i>${s.nombre}</span>`).join("")}<span><i style="background:repeating-linear-gradient(135deg,#ddd 0 3px,#fff 3px 6px);border:1px solid #ccc"></i>Rayada = por confirmar</span></div>`;
+  const cont = $(".ag-cont", p);
+  if (A.resaltar) {
+    const el = $(`[data-cita="${A.resaltar}"]`, p);
+    if (el) cont.scrollTop = Math.max(0, el.offsetTop - 120), cont.scrollLeft = Math.max(0, el.closest(".ag-col").offsetLeft - 80);
+    const id = A.resaltar; setTimeout(() => { if (A.resaltar === id) A.resaltar = 0; }, 2600);
+  } else if (A.scroll) {
+    const enHoy = cols.some((c) => clave(c.fecha) === hoyK);
+    cont.scrollTop = enHoy ? Math.max(0, (Math.min(Math.max(ahora, AP), CI) - AP - 60) * PX) : 0;
+    if (A.vista === "semana" && enHoy && esMovil()) cont.scrollLeft = Math.max(0, $(".ag-col.hoy", p) ? $(".ag-col.hoy", p).offsetLeft - 58 : 0);
+  } else { cont.scrollTop = prevTop; cont.scrollLeft = prevLeft; }
+  A.scroll = false;
+};
+
+$("#p-agenda").addEventListener("click", (e) => {
+  const b = e.target.closest("[data-ag]");
+  if (b) {
+    const a = b.dataset.ag;
+    if (a === "nueva") return nuevaCita({});
+    const paso = A.vista === "dia" ? 1 : 7;
+    if (a === "hoy") A.fecha = abierto(HOY) ? new Date(HOY) : sigAbierto(HOY);
+    else { A.fecha = addD(A.fecha, a === "ant" ? -paso : paso); if (A.vista === "dia" && !abierto(A.fecha)) A.fecha = addD(A.fecha, a === "ant" ? -1 : 1); }
+    A.scroll = true; return RENDER.agenda();
+  }
+  const v = e.target.closest("[data-vista]");
+  if (v) { A.vista = v.dataset.vista; A.scroll = true; return RENDER.agenda(); }
+  const c = e.target.closest("[data-cita]");
+  if (c) return abrirCita(+c.dataset.cita);
+  const carril = e.target.closest(".ag-carril");
+  if (carril) {
+    const y = e.clientY - carril.getBoundingClientRect().top;
+    const m = AP + Math.floor(y / PX / 30) * 30;
+    nuevaCita({ fecha: carril.dataset.f, est: carril.dataset.e, ini: m });
+  }
+});
+$("#p-agenda").addEventListener("change", (e) => { if (e.target.id === "ag-est") { A.est = e.target.value; RENDER.agenda(); } });
+
+function opcionesHora(horas, sel) {
+  if (!horas.length) return `<option value="">Sin horarios libres este día</option>`;
+  return horas.map((t) => `<option value="${t}" ${t === sel ? "selected" : ""}>${hora(t)}</option>`).join("");
+}
+function nombresClientes() { return [...new Set(citas.map((c) => c.cliente))].sort((a, b) => a.localeCompare(b, "es")); }
+
+function nuevaCita(pre) {
+  const fecha = pre.fecha || clave(A.fecha < HOY ? HOY : A.fecha);
+  const e0 = pre.est || (A.est !== "todas" ? A.est : "mariana");
+  const s0 = pre.servicio || est(e0).hace[0];
+  const h = modal(`${cabModal("Nueva cita", '<span class="etq ac">Agenda</span>')}
+    <form id="f-nueva" autocomplete="off"><div class="hoja-cuerpo">
+      <div class="campo"><label for="nc-cli">Cliente</label><input id="nc-cli" name="cliente" list="nc-lista" placeholder="Escribe el nombre" value="${esc(pre.cliente || "")}" required><datalist id="nc-lista">${nombresClientes().map((n) => `<option value="${esc(n)}">`).join("")}</datalist></div>
+      <div class="campo"><label for="nc-svc">Servicio</label><select id="nc-svc" name="servicio">${SERVICIOS.map((s) => `<option value="${s.id}" ${s.id === s0 ? "selected" : ""}>${s.nombre} · ${s.dur} min · ${dinero(s.precio)}</option>`).join("")}</select></div>
+      <div class="fila2">
+        <div class="campo"><label for="nc-est">Estilista</label><select id="nc-est" name="estilista">${ESTILISTAS.map((e) => `<option value="${e.id}" ${e.id === e0 ? "selected" : ""}>${e.nombre}</option>`).join("")}</select></div>
+        <div class="campo"><label for="nc-fecha">Fecha</label><input id="nc-fecha" type="date" name="fecha" value="${fecha}" min="${clave(HOY)}" required></div>
+      </div>
+      <div class="campo"><label for="nc-hora">Hora</label><select id="nc-hora" name="hora"></select></div>
+      <div class="info-svc" id="nc-info"></div>
+      <div class="aviso-form" id="nc-aviso" hidden></div>
+    </div>
+    <div class="hoja-pie"><button type="button" class="btn" data-cerrar>Cancelar</button><button class="btn prim" id="nc-guardar">${ICON.check}Guardar cita</button></div></form>`);
+  const f = $("#f-nueva", h);
+  let horaSel = pre.ini;
+  const act = () => {
+    const s = svc(f.servicio.value);
+    const horas = horasLibres(f.estilista.value, f.fecha.value, s.dur, { pasado: false });
+    if (f.hora.value) horaSel = +f.hora.value;
+    f.hora.innerHTML = abierto(deClave(f.fecha.value || clave(HOY))) ? opcionesHora(horas, horaSel) : `<option value="">Los domingos no abrimos</option>`;
+    if (horaSel !== undefined && !horas.includes(horaSel) && horas.length) {
+      const cerca = horas.reduce((a, b) => (Math.abs(b - horaSel) < Math.abs(a - horaSel) ? b : a));
+      f.hora.value = cerca;
+    }
+    const aviso = $("#nc-aviso", h);
+    if (pre.ini !== undefined && f.hora.value && +f.hora.value !== pre.ini && f.fecha.value === pre.fecha && f.estilista.value === pre.est) {
+      aviso.hidden = false; aviso.textContent = `A las ${hora(pre.ini)} no alcanza el tiempo para ${s.nombre.toLowerCase()}; te propongo la hora libre más cercana.`;
+    } else aviso.hidden = true;
+    const ini = f.hora.value ? +f.hora.value : null;
+    $("#nc-info", h).innerHTML = `Duración: <b>${s.dur} min</b>${ini !== null ? ` · de ${hora(ini)} a ${hora(ini + s.dur)}` : ""} · Precio: <b>${dinero(s.precio)}</b>`;
+    $("#nc-guardar", h).disabled = !f.hora.value;
+  };
+  f.addEventListener("change", (e) => { if (e.target.name === "hora") horaSel = +f.hora.value; act(); });
+  act();
+  f.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const nombre = f.cliente.value.trim().replace(/\s+/g, " ");
+    if (!nombre) return f.cliente.focus();
+    if (!f.hora.value) return;
+    const s = svc(f.servicio.value), ini = +f.hora.value;
+    if (!libre(f.estilista.value, f.fecha.value, ini, s.dur)) { $("#nc-aviso", h).hidden = false; $("#nc-aviso", h).textContent = "Ese horario ya se ocupó, elige otro."; return; }
+    const c = { id: sigId++, cliente: nombre, servicio: s.id, estilista: f.estilista.value, fecha: f.fecha.value, ini, dur: s.dur, estado: "confirmada", origen: "Recepción", aviso: false };
+    citas.push(c);
+    cerrarModal();
+    A.fecha = deClave(c.fecha); A.resaltar = c.id;
+    if (actual !== "agenda") ir("agenda"); else RENDER.agenda();
+    toast(`Cita agendada: ${nombre.split(" ")[0]}, ${hora(ini)}`);
+  });
+  if (!pre.cliente) setTimeout(() => f.cliente.focus(), 50);
+}
+
+function abrirCita(id) {
+  const c = citas.find((x) => x.id === id);
+  const s = svc(c.servicio), e = est(c.estilista), d = deClave(c.fecha);
+  const [lbl, cls] = ESTADOS[c.estado];
+  const futura = c.fecha > clave(HOY) || (c.fecha === clave(HOY));
+  const abierta = c.estado === "pendiente" || c.estado === "confirmada";
+  let acc = "";
+  if (abierta && futura) acc += `<button class="btn mal" data-acc="cancelar">${ICON.x}Cancelar</button><button class="btn" data-acc="mover">${ICON.reloj}Mover</button>`;
+  if (c.estado === "pendiente") acc += `<button class="btn ok" data-acc="confirmar">${ICON.check}Confirmar</button>`;
+  if (abierta && c.fecha <= clave(HOY)) acc += `<button class="btn prim" data-acc="llego">${ICON.check}Llegó</button>`;
+  if (abierta && c.fecha === clave(HOY)) acc += `<button class="btn" data-acc="falto">No llegó</button>`;
+  if (!acc) acc = `<button class="btn" data-cerrar>Cerrar</button>`;
+  const h = modal(`${cabModal(esc(c.cliente), `<span class="etq ${cls}">${lbl}</span>`)}
+    <div class="hoja-cuerpo">
+      <p class="sub" style="margin-bottom:12px"><span class="punto" style="background:${s.color}"></span>${esc(s.nombre)}</p>
+      <div class="datos">
+        <div><span>Fecha</span><strong>${cap(fLarga(d))}</strong></div>
+        <div><span>Hora</span><strong>${hora(c.ini)} – ${hora(c.ini + c.dur)}</strong></div>
+        <div><span>Estilista</span><strong>${e.nombre}</strong></div>
+        <div><span>Duración</span><strong>${c.dur} min</strong></div>
+        <div><span>Precio</span><strong>${dinero(s.precio)}</strong></div>
+        <div><span>Agendada por</span><strong>${c.origen}</strong></div>
+      </div>
+      ${abierta && futura ? `<a class="btn wa" style="width:100%;margin-top:12px" target="_blank" rel="noopener" href="${wa(mensajeRecordatorio(c))}" data-acc="wa">${ICON.wa}Enviar recordatorio por WhatsApp</a>` : ""}
+    </div>
+    <div class="hoja-pie">${acc}</div>`);
+  h.addEventListener("click", (ev) => {
+    const b = ev.target.closest("[data-acc]"); if (!b) return;
+    const a = b.dataset.acc;
+    if (a === "wa") { c.aviso = true; return; }
+    if (a === "mover") return moverCita(c);
+    if (a === "cancelar") { c.estado = "cancelada"; toast("Cita cancelada; el horario quedó libre"); }
+    if (a === "confirmar") { c.estado = "confirmada"; toast("Cita confirmada"); }
+    if (a === "llego") { c.estado = "llego"; toast(`${c.cliente.split(" ")[0]} ya llegó`); }
+    if (a === "falto") { c.estado = "falto"; toast("Marcada como no llegó"); }
+    cerrarModal(); RENDER[actual]();
+  });
+}
+
+function moverCita(c) {
+  const s = svc(c.servicio);
+  const h = modal(`${cabModal("Mover cita", `<span class="etq neu">${esc(c.cliente)}</span>`)}
+    <form id="f-mover"><div class="hoja-cuerpo">
+      <p class="sub" style="margin-bottom:14px">${esc(s.nombre)} · ${s.dur} min. Ahora: ${cap(fLarga(deClave(c.fecha)))}, ${hora(c.ini)} con ${est(c.estilista).nombre}.</p>
+      <div class="fila2">
+        <div class="campo"><label>Nueva fecha</label><input type="date" name="fecha" value="${c.fecha}" min="${clave(HOY)}"></div>
+        <div class="campo"><label>Estilista</label><select name="estilista">${ESTILISTAS.map((e) => `<option value="${e.id}" ${e.id === c.estilista ? "selected" : ""}>${e.nombre}</option>`).join("")}</select></div>
+      </div>
+      <div class="campo"><label>Nueva hora</label><select name="hora"></select></div>
+    </div>
+    <div class="hoja-pie"><button type="button" class="btn" data-cerrar>Cancelar</button><button class="btn prim" id="mv-ok">${ICON.check}Mover cita</button></div></form>`);
+  const f = $("#f-mover", h);
+  const act = () => {
+    const horas = horasLibres(f.estilista.value, f.fecha.value, c.dur, { ignorar: c.id });
+    f.hora.innerHTML = opcionesHora(horas, c.ini);
+    $("#mv-ok", h).disabled = !horas.length;
+  };
+  f.addEventListener("change", (e) => { if (e.target.name !== "hora") act(); });
+  act();
+  f.addEventListener("submit", (e) => {
+    e.preventDefault();
+    c.fecha = f.fecha.value; c.estilista = f.estilista.value; c.ini = +f.hora.value; c.aviso = false;
+    if (c.estado === "confirmada") c.estado = "pendiente";
+    cerrarModal();
+    A.fecha = deClave(c.fecha); A.resaltar = c.id;
+    if (actual !== "agenda") ir("agenda"); else RENDER.agenda();
+    toast(`Cita movida a ${fLarga(deClave(c.fecha))}, ${hora(c.ini)}`);
+  });
+}
+
+/* ================= Reserva en línea ================= */
+const R = { servicio: null, est: "cualquiera", fecha: null, hora: null, hecho: null };
+function dispReserva(fecha) {
+  const s = svc(R.servicio);
+  const quien = R.est === "cualquiera" ? ESTILISTAS.filter((e) => e.hace.includes(s.id)) : [est(R.est)];
+  const mapa = new Map();
+  quien.forEach((e) => horasLibres(e.id, fecha, s.dur).forEach((t) => { if (!mapa.has(t)) mapa.set(t, []); mapa.get(t).push(e.id); }));
+  return [...mapa.entries()].sort((a, b) => a[0] - b[0]);
+}
+RENDER.reservar = function () {
+  const p = $("#p-reservar");
+  const aviso = `<div class="res-aviso">${ICON.enlace}<span>Así ven tus clientas la página de reservas. Comparte el enlace en tu Instagram, Facebook o estado de WhatsApp y cada reserva entra sola a tu agenda.</span></div>`;
+  if (R.hecho) {
+    const c = R.hecho;
+    p.innerHTML = `<div class="encabezado"><div><h1>Reserva en línea</h1><p>Lo que ve tu clienta al apartar su cita.</p></div></div>${aviso}
+      <div class="panel exito-res"><div class="ok-ico">${ICON.check}</div><h2>¡Listo, ${esc(c.cliente.split(" ")[0])}! Tu cita quedó apartada</h2>
+      <p>${esc(svc(c.servicio).nombre)} con ${est(c.estilista).nombre} el ${fLarga(deClave(c.fecha))} a las ${hora(c.ini, 1)} ${c.ini < 720 ? "de la mañana" : c.ini < 19 * 60 ? "de la tarde" : "de la noche"}. Te mandaremos un recordatorio un día antes.</p>
+      <div class="chips" style="justify-content:center"><button class="btn prim" id="res-ver">${ICON.cal}Ver en la agenda</button><button class="btn" id="res-otra">Hacer otra reserva</button></div></div>`;
+    $("#res-ver").onclick = () => { A.fecha = deClave(c.fecha); A.resaltar = c.id; ir("agenda"); };
+    $("#res-otra").onclick = () => { Object.assign(R, { servicio: null, est: "cualquiera", fecha: null, hora: null, hecho: null }); RENDER.reservar(); };
+    return;
+  }
+  const s = R.servicio && svc(R.servicio);
+  const cats = [...new Set(SERVICIOS.map((x) => x.cat))];
+  const dias = [];
+  if (s) { let d = new Date(HOY); while (dias.length < 12) { if (abierto(d)) dias.push({ d, n: dispReserva(clave(d)).length }); d = addD(d, 1); } }
+  if (s && R.fecha && !dias.some((x) => clave(x.d) === R.fecha && x.n)) R.fecha = null;
+  if (s && !R.fecha) { const pr = dias.find((x) => x.n); if (pr) R.fecha = clave(pr.d); }
+  const disp = s && R.fecha ? dispReserva(R.fecha) : [];
+  if (R.hora !== null && !disp.some(([t]) => t === R.hora)) R.hora = null;
+  const grupos = [["Mañana", (t) => t < 12 * 60], ["Tarde", (t) => t >= 12 * 60 && t < 17 * 60], ["Noche", (t) => t >= 17 * 60]];
+  const estAsig = R.hora !== null ? (R.est === "cualquiera" ? disp.find(([t]) => t === R.hora)[1][0] : R.est) : null;
+  p.innerHTML = `<div class="encabezado"><div><h1>Reserva en línea</h1><p>Lo que ve tu clienta al apartar su cita.</p></div></div>${aviso}
+  <div class="res"><div>
+    <div class="res-hero"><small>Estética Bella Luz</small><h2>Aparta tu cita en un minuto</h2><p>Elige tu servicio, con quién y a qué hora. Solo verás horarios libres.</p></div>
+    <div class="panel paso"><h3><i>1</i>¿Qué te vas a hacer?</h3>
+      ${cats.map((ct) => `<div class="sec-t" style="margin-top:4px">${ct}</div><div class="svc-grid">${SERVICIOS.filter((x) => x.cat === ct).map((x) => `<button class="svc-op ${R.servicio === x.id ? "activo" : ""}" data-r-svc="${x.id}"><i style="background:${x.color}"></i><span><b>${x.nombre}</b><small>${x.dur} min · ${dinero(x.precio)}</small></span></button>`).join("")}</div>`).join("")}
+    </div>
+    <div class="panel paso ${s ? "" : "bloq"}"><h3><i>2</i>¿Con quién?</h3>
+      <div class="est-grid"><button class="est-op ${R.est === "cualquiera" ? "activo" : ""}" data-r-est="cualquiera"><div class="avatar" style="background:#8a8fa3">✦</div><div><b>Sin preferencia</b><small>La primera disponible</small></div></button>
+      ${ESTILISTAS.filter((e) => !s || e.hace.includes(s.id)).map((e) => `<button class="est-op ${R.est === e.id ? "activo" : ""}" data-r-est="${e.id}"><div class="avatar" style="background:${e.color}">${e.nombre[0]}</div><div><b>${e.nombre}</b><small>${e.puesto}</small></div></button>`).join("")}</div>
+    </div>
+    <div class="panel paso ${s ? "" : "bloq"}"><h3><i>3</i>¿Qué día?</h3>
+      <div class="dias">${s ? dias.map((x) => `<button class="dia-op ${R.fecha === clave(x.d) ? "activo" : ""}" data-r-dia="${clave(x.d)}" ${x.n ? "" : "disabled"}><span>${x.d.toLocaleDateString("es-MX", { weekday: "short" }).replace(".", "")}</span><b>${x.d.getDate()}</b><small>${x.n ? x.n + " libres" : "Lleno"}</small></button>`).join("") : `<span class="sub">Primero elige un servicio.</span>`}</div>
+    </div>
+    <div class="panel paso ${s && R.fecha ? "" : "bloq"}"><h3><i>4</i>¿A qué hora?</h3>
+      ${s && R.fecha ? (disp.length ? grupos.map(([g, fn]) => { const hs = disp.filter(([t]) => fn(t)); return hs.length ? `<div class="horas-grupo"><span>${g}</span><div class="horas">${hs.map(([t]) => `<button class="hora-op ${R.hora === t ? "activo" : ""}" data-r-hora="${t}">${hora(t)}</button>`).join("")}</div></div>` : ""; }).join("") : `<span class="sub">Ese día ya no hay lugar.</span>`) : `<span class="sub">Elige servicio y día para ver los horarios.</span>`}
+    </div>
+    <form class="panel paso ${R.hora !== null ? "" : "bloq"}" id="f-res"><h3><i>5</i>Tus datos</h3>
+      <div class="fila2"><div class="campo"><label for="r-nom">Nombre completo</label><input id="r-nom" name="nombre" required placeholder="¿Cómo te llamas?"></div>
+      <div class="campo"><label for="r-tel">WhatsApp</label><input id="r-tel" name="tel" inputmode="tel" placeholder="10 dígitos"></div></div>
+      <button class="btn prim" style="width:100%;padding:13px" ${R.hora !== null ? "" : "disabled"}>${ICON.check}Confirmar mi cita</button>
+    </form>
+  </div>
+  <aside class="panel res-resumen"><h3>Tu cita</h3>
+    <div class="res-linea"><span>Servicio</span><b>${s ? esc(s.nombre) : "—"}</b></div>
+    <div class="res-linea"><span>Con</span><b>${estAsig ? est(estAsig).nombre : R.est === "cualquiera" ? "Sin preferencia" : est(R.est).nombre}</b></div>
+    <div class="res-linea"><span>Día</span><b>${R.fecha ? cap(fLarga(deClave(R.fecha))) : "—"}</b></div>
+    <div class="res-linea"><span>Hora</span><b>${R.hora !== null ? `${hora(R.hora)} – ${hora(R.hora + s.dur)}` : "—"}</b></div>
+    <div class="res-linea" style="border:0"><span>Total</span><b>${s ? dinero(s.precio) : "—"}</b></div>
+    <p class="sub" style="margin-top:8px;font-size:.78rem">Pagas en la estética. Si no puedes llegar, avísanos con tiempo por WhatsApp.</p>
+  </aside></div>`;
+};
+$("#p-reservar").addEventListener("click", (e) => {
+  const t = e.target.closest("[data-r-svc],[data-r-est],[data-r-dia],[data-r-hora]");
+  if (!t) return;
+  if (t.dataset.rSvc) { R.servicio = t.dataset.rSvc; R.hora = null; if (R.est !== "cualquiera" && !est(R.est).hace.includes(R.servicio)) R.est = "cualquiera"; }
+  if (t.dataset.rEst) { R.est = t.dataset.rEst; R.hora = null; }
+  if (t.dataset.rDia) { R.fecha = t.dataset.rDia; R.hora = null; }
+  if (t.dataset.rHora) R.hora = +t.dataset.rHora;
+  const y = window.scrollY; RENDER.reservar(); window.scrollTo(0, y);
+});
+$("#p-reservar").addEventListener("submit", (e) => {
+  e.preventDefault();
+  const f = e.target, nombre = f.nombre.value.trim().replace(/\s+/g, " ");
+  if (!nombre || R.hora === null) return;
+  const s = svc(R.servicio), disp = dispReserva(R.fecha), op = disp.find(([t]) => t === R.hora);
+  if (!op) { toast("Ese horario se acaba de ocupar, elige otro"); return RENDER.reservar(); }
+  let eid = op[1][0];
+  if (R.est === "cualquiera") eid = op[1].sort((a, b) => citas.filter((c) => c.fecha === R.fecha && c.estilista === a && activa(c)).length - citas.filter((c) => c.fecha === R.fecha && c.estilista === b && activa(c)).length)[0];
+  const c = { id: sigId++, cliente: nombre, servicio: s.id, estilista: eid, fecha: R.fecha, ini: R.hora, dur: s.dur, estado: "pendiente", origen: "Reserva en línea", aviso: false };
+  citas.push(c); R.hecho = c; RENDER.reservar(); window.scrollTo(0, 0);
+  toast("Nueva reserva en línea en la agenda");
+});
+
+/* ================= Recordatorios ================= */
+function mensajeRecordatorio(c) {
+  const d = deClave(c.fecha);
+  const cuando = c.fecha === clave(addD(HOY, 1)) ? `mañana ${fLarga(d)}` : c.fecha === clave(HOY) ? `hoy ${fLarga(d)}` : `el ${fLarga(d)}`;
+  return `¡Hola ${c.cliente.split(" ")[0]}! Te recordamos tu cita en ${NEGOCIO}:\n\n${svc(c.servicio).nombre} con ${est(c.estilista).nombre}\n${cap(cuando)} a las ${hora(c.ini)}\n\n¿Nos confirmas tu asistencia? Si necesitas cambiar el horario, responde a este mensaje. ¡Te esperamos!`;
+}
+RENDER.recordatorios = function () {
+  const dia = sigAbierto(HOY), k = clave(dia);
+  const lista = citas.filter((c) => c.fecha === k && (c.estado === "pendiente" || c.estado === "confirmada")).sort((a, b) => a.ini - b.ini);
+  const enviados = lista.filter((c) => c.aviso).length;
+  const esManana = k === clave(addD(HOY, 1));
+  $("#p-recordatorios").innerHTML = `<div class="encabezado"><div><h1>Recordatorios</h1><p>Citas de ${esManana ? "mañana" : "el próximo día hábil"}: ${fLarga(dia)}. Un toque y el mensaje sale listo por WhatsApp.</p></div></div>
+    <div class="kpis">
+      <div class="panel kpi"><span>Citas ${esManana ? "de mañana" : "del " + fLarga(dia).split(",")[0]}</span><strong>${lista.length}</strong></div>
+      <div class="panel kpi"><span>Recordatorios enviados</span><strong>${enviados}</strong><small>de ${lista.length}</small></div>
+      <div class="panel kpi"><span>Por confirmar</span><strong>${lista.filter((c) => c.estado === "pendiente").length}</strong></div>
+      <div class="panel kpi"><span>En servicios</span><strong>${dinero(lista.reduce((a, c) => a + svc(c.servicio).precio, 0))}</strong></div>
+    </div>
+    <div class="panel lista">${lista.length ? lista.map((c) => { const s = svc(c.servicio); const [l, cl] = ESTADOS[c.estado]; return `<div class="rec">
+      <div class="h">${hora(c.ini, 1)}<small>${c.ini < 720 ? "a. m." : "p. m."}<br>${c.dur} min</small></div>
+      <div><b>${esc(c.cliente)}</b><span class="sub"><span class="punto" style="background:${s.color};width:9px;height:9px;margin-right:6px"></span>${esc(s.nombre)} · ${est(c.estilista).nombre}</span>
+        <details><summary>Ver mensaje</summary><pre>${esc(mensajeRecordatorio(c))}</pre></details></div>
+      <div class="rec-acc"><span class="etq ${c.aviso ? "ok" : cl}">${c.aviso ? "Recordatorio enviado" : l}</span>
+        <a class="btn ${c.aviso ? "" : "wa"} chico" href="${wa(mensajeRecordatorio(c))}" target="_blank" rel="noopener" data-rec="${c.id}">${ICON.wa}${c.aviso ? "Enviar de nuevo" : "Enviar recordatorio por WhatsApp"}</a></div>
+    </div>`; }).join("") : `<div class="vacio">No hay citas pendientes para ese día.</div>`}</div>`;
+};
+$("#p-recordatorios").addEventListener("click", (e) => {
+  const a = e.target.closest("[data-rec]"); if (!a) return;
+  const c = citas.find((x) => x.id === +a.dataset.rec); c.aviso = true;
+  setTimeout(() => { RENDER.recordatorios(); toast(`Recordatorio listo para ${c.cliente.split(" ")[0]}`); }, 60);
+});
+
+/* ================= Clientes ================= */
+let cliSel = null, cliBusca = "";
+function datosClientes() {
+  const m = new Map();
+  citas.forEach((c) => { if (!m.has(c.cliente)) m.set(c.cliente, []); m.get(c.cliente).push(c); });
+  const hoyK = clave(HOY);
+  return [...m.entries()].map(([nombre, cs]) => {
+    cs.sort((a, b) => (a.fecha + String(a.ini).padStart(4, "0")).localeCompare(b.fecha + String(b.ini).padStart(4, "0")));
+    const visitas = cs.filter((c) => c.estado === "llego");
+    const conteo = {}; visitas.forEach((c) => (conteo[c.servicio] = (conteo[c.servicio] || 0) + 1));
+    const favs = Object.entries(conteo).sort((a, b) => b[1] - a[1]);
+    const prox = cs.find((c) => c.fecha >= hoyK && (c.estado === "pendiente" || c.estado === "confirmada"));
+    return { nombre, cs, visitas, favs, prox, ultima: visitas[visitas.length - 1], gastado: visitas.reduce((a, c) => a + svc(c.servicio).precio, 0) };
+  });
+}
+const haceDias = (k) => { const n = Math.round((HOY - deClave(k)) / 864e5); return n === 0 ? "hoy" : n === 1 ? "ayer" : `hace ${n} días`; };
+function detalleCliente(x) {
+  const max = x.favs.length ? x.favs[0][1] : 1;
+  return `<div class="cli-cab"><div class="avatar" style="background:${colorDe(x.nombre)}">${iniciales(x.nombre)}</div><div style="flex:1;min-width:0"><h2>${esc(x.nombre)}</h2><span class="sub">Clienta desde ${x.visitas.length ? fCorta(deClave(x.visitas[0].fecha)) : "esta semana"}</span></div><button class="btn prim chico" data-agendar="${esc(x.nombre)}">${ICON.mas}Agendar</button></div>
+    <div class="mini-kpis"><div><span>Visitas</span><b>${x.visitas.length}</b></div><div><span>Ha gastado</span><b>${dinero(x.gastado)}</b></div><div><span>Última visita</span><b>${x.ultima ? haceDias(x.ultima.fecha) : "—"}</b></div></div>
+    ${x.prox ? `<div class="info-svc" style="margin-bottom:4px">Próxima cita: <b>${cap(fLarga(deClave(x.prox.fecha)))}, ${hora(x.prox.ini)}</b> · ${svc(x.prox.servicio).nombre} con ${est(x.prox.estilista).nombre}</div>` : ""}
+    <div class="sec-t">Servicios favoritos</div>
+    ${x.favs.length ? x.favs.slice(0, 4).map(([id, n]) => `<div class="fav"><span>${svc(id).nombre}</span><div class="barra"><i style="width:${(n / max) * 100}%;background:${svc(id).color}"></i></div><small>${n} ${n === 1 ? "vez" : "veces"}</small></div>`).join("") : `<p class="sub">Aún no tiene visitas.</p>`}
+    <div class="sec-t">Historial</div>
+    ${x.cs.slice().reverse().slice(0, 14).map((c) => `<div class="hist"><i style="background:${svc(c.servicio).color}"></i><div><b>${svc(c.servicio).nombre}</b><br><small>${cap(fCorta(deClave(c.fecha)))} · ${hora(c.ini)} · ${est(c.estilista).nombre}</small></div><span class="etq ${ESTADOS[c.estado][1]}">${ESTADOS[c.estado][0]}</span><span class="num" style="width:76px">${dinero(svc(c.servicio).precio)}</span></div>`).join("")}`;
+}
+RENDER.clientes = function () {
+  const todos = datosClientes().sort((a, b) => (b.ultima ? b.ultima.fecha : "").localeCompare(a.ultima ? a.ultima.fecha : ""));
+  const q = cliBusca.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
+  const lista = todos.filter((x) => x.nombre.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").includes(q));
+  if (!cliSel || !todos.some((x) => x.nombre === cliSel)) cliSel = todos[0] && todos[0].nombre;
+  const sel = todos.find((x) => x.nombre === cliSel);
+  $("#p-clientes").innerHTML = `<div class="encabezado"><div><h1>Clientes</h1><p>${todos.length} clientes con historial de visitas.</p></div></div>
+    <div class="kpis">
+      <div class="panel kpi"><span>Clientes</span><strong>${todos.length}</strong></div>
+      <div class="panel kpi"><span>Visitas en 30 días</span><strong>${citas.filter((c) => c.estado === "llego" && c.fecha >= clave(addD(HOY, -30))).length}</strong></div>
+      <div class="panel kpi"><span>Con cita próxima</span><strong>${todos.filter((x) => x.prox).length}</strong></div>
+      <div class="panel kpi"><span>Ticket promedio</span><strong>${dinero(Math.round(todos.reduce((a, x) => a + x.gastado, 0) / Math.max(1, todos.reduce((a, x) => a + x.visitas.length, 0))))}</strong></div>
+    </div>
+    <div class="cli-dos">
+      <div class="panel"><div style="padding:14px"><div class="buscador">${ICON.buscar}<input id="cli-q" placeholder="Buscar cliente" value="${esc(cliBusca)}"></div></div>
+        <div class="cli-lista">${lista.map((x) => `<button class="cli-fila ${x.nombre === cliSel && !esMovil() ? "activo" : ""}" data-cli="${esc(x.nombre)}"><div class="avatar" style="background:${colorDe(x.nombre)}">${iniciales(x.nombre)}</div><div><b>${esc(x.nombre)}</b><small>${x.visitas.length} visitas${x.ultima ? " · " + haceDias(x.ultima.fecha) : ""}</small></div>${x.favs[0] ? `<span class="etq neu">${svc(x.favs[0][0]).nombre}</span>` : `<span class="etq ac">Nueva</span>`}</button>`).join("") || `<div class="vacio">Sin resultados</div>`}</div>
+      </div>
+      <div class="panel cli-det cli-det-panel">${sel ? detalleCliente(sel) : ""}</div>
+    </div>`;
+};
+$("#p-clientes").addEventListener("input", (e) => {
+  if (e.target.id !== "cli-q") return;
+  cliBusca = e.target.value; RENDER.clientes();
+  const i = $("#cli-q"); i.focus(); i.setSelectionRange(i.value.length, i.value.length);
+});
+$("#p-clientes").addEventListener("click", (e) => {
+  const f = e.target.closest("[data-cli]");
+  if (f) {
+    cliSel = f.dataset.cli;
+    if (esMovil()) { const x = datosClientes().find((y) => y.nombre === cliSel); modal(`<div class="hoja-cab"><div></div><button class="cerrar" data-cerrar aria-label="Cerrar">${ICON.x}</button></div><div class="hoja-cuerpo" style="padding-bottom:22px">${detalleCliente(x)}</div>`, "ancha"); }
+    else RENDER.clientes();
+  }
+});
+document.addEventListener("click", (e) => {
+  const b = e.target.closest("[data-agendar]");
+  if (b) { const n = b.dataset.agendar; const x = datosClientes().find((y) => y.nombre === n); nuevaCita({ cliente: n, servicio: x && x.favs[0] ? x.favs[0][0] : undefined, est: x && x.favs[0] ? ESTILISTAS.find((e) => e.hace.includes(x.favs[0][0])).id : undefined }); }
+});
+
+/* ================= Servicios ================= */
+RENDER.servicios = function () {
+  const mesK = clave(new Date(HOY.getFullYear(), HOY.getMonth(), 1));
+  const delMes = (id) => citas.filter((c) => c.servicio === id && c.estado === "llego" && c.fecha >= mesK).length;
+  $("#p-servicios").innerHTML = `<div class="encabezado"><div><h1>Servicios</h1><p>Precios y duraciones. La duración se usa para acomodar cada cita en la agenda.</p></div><button class="btn prim" data-svc-nuevo>${ICON.mas}Agregar servicio</button></div>
+    <div class="panel tabla-cont"><table class="tab-svc"><thead><tr><th>Servicio</th><th>Categoría</th><th class="num">Duración</th><th class="num">Precio</th><th class="num">Este mes</th><th></th></tr></thead><tbody>
+    ${SERVICIOS.map((s) => `<tr><td><span class="punto" style="background:${s.color}"></span><b>${esc(s.nombre)}</b></td><td class="sub">${s.cat}</td><td class="num">${s.dur} min</td><td class="num"><b>${dinero(s.precio)}</b></td><td class="num sub">${delMes(s.id)}</td><td class="num"><button class="btn chico" data-svc="${s.id}" aria-label="Editar">${ICON.lapiz}<span class="txt-ed">Editar</span></button></td></tr>`).join("")}
+    </tbody></table></div>`;
+};
+function editarServicio(s) {
+  const nuevo = !s;
+  s = s || { id: "s" + Date.now(), nombre: "", cat: "Cabello", dur: 60, precio: 0, color: COLORES_AV[SERVICIOS.length % COLORES_AV.length] };
+  const h = modal(`${cabModal(nuevo ? "Nuevo servicio" : "Editar servicio")}
+    <form id="f-svc"><div class="hoja-cuerpo">
+      <div class="campo"><label>Nombre</label><input name="nombre" required value="${esc(s.nombre)}"></div>
+      <div class="campo"><label>Categoría</label><select name="cat">${["Cabello", "Color", "Tratamientos", "Rostro", "Uñas"].map((c) => `<option ${c === s.cat ? "selected" : ""}>${c}</option>`).join("")}</select></div>
+      <div class="fila2"><div class="campo"><label>Duración</label><select name="dur">${[15, 30, 45, 60, 75, 90, 120, 150, 180].map((d) => `<option value="${d}" ${d === s.dur ? "selected" : ""}>${d} min</option>`).join("")}</select></div>
+      <div class="campo"><label>Precio</label><input name="precio" type="number" min="0" step="10" required value="${s.precio || ""}"></div></div>
+    </div><div class="hoja-pie"><button type="button" class="btn" data-cerrar>Cancelar</button><button class="btn prim">${ICON.check}Guardar</button></div></form>`);
+  $("#f-svc", h).addEventListener("submit", (e) => {
+    e.preventDefault(); const f = e.target;
+    s.nombre = f.nombre.value.trim(); s.cat = f.cat.value; s.dur = +f.dur.value; s.precio = +f.precio.value;
+    if (nuevo) { SERVICIOS.push(s); PESO[s.id] = 1; }
+    cerrarModal(); RENDER.servicios(); toast(nuevo ? "Servicio agregado" : "Servicio actualizado");
+  });
+}
+$("#p-servicios").addEventListener("click", (e) => {
+  const b = e.target.closest("[data-svc]"); if (b) return editarServicio(svc(b.dataset.svc));
+  if (e.target.closest("[data-svc-nuevo]")) editarServicio(null);
+});
+
+/* ================= Arranque ================= */
+document.addEventListener("DOMContentLoaded", () => { armarNav(); ir(location.hash.slice(1) || "agenda"); });
+</script>
+<script src="../../plantillas/comun/marca.js"></script>
+<script src="../../portafolio/portafolio.js" data-volver="../#catalogo" data-firma="Hecho por LocalConnect" data-tipo="Agenda de citas" data-boton="Lo quiero" data-quiero="¡Hola LocalConnect! Vi el sistema de agenda de citas y lo quiero para mi negocio."></script>
+</body>
+</html>

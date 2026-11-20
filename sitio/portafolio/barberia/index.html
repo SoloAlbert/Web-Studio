@@ -29,7 +29,7 @@
     .btn--linea { background: transparent; color: var(--texto); border: 1px solid var(--oro); }
     .hero { position: relative; min-height: 82vh; display: grid; align-items: center; overflow: hidden;
       background: radial-gradient(ellipse at 80% 30%, rgba(201, 164, 92, 0.18), transparent 55%), repeating-linear-gradient(135deg, #151515 0 14px, #121212 14px 28px); }
-    .hero .fila { display: grid; gap: 2.5rem; align-items: center; padding: 4rem 0; }
+    .hero .fila { display: grid; gap: 2.5rem; align-items: center; padding-block: 4rem; }
     @media (min-width: 860px) { .hero .fila { grid-template-columns: 1.2fr 0.8fr; } }
     .hero .eti { color: var(--oro); letter-spacing: 0.3em; text-transform: uppercase; font-size: 0.78rem; margin: 0 0 0.6rem; }
     .hero h1 { font-size: clamp(3.4rem, 12vw, 7rem); line-height: 0.92; margin: 0 0 1rem; }
@@ -37,8 +37,15 @@
     .hero p.sub { color: var(--suave); font-size: 1.08rem; max-width: 30rem; margin: 0 0 2rem; }
     .hero .acc { display: flex; flex-wrap: wrap; gap: 0.8rem; }
     .poste { justify-self: center; width: 120px; height: 340px; border-radius: 60px; padding: 10px; background: linear-gradient(#d9d4c9, #8a857a); box-shadow: 0 30px 60px rgba(0,0,0,0.5); }
-    .poste div { width: 100%; height: 100%; border-radius: 50px; background: repeating-linear-gradient(-35deg, #b0232a 0 22px, #f2efe9 22px 44px, #1f3f8a 44px 66px, #f2efe9 66px 88px); background-size: 100% 176px; animation: girar-poste 3s linear infinite; }
-    @keyframes girar-poste { to { background-position: 0 176px; } }
+    /* Las rayas a -45° se repiten en vertical cada 88px × √2 = 124.45px: se desliza exactamente un ciclo, sin uniones. */
+    .poste div { position: relative; width: 100%; height: 100%; border-radius: 50px; overflow: hidden; }
+    .poste div::before { content: ""; position: absolute; left: 0; right: 0; top: -124.45px; height: calc(100% + 124.45px);
+      background: repeating-linear-gradient(-45deg, #b0232a 0 22px, #f2efe9 22px 44px, #1f3f8a 44px 66px, #f2efe9 66px 88px);
+      animation: girar-poste 2.4s linear infinite; will-change: transform; }
+    .poste div::after { content: ""; position: absolute; inset: 0; border-radius: inherit;
+      background: linear-gradient(90deg, rgba(0,0,0,0.28), rgba(255,255,255,0.12) 35%, rgba(255,255,255,0) 55%, rgba(0,0,0,0.3)); }
+    @keyframes girar-poste { to { transform: translateY(124.45px); } }
+    @media (prefers-reduced-motion: reduce) { .poste div::before { animation: none; } }
     @media (max-width: 859px) { .poste { display: none; } }
     .sec { padding: 5rem 0; }
     .titulo { text-align: center; margin-bottom: 2.6rem; }

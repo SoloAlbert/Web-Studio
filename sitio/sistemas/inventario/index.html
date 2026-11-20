@@ -1,0 +1,683 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Ferretería El Tornillo · Inventario</title>
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#1b2033">
+  <link rel="icon" href="../../assets/icono.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="../../portafolio/portafolio.css">
+  <style>
+    :root {
+      --fondo: #f4f5f8; --panel: #fff; --texto: #1b2033; --suave: #5b6178; --linea: #e3e5ec;
+      --acento: #c97f66; --acento-o: #b46a52; --acento-c: #fbf0eb;
+      --exito: #2e9d6a; --exito-c: #e6f5ee; --aviso: #d9822b; --aviso-c: #fcf1e5; --peligro: #c94a4a; --peligro-c: #fbeaea;
+      --oscuro: #1b2033; --r: 14px;
+      --sombra: 0 1px 2px rgba(27, 32, 51, .05), 0 6px 20px rgba(27, 32, 51, .06);
+    }
+    body { font-family: "Inter", system-ui, sans-serif; background: var(--fondo); color: var(--texto); font-size: 15px; }
+    button, input, select, textarea { font: inherit; color: inherit; }
+    button { cursor: pointer; }
+    svg.i { width: 20px; height: 20px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
+    .num { font-variant-numeric: tabular-nums; }
+
+    /* Estructura */
+    .app { display: grid; grid-template-columns: 248px minmax(0, 1fr); min-height: 100vh; }
+    .lateral { position: sticky; top: 0; height: 100vh; background: var(--oscuro); color: #fff; display: flex; flex-direction: column; padding: 22px 14px 18px; }
+    .marca { padding: 2px 10px 24px; display: flex; gap: 12px; align-items: center; }
+    .marca__logo { width: 40px; height: 40px; border-radius: 12px; background: var(--acento); display: grid; place-items: center; font-weight: 800; flex: none; }
+    .marca strong { display: block; font-size: 1rem; line-height: 1.2; }
+    .marca small { display: block; color: rgba(255, 255, 255, .55); font-size: .72rem; margin-top: 2px; }
+    .menu-lat { display: flex; flex-direction: column; gap: 4px; }
+    .menu-lat button { display: flex; align-items: center; gap: 12px; padding: 11px 12px; border: 0; background: none; color: rgba(255, 255, 255, .7); border-radius: 10px; text-align: left; font-weight: 500; }
+    .menu-lat button:hover { background: rgba(255, 255, 255, .06); color: #fff; }
+    .menu-lat button.activo { background: rgba(201, 127, 102, .2); color: #fff; }
+    .menu-lat button.activo svg { color: #e8a58d; }
+    .menu-lat .cuenta { margin-left: auto; background: var(--aviso); color: #fff; font-size: .7rem; font-weight: 700; border-radius: 999px; padding: 1px 7px; }
+    .usuario-lat { margin-top: auto; display: flex; align-items: center; gap: 10px; padding: 12px; border-radius: 12px; background: rgba(255, 255, 255, .06); border: 0; color: #fff; text-align: left; width: 100%; }
+    .usuario-lat:hover { background: rgba(255, 255, 255, .1); }
+    .avatar { width: 36px; height: 36px; border-radius: 50%; background: #e8b4a0; color: var(--oscuro); display: grid; place-items: center; font-weight: 700; font-size: .85rem; flex: none; }
+    .usuario-lat small { display: block; color: rgba(255, 255, 255, .55); font-size: .72rem; }
+    .usuario-lat strong { font-size: .9rem; }
+    .superior, .inferior { display: none; }
+    .contenido { padding: 26px 30px 110px; min-width: 0; }
+    .encabezado { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; margin-bottom: 20px; flex-wrap: wrap; }
+    .encabezado h1 { margin: 0; font-size: 1.5rem; letter-spacing: -.01em; }
+    .encabezado p { margin: 2px 0 0; color: var(--suave); font-size: .9rem; }
+    .pantalla[hidden] { display: none !important; }
+
+    /* Componentes */
+    .tarjeta { background: var(--panel); border: 1px solid var(--linea); border-radius: var(--r); box-shadow: var(--sombra); }
+    .tarjeta__cab { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 16px 18px; border-bottom: 1px solid var(--linea); }
+    .tarjeta__cab h2 { margin: 0; font-size: 1rem; }
+    .tarjeta__cuerpo { padding: 16px 18px; }
+    .boton { display: inline-flex; align-items: center; justify-content: center; gap: 8px; border: 1px solid transparent; border-radius: 12px; padding: 10px 16px; font-weight: 600; font-size: .9rem; background: var(--acento); color: #fff; text-decoration: none; transition: background .15s, transform .1s; white-space: nowrap; }
+    .boton:hover { background: var(--acento-o); }
+    .boton:active { transform: scale(.98); }
+    .boton:disabled { opacity: .45; cursor: not-allowed; transform: none; }
+    .boton--borde { background: #fff; color: var(--texto); border-color: var(--linea); }
+    .boton--borde:hover { background: #f7f8fb; }
+    .boton--verde { background: var(--exito); }
+    .boton--verde:hover { background: #26865a; }
+    .boton--grande { padding: 14px 18px; font-size: 1rem; border-radius: 14px; }
+    .boton--ancho { width: 100%; }
+    .boton--chico { padding: 7px 11px; font-size: .8rem; border-radius: 10px; }
+    .insignia { display: inline-flex; align-items: center; gap: 5px; font-size: .74rem; font-weight: 600; padding: 3px 9px; border-radius: 999px; background: #eef0f5; color: var(--suave); white-space: nowrap; }
+    .insignia--ok { background: var(--exito-c); color: var(--exito); }
+    .insignia--aviso { background: var(--aviso-c); color: #b8661a; }
+    .insignia--peligro { background: var(--peligro-c); color: var(--peligro); }
+    .chips { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; scrollbar-width: none; }
+    .chips::-webkit-scrollbar { display: none; }
+    .chip { flex: none; border: 1px solid var(--linea); background: #fff; border-radius: 999px; padding: 7px 14px; font-size: .84rem; font-weight: 500; color: var(--suave); }
+    .chip.activo { background: var(--oscuro); color: #fff; border-color: var(--oscuro); }
+    .campo { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
+    .campo label { font-size: .8rem; font-weight: 600; color: var(--suave); }
+    .entrada { width: 100%; border: 1px solid var(--linea); border-radius: 12px; padding: 11px 13px; background: #fff; outline: none; min-width: 0; }
+    .entrada:focus { border-color: var(--acento); box-shadow: 0 0 0 3px rgba(201, 127, 102, .18); }
+    .buscador { position: relative; }
+    .buscador svg { position: absolute; left: 13px; top: 50%; transform: translateY(-50%); color: var(--suave); }
+    .buscador .entrada { padding-left: 42px; }
+    .kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; margin-bottom: 18px; }
+    .kpi { padding: 16px 18px; }
+    .kpi small { color: var(--suave); font-size: .8rem; font-weight: 500; }
+    .kpi strong { display: block; font-size: 1.45rem; margin-top: 4px; letter-spacing: -.01em; }
+    .kpi span { font-size: .78rem; color: var(--suave); }
+    .tabla-cont { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: .88rem; }
+    th { text-align: left; font-size: .74rem; text-transform: uppercase; letter-spacing: .04em; color: var(--suave); font-weight: 600; padding: 11px 14px; border-bottom: 1px solid var(--linea); white-space: nowrap; background: #fafbfc; }
+    td { padding: 11px 14px; border-bottom: 1px solid var(--linea); white-space: nowrap; }
+    tr:last-child td { border-bottom: 0; }
+    .der { text-align: right; }
+    .suave { color: var(--suave); }
+    .vacio { text-align: center; color: var(--suave); padding: 30px 16px; font-size: .9rem; }
+
+    /* Modal y avisos */
+    .modal { position: fixed; inset: 0; z-index: 100; background: rgba(20, 24, 38, .5); display: grid; place-items: center; padding: 20px; animation: aparecer .15s; }
+    .modal__caja { background: #fff; border-radius: 18px; width: min(460px, 100%); max-height: calc(100vh - 40px); overflow-y: auto; box-shadow: 0 30px 80px rgba(0, 0, 0, .3); }
+    .modal__cab { display: flex; align-items: center; justify-content: space-between; padding: 18px 20px 6px; }
+    .modal__cab h2 { margin: 0; font-size: 1.1rem; }
+    .modal__cerrar { border: 0; background: #f1f2f6; width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; color: var(--suave); }
+    .modal__cuerpo { padding: 12px 20px 20px; }
+    @keyframes aparecer { from { opacity: 0; } }
+    .aviso-flot { position: fixed; left: 50%; top: 18px; transform: translateX(-50%); z-index: 200; background: var(--oscuro); color: #fff; padding: 11px 18px; border-radius: 12px; font-size: .88rem; font-weight: 500; box-shadow: 0 12px 30px rgba(0, 0, 0, .25); display: flex; gap: 8px; align-items: center; max-width: calc(100% - 32px); animation: bajar .2s; }
+    .aviso-flot svg { color: #7fd3aa; }
+    @keyframes bajar { from { opacity: 0; transform: translate(-50%, -8px); } }
+
+    .barra-filtros { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; padding: 14px 18px; border-bottom: 1px solid var(--linea); }
+    .barra-filtros .buscador { flex: 1 1 260px; min-width: 0; }
+    .barra-filtros select.entrada { width: auto; flex: 0 0 auto; padding-right: 34px; }
+    .pie-tabla { padding: 12px 18px; font-size: .82rem; color: var(--suave); border-top: 1px solid var(--linea); }
+    tr.clic { cursor: pointer; }
+    tr.clic:hover td { background: #fafbfd; }
+    tr.nuevo td { animation: resaltar 2.4s ease; }
+    @keyframes resaltar { 0%, 40% { background: var(--exito-c); } }
+    .sku { font-family: ui-monospace, Consolas, monospace; font-size: .8rem; color: var(--suave); }
+    .exist { display: inline-flex; min-width: 38px; justify-content: center; font-weight: 700; padding: 3px 8px; border-radius: 8px; background: #eef0f5; }
+    .exist--bajo { background: var(--aviso-c); color: #b8661a; }
+    .exist--cero { background: var(--peligro-c); color: var(--peligro); }
+    .solo-movil { display: none; }
+    .mas-ent { color: var(--exito); font-weight: 700; }
+    .menos-sal { color: var(--peligro); font-weight: 700; }
+
+    .dos { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 20px; align-items: start; }
+    .seg { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; background: var(--fondo); padding: 4px; border-radius: 12px; margin-bottom: 14px; }
+    .seg button { border: 0; background: none; border-radius: 9px; padding: 9px; font-weight: 600; font-size: .88rem; color: var(--suave); display: flex; align-items: center; justify-content: center; gap: 6px; }
+    .seg button.activo { background: #fff; color: var(--texto); box-shadow: 0 1px 3px rgba(0, 0, 0, .1); }
+    .seg button.activo[data-tipo="entrada"] { color: var(--exito); }
+    .seg button.activo[data-tipo="salida"] { color: var(--peligro); }
+    .seg svg { width: 17px; height: 17px; }
+    .ayuda { font-size: .8rem; color: var(--suave); margin: -6px 0 14px; }
+
+    .alertas-lista { display: flex; flex-direction: column; }
+    .alerta-fila { display: grid; grid-template-columns: 44px minmax(0, 1fr) auto auto; gap: 14px; align-items: center; padding: 14px 18px; border-bottom: 1px solid var(--linea); }
+    .alerta-fila:last-child { border-bottom: 0; }
+    .alerta-ico { width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; }
+    .alerta-fila strong { display: block; font-size: .92rem; }
+    .alerta-fila small { color: var(--suave); font-size: .8rem; }
+    .medidor { height: 6px; background: #eceef3; border-radius: 99px; overflow: hidden; margin-top: 6px; max-width: 260px; }
+    .medidor i { display: block; height: 100%; border-radius: 99px; }
+    .alerta-cant { text-align: right; font-size: .8rem; color: var(--suave); white-space: nowrap; }
+    .alerta-cant b { display: block; font-size: 1rem; color: var(--texto); }
+
+    .proveedores { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
+    .prov { padding: 18px; display: flex; flex-direction: column; gap: 12px; }
+    .prov__cab { display: flex; gap: 12px; align-items: center; }
+    .prov__logo { width: 46px; height: 46px; border-radius: 13px; display: grid; place-items: center; font-weight: 800; color: #fff; flex: none; }
+    .prov__cab strong { display: block; line-height: 1.25; }
+    .prov__cab small { color: var(--suave); font-size: .8rem; }
+    .prov__datos { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .prov__dato { background: var(--fondo); border-radius: 10px; padding: 9px 11px; font-size: .78rem; color: var(--suave); }
+    .prov__dato b { display: block; color: var(--texto); font-size: .95rem; }
+    .prov__ult { font-size: .8rem; color: var(--suave); display: flex; align-items: center; gap: 6px; }
+    .prov__ult svg { width: 15px; height: 15px; }
+    .pedido-fila { display: grid; grid-template-columns: auto minmax(0, 1fr) 84px; gap: 12px; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--linea); }
+    .pedido-fila input[type=checkbox] { width: 18px; height: 18px; accent-color: var(--acento); }
+    .pedido-fila strong { display: block; font-size: .88rem; }
+    .pedido-fila small { color: var(--suave); font-size: .76rem; }
+    .pedido-fila .entrada { padding: 8px 10px; text-align: center; }
+    .pedido-pie { position: sticky; bottom: -20px; background: #fff; padding-bottom: 20px; margin-bottom: -20px; border-top: 1px solid var(--linea); }
+    .pedido-tot { display: flex; justify-content: space-between; padding: 14px 0; font-weight: 700; }
+
+    .barra-fila { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 12px; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--linea); }
+    .barra-fila:last-child { border-bottom: 0; }
+    .barra-fila .nom { font-weight: 600; font-size: .9rem; }
+    .barrita { grid-column: 1 / -1; height: 7px; background: #eceef3; border-radius: 99px; overflow: hidden; }
+    .barrita i { display: block; height: 100%; border-radius: 99px; }
+    .ficha { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 16px; }
+    .ficha div { background: var(--fondo); border-radius: 10px; padding: 10px 12px; font-size: .78rem; color: var(--suave); }
+    .ficha b { display: block; color: var(--texto); font-size: 1rem; }
+    .mini-mov { list-style: none; padding: 0; margin: 0 0 16px; }
+    .mini-mov li { display: flex; justify-content: space-between; gap: 10px; font-size: .84rem; padding: 8px 0; border-bottom: 1px solid var(--linea); }
+    .fila-botones { display: flex; gap: 10px; }
+    .fila-botones .boton { flex: 1; }
+    .dos-campos { display: grid; grid-template-columns: 1fr 1fr; gap: 0 12px; }
+
+    @media (max-width: 1200px) {
+      .dos { grid-template-columns: minmax(0, 1fr); }
+      .form-mov { order: -1; }
+      .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 900px) {
+      .app { display: block; }
+      .lateral { display: none; }
+      .superior { display: flex; position: sticky; top: 0; z-index: 30; background: var(--oscuro); color: #fff; padding: 12px 16px; align-items: center; justify-content: space-between; gap: 12px; }
+      .superior .marca { padding: 0; gap: 10px; min-width: 0; }
+      .superior .marca__logo { width: 34px; height: 34px; border-radius: 10px; font-size: .85rem; }
+      .superior .marca > div { min-width: 0; }
+      .superior .marca strong { font-size: .95rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+      .usuario-sup { display: flex; align-items: center; gap: 8px; border: 0; background: rgba(255, 255, 255, .08); color: #fff; border-radius: 999px; padding: 4px 12px 4px 4px; font-size: .8rem; font-weight: 600; flex: none; }
+      .usuario-sup .avatar { width: 28px; height: 28px; font-size: .72rem; }
+      .inferior { display: flex; position: fixed; left: 12px; right: 12px; bottom: calc(80px + env(safe-area-inset-bottom, 0px)); z-index: 45; background: #fff; border: 1px solid var(--linea); border-radius: 18px; box-shadow: 0 10px 30px rgba(27, 32, 51, .14); padding: 6px; gap: 4px; }
+      .inferior button { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px; font-size: .7rem; font-weight: 600; border: 0; background: none; color: var(--suave); padding: 7px 2px; border-radius: 12px; position: relative; }
+      .inferior button.activo { color: var(--acento-o); background: var(--acento-c); }
+      .inferior .cuenta { position: absolute; top: 2px; right: calc(50% - 22px); background: var(--aviso); color: #fff; font-size: .62rem; border-radius: 999px; padding: 0 5px; line-height: 16px; }
+      .contenido { padding: 18px 16px 180px; }
+      .sin-barra .inferior { bottom: calc(12px + env(safe-area-inset-bottom, 0px)); }
+      .sin-barra .contenido { padding-bottom: 110px; }
+      .encabezado h1 { font-size: 1.25rem; }
+      .kpi strong { font-size: 1.2rem; }
+      .kpis { gap: 10px; }
+      .modal { place-items: end center; padding: 0; }
+      .modal__caja { width: 100%; border-radius: 20px 20px 0 0; max-height: 92vh; padding-bottom: env(safe-area-inset-bottom, 0px); }
+      .oc-movil { display: none; }
+      th, td { padding-left: 12px; padding-right: 12px; }
+      .barra-filtros { padding: 12px; }
+      .barra-filtros .buscador { flex-basis: 100%; }
+      .barra-filtros select.entrada { flex: 1 1 0; min-width: 0; padding-right: 8px; font-size: .85rem; }
+      .solo-movil { display: block; }
+      .alerta-fila { grid-template-columns: 40px minmax(0, 1fr) auto; padding: 12px 14px; gap: 10px; }
+      .alerta-ico { width: 40px; height: 40px; }
+      .alerta-fila .boton { grid-column: 2 / -1; justify-self: start; }
+      .proveedores { grid-template-columns: minmax(0, 1fr); }
+    }
+  </style>
+</head>
+<body>
+<div class="app" id="app">
+  <aside class="lateral">
+    <div class="marca">
+      <div class="marca__logo">ET</div>
+      <div><strong>Ferretería El Tornillo</strong><small>LocalConnect · Inventario y almacén</small></div>
+    </div>
+    <nav class="menu-lat" id="menuLat"></nav>
+    <button class="usuario-lat" data-accion="usuario">
+      <span class="avatar" data-avatar>HE</span>
+      <span><small>Sesión iniciada</small><strong data-usuario-txt>Almacén: Héctor</strong></span>
+    </button>
+  </aside>
+
+  <header class="superior">
+    <div class="marca">
+      <div class="marca__logo">ET</div>
+      <div><strong>Ferretería El Tornillo</strong><small>LocalConnect · Inventario</small></div>
+    </div>
+    <button class="usuario-sup" data-accion="usuario"><span class="avatar" data-avatar>HE</span><span data-usuario-corto>Héctor</span></button>
+  </header>
+
+  <main class="contenido">
+    <section class="pantalla" data-pantalla="productos">
+      <div class="encabezado"><div><h1>Productos</h1><p>Catálogo del almacén con existencias, costos y precios.</p></div>
+        <button class="boton" data-accion="nuevo-producto"><svg class="i" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Nuevo producto</button></div>
+      <div class="tarjeta">
+        <div class="barra-filtros">
+          <div class="buscador"><svg class="i" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg><input class="entrada" id="buscar" type="search" placeholder="Buscar por nombre o SKU" autocomplete="off"></div>
+          <select class="entrada" id="filtroCat"></select>
+          <select class="entrada" id="filtroEstado"><option value="">Todas las existencias</option><option value="bajo">Bajo el mínimo</option><option value="cero">Agotados</option><option value="ok">Suficiente</option></select>
+        </div>
+        <div class="tabla-cont"><table>
+          <thead><tr><th class="oc-movil">SKU</th><th>Producto</th><th class="oc-movil">Categoría</th><th class="der">Existencia</th><th class="der oc-movil">Mínimo</th><th class="der oc-movil">Costo</th><th class="der">Precio</th><th class="der oc-movil">Margen</th></tr></thead>
+          <tbody id="tablaProd"></tbody>
+        </table></div>
+        <div class="pie-tabla" id="pieProd"></div>
+      </div>
+    </section>
+
+    <section class="pantalla" data-pantalla="alertas" hidden>
+      <div class="encabezado"><div><h1>Alertas</h1><p>Productos por debajo del mínimo que conviene surtir.</p></div>
+        <button class="boton" data-ir="proveedores"><svg class="i" viewBox="0 0 24 24"><path d="M1 5h13v11H1zM14 9h4l4 4v3h-8z"/><circle cx="6" cy="18" r="2"/><circle cx="18" cy="18" r="2"/></svg>Generar pedidos</button></div>
+      <div class="kpis" id="kpisAlertas"></div>
+      <div class="tarjeta"><div class="alertas-lista" id="listaAlertas"></div></div>
+    </section>
+
+    <section class="pantalla" data-pantalla="movimientos" hidden>
+      <div class="encabezado"><div><h1>Movimientos</h1><p>Entradas y salidas del almacén con su motivo y responsable.</p></div></div>
+      <div class="dos">
+        <div class="tarjeta">
+          <div class="tarjeta__cab"><h2>Historial</h2><div class="chips" id="filtroMov">
+            <button class="chip activo" data-fmov="">Todos</button><button class="chip" data-fmov="entrada">Entradas</button><button class="chip" data-fmov="salida">Salidas</button></div></div>
+          <div class="tabla-cont"><table>
+            <thead><tr><th>Fecha</th><th>Producto</th><th class="der">Cantidad</th><th class="oc-movil">Motivo</th><th class="oc-movil">Usuario</th><th class="der">Queda</th></tr></thead>
+            <tbody id="tablaMov"></tbody>
+          </table></div>
+        </div>
+        <form class="tarjeta form-mov" id="formMov" novalidate>
+          <div class="tarjeta__cab"><h2>Registrar movimiento</h2></div>
+          <div class="tarjeta__cuerpo">
+            <div class="seg" id="segTipo">
+              <button type="button" data-tipo="entrada" class="activo"><svg class="i" viewBox="0 0 24 24"><path d="M12 4v16M5 13l7 7 7-7"/></svg>Entrada</button>
+              <button type="button" data-tipo="salida"><svg class="i" viewBox="0 0 24 24"><path d="M12 20V4M5 11l7-7 7 7"/></svg>Salida</button>
+            </div>
+            <div class="campo"><label for="movProd">Producto</label><select class="entrada" id="movProd"></select></div>
+            <p class="ayuda" id="movAyuda"></p>
+            <div class="dos-campos">
+              <div class="campo"><label for="movCant">Cantidad</label><input class="entrada" id="movCant" type="number" min="1" step="1" value="10" inputmode="numeric"></div>
+              <div class="campo"><label for="movMotivo">Motivo</label><select class="entrada" id="movMotivo"></select></div>
+            </div>
+            <div class="campo"><label for="movRef">Referencia o nota (opcional)</label><input class="entrada" id="movRef" placeholder="Factura, remisión u obra" autocomplete="off"></div>
+            <button class="boton boton--grande boton--ancho" type="submit" id="movGuardar">Registrar entrada</button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <section class="pantalla" data-pantalla="proveedores" hidden>
+      <div class="encabezado"><div><h1>Proveedores</h1><p>Arma el pedido con lo que falta y mándalo por WhatsApp.</p></div></div>
+      <div class="proveedores" id="proveedores"></div>
+    </section>
+
+    <section class="pantalla" data-pantalla="valor" hidden>
+      <div class="encabezado"><div><h1>Valor del inventario</h1><p id="valorSub"></p></div></div>
+      <div class="kpis" id="kpisValor"></div>
+      <div class="dos" style="grid-template-columns:minmax(0,1fr) minmax(0,380px)">
+        <div class="tarjeta"><div class="tarjeta__cab"><h2>Por categoría</h2></div>
+          <div class="tabla-cont"><table><thead><tr><th>Categoría</th><th class="der oc-movil">Piezas</th><th class="der">A costo</th><th class="der">A precio de venta</th><th class="der oc-movil">Utilidad</th></tr></thead><tbody id="tablaValor"></tbody></table></div></div>
+        <div class="tarjeta"><div class="tarjeta__cab"><h2>Donde está tu dinero</h2></div><div class="tarjeta__cuerpo" id="topValor"></div></div>
+      </div>
+    </section>
+  </main>
+  <nav class="inferior" id="menuInf"></nav>
+</div>
+<div id="modal" class="modal" hidden><div class="modal__caja" role="dialog" aria-modal="true"></div></div>
+
+<script>
+(function () {
+  "use strict";
+  if (new URLSearchParams(location.search).has("directo")) document.documentElement.classList.add("sin-barra");
+  const $ = (s, r = document) => r.querySelector(s);
+  const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+  const dinero = new Intl.NumberFormat("es-MX", { style: "currency", currency: "MXN" });
+  const $m = (n) => dinero.format(n);
+  const entero = (n) => n.toLocaleString("es-MX");
+  const esc = (t) => String(t).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  const hora = (d) => d.toLocaleTimeString("es-MX", { hour: "2-digit", minute: "2-digit" });
+  const fecha = (d) => {
+    const hoy = new Date(); const ayer = new Date(hoy); ayer.setDate(hoy.getDate() - 1);
+    const dia = d.toDateString() === hoy.toDateString() ? "Hoy" : d.toDateString() === ayer.toDateString() ? "Ayer" : d.toLocaleDateString("es-MX", { day: "numeric", month: "short" });
+    return `${dia} ${hora(d)}`;
+  };
+  const ico = (p, extra = "") => `<svg class="i" viewBox="0 0 24 24" ${extra}>${p}</svg>`;
+  const I = {
+    productos: '<path d="M21 8l-9-5-9 5 9 5 9-5z"/><path d="M3 8v8l9 5 9-5V8"/><path d="M12 13v8"/>',
+    alertas: '<path d="M6 8a6 6 0 0 1 12 0c0 7 3 8 3 8H3s3-1 3-8"/><path d="M10 21a2 2 0 0 0 4 0"/>',
+    movimientos: '<path d="M7 4v16M3 8l4-4 4 4M17 20V4M13 16l4 4 4-4"/>',
+    proveedores: '<path d="M1 5h13v11H1zM14 9h4l4 4v3h-8z"/><circle cx="6" cy="18" r="2"/><circle cx="18" cy="18" r="2"/>',
+    valor: '<path d="M12 2v20M17 6H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>',
+    check: '<path d="M5 12l5 5L20 7"/>', x: '<path d="M6 6l12 12M18 6L6 18"/>',
+    alerta: '<path d="M12 3l10 18H2z"/><path d="M12 10v4M12 17.5h.01"/>',
+    abajo: '<path d="M12 4v16M5 13l7 7 7-7"/>', arriba: '<path d="M12 20V4M5 11l7-7 7 7"/>',
+    wa: '<path d="M3 21l1.6-4.8A8.5 8.5 0 1 1 8 19.6z"/><path d="M9 9.5c.5 2 2.5 4 4.5 4.5l1-1.2 2 .8c-.3 1.4-1.4 2-2.6 1.8C11 15 9 13 8.6 10.1 8.4 8.9 9 7.8 10.4 7.5l.8 2z"/>',
+    reloj: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+  };
+
+  // ---------- Datos ----------
+  const PROVS = [
+    { id: "DH", nombre: "Distribuidora de Herramientas del Centro", contacto: "Ing. Raúl Mendoza", color: "#3d7fc9", entrega: "2 días", ultimo: null },
+    { id: "TA", nombre: "Tornillos y Anclajes del Bajío", contacto: "Patricia Lozano", color: "#c97f66", entrega: "1 día", ultimo: null },
+    { id: "EV", nombre: "Eléctrica Volta", contacto: "Fernando Ruiz", color: "#d9822b", entrega: "1 día", ultimo: null },
+    { id: "PC", nombre: "Plomería y Conexiones del Norte", contacto: "Gabriela Treviño", color: "#4b9bb3", entrega: "3 días", ultimo: null },
+    { id: "PA", nombre: "Pinturas y Recubrimientos Aguilar", contacto: "Jorge Aguilar", color: "#8a5bc4", entrega: "2 días", ultimo: null },
+    { id: "MR", nombre: "Materiales La Roca", contacto: "Sergio Ibarra", color: "#2e9d6a", entrega: "Mismo día", ultimo: null },
+  ];
+  const prov = (id) => PROVS.find((p) => p.id === id);
+  const CATS = ["Tornillería", "Herramienta", "Eléctrico", "Plomería", "Pintura", "Construcción", "Jardinería"];
+  const productos = [
+    ["TOR-001", "Tornillo para madera 1\" (caja 100)", "Tornillería", "caja", 24, 10, 38, 65, "TA"],
+    ["TOR-002", "Tornillo para tablaroca 1 1/4\" (caja 100)", "Tornillería", "caja", 6, 10, 42, 72, "TA"],
+    ["TOR-003", "Taquete plástico 1/4\" (bolsa 100)", "Tornillería", "bolsa", 18, 8, 25, 45, "TA"],
+    ["TOR-004", "Pija autorroscante 8 x 1\" (caja 100)", "Tornillería", "caja", 3, 8, 55, 95, "TA"],
+    ["TOR-005", "Clavo estándar 2 1/2\"", "Tornillería", "kg", 32, 15, 34, 52, "TA"],
+    ["TOR-006", "Rondana plana 3/8\" (bolsa 50)", "Tornillería", "bolsa", 12, 6, 28, 48, "TA"],
+    ["TOR-007", "Tuerca hexagonal 3/8\" (bolsa 50)", "Tornillería", "bolsa", 0, 6, 31, 55, "TA"],
+    ["TOR-008", "Ancla expansiva 3/8\"", "Tornillería", "pza", 85, 40, 6.5, 12, "TA"],
+    ["HER-001", "Martillo uña curva 16 oz", "Herramienta", "pza", 14, 5, 118, 189, "DH"],
+    ["HER-002", "Desarmador plano 1/4\"", "Herramienta", "pza", 22, 10, 32, 59, "DH"],
+    ["HER-003", "Juego de desarmadores 6 pzas", "Herramienta", "juego", 4, 5, 145, 239, "DH"],
+    ["HER-004", "Pinza de electricista 8\"", "Herramienta", "pza", 9, 5, 129, 215, "DH"],
+    ["HER-005", "Flexómetro 5 m", "Herramienta", "pza", 26, 10, 69, 119, "DH"],
+    ["HER-006", "Llave Stillson 14\"", "Herramienta", "pza", 3, 3, 245, 389, "DH"],
+    ["HER-007", "Nivel de aluminio 24\"", "Herramienta", "pza", 7, 4, 135, 219, "DH"],
+    ["HER-008", "Segueta con arco", "Herramienta", "pza", 11, 5, 89, 149, "DH"],
+    ["ELE-001", "Cable THW calibre 12 (rollo 100 m)", "Eléctrico", "rollo", 5, 4, 1180, 1590, "EV"],
+    ["ELE-002", "Cable THW calibre 14 (rollo 100 m)", "Eléctrico", "rollo", 2, 4, 890, 1250, "EV"],
+    ["ELE-003", "Contacto doble polarizado", "Eléctrico", "pza", 46, 20, 28, 49, "EV"],
+    ["ELE-004", "Apagador sencillo", "Eléctrico", "pza", 38, 20, 24, 42, "EV"],
+    ["ELE-005", "Foco LED 9 W luz blanca", "Eléctrico", "pza", 64, 30, 22, 39, "EV"],
+    ["ELE-006", "Cinta de aislar negra 19 mm", "Eléctrico", "pza", 8, 24, 11, 22, "EV"],
+    ["ELE-007", "Extensión de uso rudo 5 m", "Eléctrico", "pza", 12, 6, 98, 165, "EV"],
+    ["PLO-001", "Tubo PVC hidráulico 1/2\" (6 m)", "Plomería", "tramo", 30, 15, 62, 98, "PC"],
+    ["PLO-002", "Codo PVC 1/2\" x 90°", "Plomería", "pza", 140, 60, 3.2, 7, "PC"],
+    ["PLO-003", "Cinta teflón 1/2\"", "Plomería", "pza", 18, 30, 6, 14, "PC"],
+    ["PLO-004", "Llave de paso 1/2\"", "Plomería", "pza", 16, 8, 85, 139, "PC"],
+    ["PLO-005", "Manguera para lavabo 40 cm", "Plomería", "pza", 21, 10, 39, 69, "PC"],
+    ["PLO-006", "Pegamento para PVC 250 ml", "Plomería", "pza", 4, 6, 72, 118, "PC"],
+    ["PIN-001", "Pintura vinílica blanca 19 L", "Pintura", "cubeta", 6, 3, 1150, 1590, "PA"],
+    ["PIN-002", "Esmalte negro brillante 1 L", "Pintura", "litro", 9, 5, 145, 225, "PA"],
+    ["PIN-003", "Thinner estándar 1 L", "Pintura", "litro", 22, 12, 38, 62, "PA"],
+    ["PIN-004", "Brocha de 3\"", "Pintura", "pza", 17, 10, 35, 62, "PA"],
+    ["PIN-005", "Rodillo 9\" con charola", "Pintura", "juego", 2, 4, 95, 159, "PA"],
+    ["PIN-006", "Lija de agua grano 100", "Pintura", "pliego", 60, 30, 7, 14, "PA"],
+    ["CON-001", "Cemento gris 50 kg", "Construcción", "bulto", 28, 20, 205, 255, "MR"],
+    ["CON-002", "Mortero 50 kg", "Construcción", "bulto", 9, 12, 145, 185, "MR"],
+    ["CON-003", "Varilla corrugada 3/8\" (12 m)", "Construcción", "pza", 64, 40, 128, 165, "MR"],
+    ["CON-004", "Impermeabilizante acrílico 19 L", "Construcción", "cubeta", 5, 3, 980, 1390, "MR"],
+    ["JAR-001", "Manguera de jardín 15 m", "Jardinería", "pza", 6, 4, 189, 299, "DH"],
+    ["JAR-002", "Pala cuadrada", "Jardinería", "pza", 8, 4, 185, 289, "DH"],
+    ["JAR-003", "Carretilla 5 pies cúbicos", "Jardinería", "pza", 1, 2, 980, 1450, "DH"],
+  ].map(([sku, nombre, cat, unidad, exist, min, costo, precio, prov]) => ({ sku, nombre, cat, unidad, exist, min, costo, precio, prov }));
+  const porSku = (s) => productos.find((p) => p.sku === s);
+  const MOTIVOS = {
+    entrada: ["Compra a proveedor", "Devolución de cliente", "Ajuste de inventario", "Traspaso de bodega"],
+    salida: ["Venta en mostrador", "Venta a obra", "Merma o dañado", "Uso interno", "Ajuste de inventario"],
+  };
+  const USUARIOS = [["Héctor", "Almacén"], ["Sofía", "Mostrador"], ["Don Ramón", "Dueño"]];
+  const S = { pantalla: "productos", usuario: "Héctor", rol: "Almacén", busca: "", cat: "", estado: "", fmov: "", tipo: "entrada", nuevoMov: 0 };
+
+  // Movimientos iniciales (del más reciente al más antiguo); la existencia resultante se calcula hacia atrás
+  const hace = (dias, h, m) => { const d = new Date(); d.setDate(d.getDate() - dias); d.setHours(h, m, 0, 0); if (d > new Date()) d.setTime(Date.now() - 20 * 60000 * (1 + m % 5)); return d; };
+  const movs = [
+    [hace(0, 9, 12), "salida", "CON-001", 6, "Venta a obra", "Sofía", "Obra Calle Morelos"],
+    [hace(0, 8, 40), "salida", "ELE-002", 1, "Venta en mostrador", "Sofía", ""],
+    [hace(0, 8, 15), "entrada", "ELE-005", 40, "Compra a proveedor", "Héctor", "Factura EV-2291"],
+    [hace(1, 17, 50), "salida", "TOR-007", 4, "Venta en mostrador", "Sofía", ""],
+    [hace(1, 16, 5), "salida", "PIN-005", 3, "Venta en mostrador", "Sofía", ""],
+    [hace(1, 13, 30), "salida", "HER-003", 2, "Venta en mostrador", "Don Ramón", ""],
+    [hace(1, 11, 10), "entrada", "CON-001", 20, "Compra a proveedor", "Héctor", "Remisión 4471"],
+    [hace(1, 10, 2), "salida", "PLO-006", 2, "Merma o dañado", "Héctor", "Envase roto"],
+    [hace(2, 18, 20), "salida", "JAR-003", 1, "Venta en mostrador", "Sofía", ""],
+    [hace(2, 12, 45), "salida", "ELE-006", 16, "Venta a obra", "Don Ramón", "Instalación Fracc. Las Palmas"],
+    [hace(2, 9, 30), "entrada", "TOR-001", 12, "Compra a proveedor", "Héctor", "Factura TA-0388"],
+    [hace(3, 16, 15), "entrada", "PIN-001", 4, "Compra a proveedor", "Héctor", "Factura PA-1120"],
+    [hace(3, 12, 0), "salida", "CON-003", 36, "Venta a obra", "Don Ramón", "Obra Calle Morelos"],
+    [hace(4, 10, 25), "entrada", "HER-001", 6, "Devolución de cliente", "Sofía", "Ticket 8812"],
+  ];
+  const saldo = {};
+  const movimientos = movs.map(([f, tipo, sku, cant, motivo, usuario, ref]) => {
+    if (!(sku in saldo)) saldo[sku] = porSku(sku).exist;
+    const queda = saldo[sku];
+    saldo[sku] -= tipo === "entrada" ? cant : -cant;
+    return { id: 0, fecha: f, tipo, sku, cant, motivo, usuario, ref, queda };
+  }).reverse();
+  movimientos.forEach((m, i) => (m.id = i + 1));
+  PROVS[2].ultimo = hace(6, 11, 30); PROVS[5].ultimo = hace(2, 9, 0); PROVS[1].ultimo = hace(5, 12, 15);
+
+  const estado = (p) => (p.exist === 0 ? "cero" : p.exist < p.min ? "bajo" : "ok");
+  const bajos = () => productos.filter((p) => p.exist < p.min);
+  const sugerido = (p) => Math.max(1, p.min * 2 - p.exist);
+
+  // ---------- Navegación ----------
+  const PANTALLAS = [
+    { id: "productos", nombre: "Productos", ico: I.productos },
+    { id: "alertas", nombre: "Alertas", ico: I.alertas },
+    { id: "movimientos", nombre: "Movimientos", corto: "Movim.", ico: I.movimientos },
+    { id: "proveedores", nombre: "Proveedores", ico: I.proveedores },
+    { id: "valor", nombre: "Valor del inventario", corto: "Valor", ico: I.valor },
+  ];
+  function pintarMenus() {
+    const n = bajos().length;
+    const ins = (id) => (id === "alertas" && n ? `<span class="cuenta">${n}</span>` : "");
+    $("#menuLat").innerHTML = PANTALLAS.map((p) => `<button data-ir="${p.id}" class="${S.pantalla === p.id ? "activo" : ""}">${ico(p.ico)}${p.nombre}${ins(p.id)}</button>`).join("");
+    $("#menuInf").innerHTML = PANTALLAS.map((p) => `<button data-ir="${p.id}" class="${S.pantalla === p.id ? "activo" : ""}">${ico(p.ico)}${p.corto || p.nombre}${ins(p.id)}</button>`).join("");
+  }
+  const PINTA = { productos: pintarProductos, alertas: pintarAlertas, movimientos: pintarMovimientos, proveedores: pintarProveedores, valor: pintarValor };
+  function ir(id) {
+    S.pantalla = id;
+    $$(".pantalla").forEach((s) => (s.hidden = s.dataset.pantalla !== id));
+    pintarMenus(); PINTA[id]();
+    window.scrollTo(0, 0);
+  }
+  let tAviso;
+  function aviso(txt) {
+    $$(".aviso-flot").forEach((e) => e.remove());
+    const d = document.createElement("div"); d.className = "aviso-flot"; d.innerHTML = ico(I.check) + esc(txt);
+    document.body.appendChild(d); clearTimeout(tAviso); tAviso = setTimeout(() => d.remove(), 2600);
+  }
+  function abrirModal(titulo, cuerpo) {
+    const m = $("#modal");
+    m.firstElementChild.innerHTML = `<div class="modal__cab"><h2>${titulo}</h2><button class="modal__cerrar" data-accion="cerrar-modal" aria-label="Cerrar">${ico(I.x)}</button></div><div class="modal__cuerpo">${cuerpo}</div>`;
+    m.hidden = false;
+  }
+  const cerrarModal = () => ($("#modal").hidden = true);
+  const badgeExist = (p) => `<span class="exist num ${estado(p) === "cero" ? "exist--cero" : estado(p) === "bajo" ? "exist--bajo" : ""}">${entero(p.exist)}</span>`;
+
+  // ---------- Productos ----------
+  function pintarProductos() {
+    const sel = $("#filtroCat");
+    if (!sel.options.length) sel.innerHTML = `<option value="">Todas las categorías</option>` + CATS.map((c) => `<option>${c}</option>`).join("");
+    const q = S.busca.trim().toLowerCase();
+    const lista = productos.filter((p) => (!S.cat || p.cat === S.cat) && (!S.estado || (S.estado === "bajo" ? p.exist < p.min : estado(p) === S.estado)) && (!q || p.nombre.toLowerCase().includes(q) || p.sku.toLowerCase().includes(q)));
+    $("#tablaProd").innerHTML = lista.length ? lista.map((p) => `<tr class="clic" data-prod="${p.sku}">
+      <td class="sku oc-movil">${p.sku}</td><td style="white-space:normal;min-width:150px"><strong style="font-weight:600">${esc(p.nombre)}</strong><span class="sku solo-movil">${p.sku}</span></td><td class="suave oc-movil">${p.cat}</td>
+      <td class="der">${badgeExist(p)} <span class="suave" style="font-size:.76rem">${p.unidad}</span></td><td class="der num suave oc-movil">${p.min}</td>
+      <td class="der num oc-movil">${$m(p.costo)}</td><td class="der num"><strong>${$m(p.precio)}</strong></td><td class="der num suave oc-movil">${Math.round(((p.precio - p.costo) / p.precio) * 100)} %</td></tr>`).join("")
+      : `<tr><td colspan="8" class="vacio">No hay productos con esos filtros.</td></tr>`;
+    $("#pieProd").textContent = `Mostrando ${lista.length} de ${productos.length} productos · ${bajos().length} bajo el mínimo`;
+  }
+  function verProducto(sku) {
+    const p = porSku(sku);
+    const ms = movimientos.filter((m) => m.sku === sku).slice(-4).reverse();
+    abrirModal(esc(p.nombre), `<p class="suave" style="margin:-4px 0 14px;font-size:.85rem"><span class="sku">${p.sku}</span> · ${p.cat} · ${esc(prov(p.prov).nombre)}</p>
+      <div class="ficha"><div>Existencia<b class="num">${entero(p.exist)} ${p.unidad}</b></div><div>Mínimo<b class="num">${p.min} ${p.unidad}</b></div><div>Costo<b class="num">${$m(p.costo)}</b></div><div>Precio de venta<b class="num">${$m(p.precio)}</b></div></div>
+      <p class="lbl" style="font-size:.8rem;font-weight:600;color:var(--suave);margin:0 0 4px">Últimos movimientos</p>
+      <ul class="mini-mov">${ms.length ? ms.map((m) => `<li><span>${fecha(m.fecha)} · ${esc(m.motivo)}</span><span class="${m.tipo === "entrada" ? "mas-ent" : "menos-sal"} num">${m.tipo === "entrada" ? "+" : "−"}${m.cant}</span></li>`).join("") : `<li class="suave">Sin movimientos recientes</li>`}</ul>
+      <div class="fila-botones"><button class="boton boton--borde" data-mov-de="${p.sku}" data-mov-tipo="salida">${ico(I.arriba)}Salida</button><button class="boton boton--verde" data-mov-de="${p.sku}" data-mov-tipo="entrada">${ico(I.abajo)}Entrada</button></div>`);
+  }
+  function nuevoProducto() {
+    abrirModal("Nuevo producto", `<form id="formNuevo" novalidate>
+      <div class="campo"><label for="npNombre">Nombre</label><input class="entrada" id="npNombre" required placeholder="Nombre del producto"></div>
+      <div class="dos-campos"><div class="campo"><label for="npCat">Categoría</label><select class="entrada" id="npCat">${CATS.map((c) => `<option>${c}</option>`).join("")}</select></div>
+      <div class="campo"><label for="npUnidad">Unidad</label><select class="entrada" id="npUnidad">${["pza", "caja", "bolsa", "kg", "litro", "rollo", "juego", "bulto", "cubeta", "tramo"].map((u) => `<option>${u}</option>`).join("")}</select></div></div>
+      <div class="dos-campos"><div class="campo"><label for="npExist">Existencia inicial</label><input class="entrada" id="npExist" type="number" min="0" value="0" inputmode="numeric"></div>
+      <div class="campo"><label for="npMin">Mínimo</label><input class="entrada" id="npMin" type="number" min="0" value="5" inputmode="numeric"></div></div>
+      <div class="dos-campos"><div class="campo"><label for="npCosto">Costo</label><input class="entrada" id="npCosto" type="number" min="0" step="0.5" inputmode="decimal" placeholder="$0.00"></div>
+      <div class="campo"><label for="npPrecio">Precio de venta</label><input class="entrada" id="npPrecio" type="number" min="0" step="0.5" inputmode="decimal" placeholder="$0.00"></div></div>
+      <div class="campo"><label for="npProv">Proveedor</label><select class="entrada" id="npProv">${PROVS.map((p) => `<option value="${p.id}">${esc(p.nombre)}</option>`).join("")}</select></div>
+      <button class="boton boton--grande boton--ancho" type="submit">Guardar producto</button></form>`);
+    $("#formNuevo").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const nombre = $("#npNombre").value.trim(); const costo = +$("#npCosto").value; const precio = +$("#npPrecio").value;
+      if (!nombre) { $("#npNombre").focus(); return aviso("Escribe el nombre del producto"); }
+      if (!(precio > 0)) { $("#npPrecio").focus(); return aviso("Escribe el precio de venta"); }
+      const cat = $("#npCat").value; const pre = cat.slice(0, 3).toUpperCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
+      const n = productos.filter((p) => p.sku.startsWith(pre)).length + 1;
+      const p = { sku: `${pre}-${String(n).padStart(3, "0")}`, nombre, cat, unidad: $("#npUnidad").value, exist: Math.max(0, Math.floor(+$("#npExist").value || 0)), min: Math.max(0, Math.floor(+$("#npMin").value || 0)), costo: costo || 0, precio, prov: $("#npProv").value };
+      productos.push(p);
+      cerrarModal(); S.busca = ""; $("#buscar").value = ""; pintarMenus(); pintarProductos(); pintarSelectMov();
+      aviso(`${p.sku} agregado al catálogo`);
+    });
+  }
+
+  // ---------- Alertas ----------
+  function pintarAlertas() {
+    const l = bajos().sort((a, b) => a.exist / a.min - b.exist / b.min);
+    const ceros = l.filter((p) => p.exist === 0).length;
+    const repo = l.reduce((a, p) => a + sugerido(p) * p.costo, 0);
+    $("#kpisAlertas").innerHTML = [["Bajo el mínimo", l.length, "productos"], ["Agotados", ceros, "sin existencia"], ["Proveedores a surtir", new Set(l.map((p) => p.prov)).size, "con faltantes"], ["Costo de reposición", $m(repo), "pedido sugerido"]]
+      .map(([a, b, c]) => `<div class="tarjeta kpi"><small>${a}</small><strong class="num">${b}</strong><span>${c}</span></div>`).join("");
+    $("#listaAlertas").innerHTML = l.length ? l.map((p) => {
+      const cero = p.exist === 0; const pct = Math.min(100, (p.exist / p.min) * 100);
+      return `<div class="alerta-fila"><span class="alerta-ico" style="background:${cero ? "var(--peligro-c)" : "var(--aviso-c)"};color:${cero ? "var(--peligro)" : "var(--aviso)"}">${ico(I.alerta)}</span>
+        <div style="min-width:0"><strong>${esc(p.nombre)}</strong><small><span class="sku">${p.sku}</span> · ${esc(prov(p.prov).nombre)}</small><div class="medidor"><i style="width:${pct}%;background:${cero ? "var(--peligro)" : "var(--aviso)"}"></i></div></div>
+        <div class="alerta-cant"><b class="num">${p.exist} / ${p.min}</b>${cero ? "Agotado" : `faltan ${p.min - p.exist}`} · pedir ${sugerido(p)}</div>
+        <button class="boton boton--borde boton--chico" data-mov-de="${p.sku}" data-mov-tipo="entrada">${ico(I.abajo, 'style="width:15px;height:15px"')}Registrar entrada</button></div>`;
+    }).join("") : `<div class="vacio">${ico(I.check)}<br>Todo el inventario está por arriba del mínimo.</div>`;
+  }
+
+  // ---------- Movimientos ----------
+  function pintarSelectMov() {
+    const sel = $("#movProd"); const v = sel.value;
+    sel.innerHTML = CATS.map((c) => `<optgroup label="${c}">${productos.filter((p) => p.cat === c).map((p) => `<option value="${p.sku}">${p.sku} · ${esc(p.nombre)}</option>`).join("")}</optgroup>`).join("");
+    if (v) sel.value = v;
+    actualizarAyuda();
+  }
+  function actualizarAyuda() {
+    const p = porSku($("#movProd").value); if (!p) return;
+    $("#movAyuda").innerHTML = `Existencia actual: <strong style="color:var(--texto)">${entero(p.exist)} ${p.unidad}</strong> · mínimo ${p.min}`;
+  }
+  function ponerTipo(t) {
+    S.tipo = t;
+    $$("#segTipo button").forEach((b) => b.classList.toggle("activo", b.dataset.tipo === t));
+    $("#movMotivo").innerHTML = MOTIVOS[t].map((m) => `<option>${m}</option>`).join("");
+    const g = $("#movGuardar");
+    g.textContent = t === "entrada" ? "Registrar entrada" : "Registrar salida";
+    g.className = "boton boton--grande boton--ancho " + (t === "entrada" ? "boton--verde" : "");
+  }
+  function pintarMovimientos() {
+    const l = movimientos.filter((m) => !S.fmov || m.tipo === S.fmov).slice().reverse();
+    $("#tablaMov").innerHTML = l.map((m) => {
+      const p = porSku(m.sku);
+      return `<tr class="${m.id === S.nuevoMov ? "nuevo" : ""}"><td class="suave num">${fecha(m.fecha)}</td>
+        <td style="white-space:normal;min-width:170px"><strong style="font-weight:600">${esc(p.nombre)}</strong><br><span class="sku">${m.sku}</span>${m.ref ? ` <span class="suave" style="font-size:.76rem">· ${esc(m.ref)}</span>` : ""}</td>
+        <td class="der num ${m.tipo === "entrada" ? "mas-ent" : "menos-sal"}">${m.tipo === "entrada" ? "+" : "−"}${entero(m.cant)}</td>
+        <td class="oc-movil">${esc(m.motivo)}</td><td class="oc-movil suave">${esc(m.usuario)}</td><td class="der num">${entero(m.queda)}</td></tr>`;
+    }).join("") || `<tr><td colspan="6" class="vacio">Sin movimientos.</td></tr>`;
+    S.nuevoMov = 0;
+  }
+  function registrarMov(e) {
+    e.preventDefault();
+    const p = porSku($("#movProd").value); const cant = Math.floor(+$("#movCant").value);
+    if (!p) return;
+    if (!(cant > 0)) { $("#movCant").focus(); return aviso("Escribe una cantidad mayor a cero"); }
+    if (S.tipo === "salida" && cant > p.exist) { $("#movCant").focus(); return aviso(`Solo hay ${p.exist} ${p.unidad} de ${p.sku}`); }
+    p.exist += S.tipo === "entrada" ? cant : -cant;
+    const m = { id: movimientos.length + 1, fecha: new Date(), tipo: S.tipo, sku: p.sku, cant, motivo: $("#movMotivo").value, usuario: S.usuario, ref: $("#movRef").value.trim(), queda: p.exist };
+    movimientos.push(m); S.nuevoMov = m.id;
+    $("#movRef").value = "";
+    pintarMenus(); pintarMovimientos(); actualizarAyuda();
+    aviso(`${S.tipo === "entrada" ? "Entrada" : "Salida"} registrada: ${p.sku} ahora tiene ${p.exist} ${p.unidad}`);
+  }
+
+  // ---------- Proveedores ----------
+  function pintarProveedores() {
+    $("#proveedores").innerHTML = PROVS.map((v) => {
+      const ps = productos.filter((p) => p.prov === v.id); const f = ps.filter((p) => p.exist < p.min);
+      const ini = v.nombre.split(" ").filter((w) => w.length > 3).slice(0, 2).map((w) => w[0]).join("");
+      return `<article class="tarjeta prov"><div class="prov__cab"><span class="prov__logo" style="background:${v.color}">${ini}</span><div style="min-width:0"><strong>${esc(v.nombre)}</strong><small>Atiende: ${esc(v.contacto)}</small></div></div>
+        <div class="prov__datos"><div class="prov__dato">Productos<b class="num">${ps.length}</b></div><div class="prov__dato">Por surtir<b class="num" style="color:${f.length ? "var(--aviso)" : "var(--exito)"}">${f.length}</b></div><div class="prov__dato">Entrega<b>${v.entrega}</b></div><div class="prov__dato">Categorías<b style="font-size:.82rem">${[...new Set(ps.map((p) => p.cat))].join(", ")}</b></div></div>
+        <div class="prov__ult">${ico(I.reloj)}${v.ultimo ? `Último pedido: ${fecha(v.ultimo)}` : "Sin pedidos recientes"}</div>
+        <button class="boton ${f.length ? "" : "boton--borde"}" data-pedido="${v.id}">${ico(I.proveedores)}Generar pedido${f.length ? ` (${f.length})` : ""}</button></article>`;
+    }).join("");
+  }
+  let pedidoDe = null;
+  function abrirPedido(id) {
+    pedidoDe = prov(id);
+    const ps = productos.filter((p) => p.prov === id).sort((a, b) => (a.exist < a.min ? 0 : 1) - (b.exist < b.min ? 0 : 1) || a.exist / a.min - b.exist / b.min);
+    const faltan = ps.filter((p) => p.exist < p.min);
+    abrirModal(`Pedido · ${esc(pedidoDe.nombre)}`, `<p class="suave" style="margin:-4px 0 6px;font-size:.86rem">${faltan.length ? `Seleccionamos los ${faltan.length} productos que están bajo el mínimo con la cantidad sugerida. Ajusta lo que necesites.` : "Este proveedor no tiene faltantes. Puedes agregar productos al pedido."}</p>
+      <div id="pedidoLista">${ps.map((p) => { const f = p.exist < p.min; return `<label class="pedido-fila"><input type="checkbox" data-ped-chk="${p.sku}" ${f ? "checked" : ""}><span style="min-width:0"><strong>${esc(p.nombre)}</strong><small>${p.sku} · hay ${p.exist}, mínimo ${p.min} · ${$m(p.costo)}</small></span><input class="entrada num" type="number" min="1" value="${f ? sugerido(p) : p.min}" data-ped-cant="${p.sku}" aria-label="Cantidad"></label>`; }).join("")}</div>
+      <div class="pedido-pie"><div class="pedido-tot"><span>Costo estimado</span><span class="num" id="pedidoTotal"></span></div>
+      <button class="boton boton--verde boton--grande boton--ancho" data-accion="enviar-pedido">${ico(I.wa)}Enviar por WhatsApp</button></div>`);
+    totalPedido();
+  }
+  function lineasPedido() {
+    return $$("[data-ped-chk]").filter((c) => c.checked).map((c) => ({ p: porSku(c.dataset.pedChk), cant: Math.max(1, Math.floor(+$(`[data-ped-cant="${c.dataset.pedChk}"]`).value || 1)) }));
+  }
+  function totalPedido() {
+    const l = lineasPedido();
+    $("#pedidoTotal").textContent = `${$m(l.reduce((a, x) => a + x.cant * x.p.costo, 0))} · ${l.length} productos`;
+  }
+  function enviarPedido() {
+    const l = lineasPedido();
+    if (!l.length) return aviso("Selecciona al menos un producto");
+    const txt = [`Hola ${pedidoDe.contacto}, le comparto el pedido de *Ferretería El Tornillo*:`, "", ...l.map((x) => `• ${x.cant} ${x.p.unidad} — ${x.p.nombre} (${x.p.sku})`), "", `Total estimado a costo: ${$m(l.reduce((a, x) => a + x.cant * x.p.costo, 0))}`, "¿Nos confirma disponibilidad y fecha de entrega? Gracias."].join("\n");
+    window.open(`https://wa.me/${window.MARCA.whatsapp}?text=${encodeURIComponent(txt)}`, "_blank", "noopener");
+    pedidoDe.ultimo = new Date();
+    cerrarModal(); pintarProveedores();
+    aviso(`Pedido enviado a ${pedidoDe.nombre}`);
+  }
+
+  // ---------- Valor ----------
+  function pintarValor() {
+    const costo = productos.reduce((a, p) => a + p.exist * p.costo, 0);
+    const venta = productos.reduce((a, p) => a + p.exist * p.precio, 0);
+    const piezas = productos.reduce((a, p) => a + p.exist, 0);
+    $("#valorSub").textContent = `${productos.length} productos · ${entero(piezas)} unidades en almacén · al ${new Date().toLocaleDateString("es-MX", { day: "numeric", month: "long", year: "numeric" })}`;
+    $("#kpisValor").innerHTML = [["Valor a costo", $m(costo), "lo que invertiste"], ["Valor a precio de venta", $m(venta), "si vendes todo"], ["Utilidad potencial", $m(venta - costo), "diferencia"], ["Margen promedio", (venta ? Math.round(((venta - costo) / venta) * 100) : 0) + " %", "sobre precio de venta"]]
+      .map(([a, b, c]) => `<div class="tarjeta kpi"><small>${a}</small><strong class="num">${b}</strong><span>${c}</span></div>`).join("");
+    const filas = CATS.map((c) => { const ps = productos.filter((p) => p.cat === c); return { c, piezas: ps.reduce((a, p) => a + p.exist, 0), costo: ps.reduce((a, p) => a + p.exist * p.costo, 0), venta: ps.reduce((a, p) => a + p.exist * p.precio, 0) }; }).sort((a, b) => b.costo - a.costo);
+    $("#tablaValor").innerHTML = filas.map((f) => `<tr><td><strong style="font-weight:600">${f.c}</strong></td><td class="der num suave oc-movil">${entero(f.piezas)}</td><td class="der num">${$m(f.costo)}</td><td class="der num"><strong>${$m(f.venta)}</strong></td><td class="der num oc-movil" style="color:var(--exito)">${$m(f.venta - f.costo)}</td></tr>`).join("") +
+      `<tr><td><strong>Total</strong></td><td class="der num oc-movil"><strong>${entero(piezas)}</strong></td><td class="der num"><strong>${$m(costo)}</strong></td><td class="der num"><strong>${$m(venta)}</strong></td><td class="der num oc-movil" style="color:var(--exito)"><strong>${$m(venta - costo)}</strong></td></tr>`;
+    const top = productos.map((p) => ({ p, v: p.exist * p.costo })).sort((a, b) => b.v - a.v).slice(0, 6);
+    const colores = ["#c97f66", "#3d7fc9", "#8a5bc4", "#2e9d6a", "#d9822b", "#4b9bb3"];
+    $("#topValor").innerHTML = top.map((x, i) => `<div class="barra-fila"><span class="nom" style="min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(x.p.nombre)}</span><span class="num" style="font-weight:700;font-size:.88rem">${$m(x.v)}</span><div class="barrita"><i style="width:${(x.v / costo) * 100 * 3}%;max-width:100%;background:${colores[i]}"></i></div><small class="suave" style="grid-column:1/-1;font-size:.76rem">${x.p.exist} ${x.p.unidad} · ${Math.round((x.v / costo) * 100)} % del inventario a costo</small></div>`).join("");
+  }
+
+  function abrirUsuarios() {
+    abrirModal("Cambiar de usuario", `<div style="display:flex;flex-direction:column;gap:8px">${USUARIOS.map(([u, r]) => `<button class="boton boton--borde" style="justify-content:flex-start;padding:12px;${u === S.usuario ? "border-color:var(--acento);background:var(--acento-c)" : ""}" data-usuario="${u}" data-rol="${r}"><span class="avatar">${u.replace("Don ", "").slice(0, 2).toUpperCase()}</span><span style="text-align:left">${u}<br><small class="suave" style="font-weight:500">${r}</small></span></button>`).join("")}</div>`);
+  }
+
+  // ---------- Eventos ----------
+  document.addEventListener("click", (e) => {
+    const b = e.target.closest("button, tr[data-prod], [data-accion]");
+    if (!b) return;
+    const d = b.dataset;
+    if (d.ir) return ir(d.ir);
+    if (d.prod) return verProducto(d.prod);
+    if (d.movDe) { cerrarModal(); ir("movimientos"); ponerTipo(d.movTipo); $("#movProd").value = d.movDe; actualizarAyuda(); $("#movCant").value = d.movTipo === "entrada" ? sugerido(porSku(d.movDe)) : 1; $("#movCant").focus(); return; }
+    if (d.tipo) return ponerTipo(d.tipo);
+    if (d.fmov !== undefined) { S.fmov = d.fmov; $$("#filtroMov .chip").forEach((c) => c.classList.toggle("activo", c === b)); return pintarMovimientos(); }
+    if (d.pedido) return abrirPedido(d.pedido);
+    if (d.usuario) {
+      S.usuario = d.usuario; S.rol = d.rol;
+      $$("[data-usuario-txt]").forEach((x) => (x.textContent = `${d.rol}: ${d.usuario}`));
+      $$("[data-usuario-corto]").forEach((x) => (x.textContent = d.usuario));
+      $$("[data-avatar]").forEach((x) => (x.textContent = d.usuario.replace("Don ", "").slice(0, 2).toUpperCase()));
+      cerrarModal(); return aviso(`Sesión de ${d.usuario}`);
+    }
+    switch (d.accion) {
+      case "cerrar-modal": return cerrarModal();
+      case "usuario": return abrirUsuarios();
+      case "nuevo-producto": return nuevoProducto();
+      case "enviar-pedido": return enviarPedido();
+    }
+  });
+  $("#modal").addEventListener("click", (e) => { if (e.target.id === "modal") cerrarModal(); });
+  $("#modal").addEventListener("input", (e) => { if (e.target.matches("[data-ped-cant]")) totalPedido(); });
+  $("#modal").addEventListener("change", (e) => { if (e.target.matches("[data-ped-chk]")) totalPedido(); });
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape") cerrarModal(); });
+  $("#buscar").addEventListener("input", (e) => { S.busca = e.target.value; pintarProductos(); });
+  $("#filtroCat").addEventListener("change", (e) => { S.cat = e.target.value; pintarProductos(); });
+  $("#filtroEstado").addEventListener("change", (e) => { S.estado = e.target.value; pintarProductos(); });
+  $("#movProd").addEventListener("change", actualizarAyuda);
+  $("#formMov").addEventListener("submit", registrarMov);
+
+  pintarSelectMov(); ponerTipo("entrada"); ir("productos");
+})();
+</script>
+<script src="../../plantillas/comun/marca.js"></script>
+<script src="../../portafolio/portafolio.js" data-volver="../#catalogo" data-firma="Hecho por LocalConnect" data-tipo="Inventario y almacén" data-boton="Lo quiero" data-quiero="¡Hola LocalConnect! Vi el sistema de inventario y almacén y lo quiero para mi negocio."></script>
+</body>
+</html>

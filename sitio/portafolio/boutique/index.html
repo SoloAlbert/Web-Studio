@@ -1,0 +1,489 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="robots" content="noindex">
+  <title>Alma Boutique · Ropa y accesorios para mujer</title>
+  <meta name="description" content="Tienda en línea hecha por LocalConnect: catálogo con filtros, carrito y pedidos por WhatsApp.">
+  <meta property="og:title" content="Alma Boutique · Tienda en línea por LocalConnect">
+  <meta property="og:image" content="https://localconnect.studio/assets/portafolio/boutique.png">
+  <meta name="theme-color" content="#f6f2ed">
+  <link rel="icon" href="../../assets/icono.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Jost:wght@300;400;500&display=swap">
+  <link rel="stylesheet" href="../portafolio.css">
+  <style>
+    :root { --fondo: #f6f2ed; --papel: #fffdfa; --tinta: #1f1b18; --suave: #7a7068; --rosa: #b07d6f; --rosa-claro: #ead8d0; --linea: #e4dcd2; --tono: #ece5dc; }
+    body { background: var(--fondo); color: var(--tinta); font-family: "Jost", system-ui, sans-serif; font-weight: 400; overflow-x: hidden; }
+    body.sin-scroll { overflow: hidden; }
+    h1, h2, h3, .marca { font-family: "Cormorant Garamond", Georgia, serif; font-weight: 500; }
+    button { font: inherit; color: inherit; }
+    .aviso { background: var(--tinta); color: #efe7de; text-align: center; font-size: 0.74rem; letter-spacing: 0.14em; text-transform: uppercase; padding: 0.55rem 1rem; }
+    .cab { position: sticky; top: 0; z-index: 20; background: rgba(246, 242, 237, 0.94); backdrop-filter: blur(10px); border-bottom: 1px solid var(--linea); }
+    .cab .fila { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; height: 70px; }
+    .marca { grid-column: 2; font-size: 1.9rem; letter-spacing: 0.32em; text-decoration: none; color: var(--tinta); padding-left: 0.32em; line-height: 1; text-align: center; }
+    .marca small { display: block; font-family: "Jost", sans-serif; font-size: 0.56rem; letter-spacing: 0.5em; color: var(--suave); margin-top: 0.25rem; }
+    .nav { grid-column: 1; grid-row: 1; display: flex; gap: 1.6rem; }
+    .nav a { color: var(--tinta); text-decoration: none; font-size: 0.8rem; letter-spacing: 0.14em; text-transform: uppercase; }
+    @media (max-width: 760px) { .nav { display: none; } }
+    .btn-bolsa { grid-column: 3; justify-self: end; display: inline-flex; align-items: center; gap: 0.5rem; background: none; border: 0; cursor: pointer; font-size: 0.8rem; letter-spacing: 0.14em; text-transform: uppercase; padding: 0.5rem 0; }
+    .btn-bolsa svg { width: 22px; height: 22px; }
+    .contador { min-width: 22px; height: 22px; border-radius: 50%; background: var(--tinta); color: #fff; font-size: 0.72rem; display: inline-grid; place-items: center; letter-spacing: 0; }
+    .btn-bolsa .txt { display: none; }
+    @media (min-width: 761px) { .btn-bolsa .txt { display: inline; } }
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.6rem; padding: 0.95rem 1.8rem; background: var(--tinta); color: #fff; text-decoration: none; font-size: 0.78rem; letter-spacing: 0.18em; text-transform: uppercase; border: 1px solid var(--tinta); cursor: pointer; }
+    .btn--linea { background: transparent; color: var(--tinta); }
+    .eti { font-size: 0.74rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--rosa); margin: 0 0 1rem; }
+
+    /* Portada */
+    .hero .fila { display: grid; gap: 2.5rem; align-items: center; padding-block: 3.2rem 3.5rem; }
+    @media (min-width: 900px) { .hero .fila { grid-template-columns: 1fr 1fr; padding-block: 5rem; } }
+    .hero h1 { font-size: clamp(2.9rem, 9vw, 5.2rem); line-height: 0.98; margin: 0 0 1.2rem; letter-spacing: -0.01em; }
+    .hero h1 em { color: var(--rosa); }
+    .hero p.sub { color: var(--suave); font-size: 1.05rem; font-weight: 300; max-width: 28rem; margin: 0 0 2rem; }
+    .hero .acc { display: flex; flex-wrap: wrap; gap: 0.8rem; }
+    .vitrina { display: grid; grid-template-columns: 1fr 1fr; gap: 0.9rem; align-items: end; max-width: 520px; width: 100%; justify-self: center; }
+    .arco { background: var(--tono); border-radius: 999px 999px 0 0; display: grid; place-items: center; padding: 1.4rem 1rem 1rem; }
+    .arco svg { width: 78%; filter: drop-shadow(0 14px 18px rgba(31, 27, 24, 0.14)); }
+    .arco--alto { aspect-ratio: 3 / 4.6; background: var(--rosa-claro); }
+    .arco--bajo { aspect-ratio: 3 / 3.8; }
+    .vitrina figcaption { grid-column: 1 / -1; font-size: 0.78rem; color: var(--suave); letter-spacing: 0.12em; text-transform: uppercase; text-align: right; }
+
+    .ventajas { border-block: 1px solid var(--linea); }
+    .ventajas .fila { display: grid; grid-template-columns: repeat(2, 1fr); }
+    @media (min-width: 900px) { .ventajas .fila { grid-template-columns: repeat(4, 1fr); } }
+    .ventaja { padding: 1.2rem 0.6rem; text-align: center; font-size: 0.82rem; color: var(--suave); }
+    .ventaja b { display: block; font-weight: 500; color: var(--tinta); letter-spacing: 0.06em; }
+
+    .sec { padding: 4.5rem 0; }
+    .titulo { text-align: center; margin: 0 auto 2.4rem; max-width: 34rem; }
+    .titulo h2 { font-size: clamp(2.2rem, 6vw, 3rem); margin: 0; line-height: 1.05; }
+    .titulo p { color: var(--suave); font-weight: 300; margin: 0.6rem 0 0; }
+
+    /* Novedades */
+    .novedades { display: grid; gap: 1rem; grid-template-columns: 1fr; }
+    @media (min-width: 760px) { .novedades { grid-template-columns: 1.3fr 1fr 1fr; } }
+    .nov { position: relative; background: var(--tono); min-height: 300px; display: flex; flex-direction: column; justify-content: flex-end; padding: 1.4rem; overflow: hidden; border: 0; text-align: left; cursor: pointer; }
+    .nov svg { position: absolute; top: 8%; left: 50%; transform: translateX(-50%); height: 66%; }
+    .nov span { position: relative; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--suave); }
+    .nov strong { position: relative; font-family: "Cormorant Garamond", serif; font-weight: 500; font-size: 1.7rem; line-height: 1.1; }
+    .nov u { position: relative; font-size: 0.76rem; letter-spacing: 0.16em; text-transform: uppercase; margin-top: 0.4rem; text-underline-offset: 4px; }
+    .nov--a { background: #e3d5c6; } .nov--b { background: #dfe3da; } .nov--c { background: var(--rosa-claro); }
+
+    /* Catálogo */
+    .herramientas { display: grid; gap: 1rem; margin-bottom: 2rem; }
+    @media (min-width: 900px) { .filtros { flex-wrap: wrap; justify-content: center; overflow: visible; } .buscador { width: 100%; max-width: 420px; justify-self: center; } }
+    .filtros { display: flex; gap: 0.5rem; overflow-x: auto; padding-bottom: 0.3rem; scrollbar-width: none; }
+    .filtros::-webkit-scrollbar { display: none; }
+    .filtros button { flex: none; border: 1px solid var(--linea); background: transparent; padding: 0.55rem 1rem; font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; color: var(--suave); }
+    .filtros button[aria-pressed="true"] { background: var(--tinta); color: #fff; border-color: var(--tinta); }
+    .buscador { position: relative; }
+    .buscador input { width: 100%; font: inherit; font-size: 0.95rem; padding: 0.8rem 1rem 0.8rem 2.6rem; border: 1px solid var(--linea); background: var(--papel); color: var(--tinta); outline: none; border-radius: 0; }
+    .buscador input:focus { border-color: var(--tinta); }
+    .buscador svg { position: absolute; left: 0.9rem; top: 50%; width: 18px; height: 18px; transform: translateY(-50%); stroke: var(--suave); }
+    .productos { display: grid; gap: 1.6rem 0.9rem; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    @media (min-width: 760px) { .productos { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2.2rem 1.4rem; } }
+    @media (min-width: 1060px) { .productos { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+    .producto { display: flex; flex-direction: column; min-width: 0; }
+    .foto { position: relative; aspect-ratio: 4 / 5; background: var(--tono); display: grid; place-items: center; margin-bottom: 0.8rem; overflow: hidden; }
+    .foto svg { width: 70%; height: 82%; filter: drop-shadow(0 12px 14px rgba(31, 27, 24, 0.13)); transition: transform 0.4s; }
+    .producto:hover .foto svg { transform: scale(1.04); }
+    .sello { position: absolute; top: 0.7rem; left: 0.7rem; background: var(--papel); font-size: 0.64rem; letter-spacing: 0.16em; text-transform: uppercase; padding: 0.3rem 0.55rem; }
+    .producto small { color: var(--suave); font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; }
+    .producto h3 { font-size: 1.28rem; margin: 0.1rem 0 0.15rem; line-height: 1.15; }
+    .producto .precio { font-size: 0.98rem; margin-bottom: 0.7rem; }
+    .producto .precio s { color: var(--suave); font-size: 0.85rem; margin-left: 0.35rem; }
+    .acciones { margin-top: auto; display: flex; gap: 0.4rem; }
+    .acciones select { flex: none; width: 4.2rem; font: inherit; font-size: 0.82rem; border: 1px solid var(--linea); background: var(--papel); padding: 0 0.3rem; color: var(--tinta); border-radius: 0; }
+    .acciones button { flex: 1; min-width: 0; border: 1px solid var(--tinta); background: transparent; padding: 0.7rem 0.4rem; font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; cursor: pointer; transition: background 0.2s, color 0.2s; }
+    .acciones button:hover, .acciones button.listo { background: var(--tinta); color: #fff; }
+    .vacio { text-align: center; color: var(--suave); padding: 2rem 0; }
+
+    /* Envíos y cambios */
+    .politicas { background: var(--papel); border-block: 1px solid var(--linea); }
+    .pols { display: grid; gap: 2rem; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+    .pol { border-top: 1px solid var(--tinta); padding-top: 1.2rem; }
+    .pol span { font-family: "Cormorant Garamond", serif; font-size: 1rem; color: var(--rosa); font-style: italic; }
+    .pol h3 { font-size: 1.5rem; margin: 0.2rem 0 0.5rem; }
+    .pol p { color: var(--suave); font-weight: 300; margin: 0; font-size: 0.95rem; }
+
+    /* Opiniones */
+    .opiniones { display: grid; gap: 1.4rem; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
+    .opinion { text-align: center; padding: 0 0.5rem; }
+    .opinion .estrellas { color: var(--rosa); letter-spacing: 0.3em; font-size: 0.85rem; }
+    .opinion p { font-family: "Cormorant Garamond", serif; font-style: italic; font-size: 1.45rem; line-height: 1.3; margin: 0.8rem 0; }
+    .opinion small { color: var(--suave); letter-spacing: 0.14em; text-transform: uppercase; font-size: 0.72rem; }
+
+    /* Instagram */
+    .insta { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.4rem; margin-bottom: 1.6rem; }
+    @media (min-width: 760px) { .insta { grid-template-columns: repeat(6, 1fr); } }
+    .insta a { aspect-ratio: 1; display: grid; place-items: center; }
+    .insta a svg { width: 56%; height: 70%; }
+    .centro { text-align: center; }
+
+    .pie-negocio { background: var(--tinta); color: rgba(239, 231, 222, 0.7); padding: 3rem 0 6.5rem; font-size: 0.85rem; }
+    .pie-negocio .fila { display: grid; gap: 1.6rem; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+    .pie-negocio .marca { display: block; color: #efe7de; text-align: left; font-size: 1.6rem; padding: 0; }
+    .pie-negocio h4 { margin: 0 0 0.6rem; color: #efe7de; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; font-size: 0.74rem; }
+    .pie-negocio p { margin: 0; line-height: 1.8; }
+    .pie-negocio a { color: inherit; }
+
+    /* Bolsa flotante (celular) */
+    .flotante { position: fixed; right: 16px; bottom: calc(92px + env(safe-area-inset-bottom, 0px)); z-index: 40; width: 58px; height: 58px; border-radius: 50%; border: 0; background: var(--tinta); color: #fff; display: grid; place-items: center; box-shadow: 0 12px 28px rgba(31, 27, 24, 0.3); cursor: pointer; }
+    .flotante svg { width: 24px; height: 24px; }
+    .flotante .contador { position: absolute; top: -2px; right: -2px; background: var(--rosa); }
+    @media (min-width: 761px) { .flotante { display: none; } }
+
+    /* Carrito lateral */
+    .velo { position: fixed; inset: 0; z-index: 60; background: rgba(31, 27, 24, 0.4); opacity: 0; pointer-events: none; transition: opacity 0.25s; }
+    .velo.abierto { opacity: 1; pointer-events: auto; }
+    .carrito { position: fixed; top: 0; right: 0; bottom: 0; z-index: 61; width: min(420px, 100%); background: var(--papel); display: flex; flex-direction: column; transform: translateX(100%); transition: transform 0.3s ease, visibility 0s linear 0.3s; visibility: hidden; }
+    .carrito.abierto { visibility: visible; transition: transform 0.3s ease; box-shadow: -20px 0 50px rgba(31, 27, 24, 0.15); }
+    .carrito.abierto { transform: none; }
+    .carrito header { display: flex; align-items: center; justify-content: space-between; padding: 1.2rem 1.4rem; border-bottom: 1px solid var(--linea); }
+    .carrito header h2 { margin: 0; font-size: 1.7rem; }
+    .cerrar { background: none; border: 0; font-size: 1.8rem; line-height: 1; cursor: pointer; padding: 0.2rem 0.4rem; }
+    .lineas { flex: 1; overflow-y: auto; padding: 0.4rem 1.4rem; }
+    .linea { display: grid; grid-template-columns: 64px 1fr auto; gap: 0.9rem; padding: 1rem 0; border-bottom: 1px solid var(--linea); align-items: start; }
+    .linea .mini { aspect-ratio: 4 / 5; background: var(--tono); display: grid; place-items: center; }
+    .linea .mini svg { width: 74%; height: 80%; }
+    .linea h3 { font-size: 1.12rem; margin: 0; line-height: 1.15; }
+    .linea .det { color: var(--suave); font-size: 0.8rem; }
+    .cantidad { display: inline-flex; align-items: center; border: 1px solid var(--linea); margin-top: 0.5rem; }
+    .cantidad button { width: 30px; height: 30px; border: 0; background: none; cursor: pointer; font-size: 1rem; }
+    .cantidad span { min-width: 26px; text-align: center; font-size: 0.9rem; }
+    .linea .der { text-align: right; display: grid; gap: 0.4rem; justify-items: end; }
+    .quitar { background: none; border: 0; color: var(--suave); font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: underline; cursor: pointer; padding: 0; }
+    .carrito-vacio { text-align: center; color: var(--suave); padding: 3rem 1rem; }
+    .carrito-vacio p { font-family: "Cormorant Garamond", serif; font-size: 1.5rem; color: var(--tinta); margin: 0 0 0.4rem; }
+    .carrito footer { border-top: 1px solid var(--linea); padding: 1.2rem 1.4rem calc(1.2rem + env(safe-area-inset-bottom, 0px)); display: grid; gap: 0.7rem; }
+    .renglon { display: flex; justify-content: space-between; font-size: 0.9rem; color: var(--suave); }
+    .renglon.total { color: var(--tinta); font-size: 1.15rem; font-weight: 500; }
+    .carrito footer .btn { width: 100%; background: #1f1b18; }
+    .carrito footer .btn[aria-disabled="true"] { opacity: 0.4; pointer-events: none; }
+    .nota { font-size: 0.78rem; color: var(--suave); text-align: center; margin: 0; }
+    .toast { position: fixed; left: 50%; top: 84px; transform: translate(-50%, -20px); z-index: 70; background: var(--tinta); color: #fff; padding: 0.7rem 1.2rem; font-size: 0.85rem; opacity: 0; pointer-events: none; transition: opacity 0.25s, transform 0.25s; white-space: nowrap; }
+    .toast.ver { opacity: 1; transform: translate(-50%, 0); }
+  </style>
+</head>
+<body>
+
+<div class="aviso">Envío gratis desde $1,500 · Cambios sin costo en 15 días</div>
+
+<header class="cab">
+  <div class="caja fila">
+    <nav class="nav"><a href="#novedades">Novedades</a><a href="#catalogo">Tienda</a><a href="#envios">Envíos</a></nav>
+    <a class="marca" href="#">ALMA<small>BOUTIQUE</small></a>
+    <button class="btn-bolsa" type="button" data-abrir-carrito aria-label="Abrir bolsa de compras">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M5 8h14l-1 13H6z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>
+      <span class="txt">Bolsa</span><span class="contador" data-contador>0</span>
+    </button>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="caja fila">
+    <div>
+      <p class="eti">Colección Otoño · Invierno 2026</p>
+      <h1>Prendas que se <em>quedan</em> contigo</h1>
+      <p class="sub">Ropa y accesorios para mujer elegidos uno a uno: telas nobles, cortes favorecedores y piezas pensadas para durar. Compra en línea y recibe en tu casa.</p>
+      <div class="acc">
+        <a class="btn" href="#catalogo">Comprar ahora</a>
+        <a class="btn btn--linea" href="#novedades">Ver novedades</a>
+      </div>
+    </div>
+    <figure class="vitrina" style="margin:0" aria-hidden="true">
+      <div class="arco arco--alto" data-figura="vestido" data-color="#7a3b45"></div>
+      <div class="arco arco--bajo" data-figura="blazer" data-color="#c8b49c"></div>
+      <figcaption>Vestido Valentina · Blazer Lucía</figcaption>
+    </figure>
+  </div>
+</section>
+
+<div class="ventajas">
+  <div class="caja fila">
+    <div class="ventaja"><b>Envío gratis</b>desde $1,500</div>
+    <div class="ventaja"><b>Cambios fáciles</b>15 días naturales</div>
+    <div class="ventaja"><b>Pago seguro</b>tarjeta o transferencia</div>
+    <div class="ventaja"><b>Atención personal</b>por WhatsApp</div>
+  </div>
+</div>
+
+<section class="sec" id="novedades">
+  <div class="caja">
+    <div class="titulo"><p class="eti">Recién llegado</p><h2>Novedades de la temporada</h2></div>
+    <div class="novedades">
+      <button class="nov nov--a" type="button" data-ir-cat="Vestidos"><span data-figura="vestido" data-color="#b07d6f"></span><span>Nueva colección</span><strong>Vestidos para cada ocasión</strong><u>Ver vestidos</u></button>
+      <button class="nov nov--b" type="button" data-ir-cat="Abrigos"><span data-figura="gabardina" data-color="#a89478"></span><span>Capas</span><strong>Abrigos y blazers</strong><u>Ver abrigos</u></button>
+      <button class="nov nov--c" type="button" data-ir-cat="Accesorios"><span data-figura="bolsa" data-color="#8b5e3c"></span><span>El detalle</span><strong>Bolsas y joyería</strong><u>Ver accesorios</u></button>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="catalogo" style="padding-top:0">
+  <div class="caja">
+    <div class="titulo"><p class="eti">Tienda en línea</p><h2>Catálogo</h2><p>Elige tu talla, agrega a tu bolsa y envía tu pedido por WhatsApp. Te confirmamos disponibilidad al momento.</p></div>
+    <div class="herramientas">
+      <div class="filtros" data-filtros role="group" aria-label="Categorías"></div>
+      <label class="buscador">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+        <input type="search" placeholder="Buscar vestido, bolsa, lino…" data-buscar aria-label="Buscar productos">
+      </label>
+    </div>
+    <div class="productos" data-productos></div>
+    <p class="vacio" data-vacio hidden>No encontramos piezas con esa búsqueda. Intenta con otra palabra.</p>
+  </div>
+</section>
+
+<section class="sec politicas" id="envios">
+  <div class="caja">
+    <div class="titulo"><p class="eti">Compra tranquila</p><h2>Envíos y cambios</h2></div>
+    <div class="pols">
+      <div class="pol"><span>01</span><h3>Envío a todo México</h3><p>Paquetería con guía de rastreo. Llega en 2 a 5 días hábiles. Envío de $149, gratis en compras desde $1,500.</p></div>
+      <div class="pol"><span>02</span><h3>Entrega local</h3><p>En la ciudad entregamos el mismo día en pedidos antes de las 2:00 p.m., o recoge sin costo en la boutique.</p></div>
+      <div class="pol"><span>03</span><h3>Cambios en 15 días</h3><p>Si la talla no te queda, la cambiamos sin costo. La prenda debe tener etiquetas y estar sin uso.</p></div>
+      <div class="pol"><span>04</span><h3>Formas de pago</h3><p>Transferencia, tarjeta de crédito o débito con liga de pago, y efectivo al recoger en tienda.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="caja">
+    <div class="titulo"><p class="eti">Clientas Alma</p><h2>Lo que dicen de nosotras</h2></div>
+    <div class="opiniones">
+      <div class="opinion"><span class="estrellas">★★★★★</span><p>“El vestido de lino es todavía más bonito en persona. Me llegó en dos días y perfectamente empacado.”</p><small>Daniela V. · Querétaro</small></div>
+      <div class="opinion"><span class="estrellas">★★★★★</span><p>“Pedí una talla más grande por error y me la cambiaron sin ningún problema. Atención de diez.”</p><small>Mónica R. · Guadalajara</small></div>
+      <div class="opinion"><span class="estrellas">★★★★★</span><p>“Me ayudaron a armar el look completo para una boda por WhatsApp. Ya soy clienta frecuente.”</p><small>Paola G. · CDMX</small></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" style="padding-top:0">
+  <div class="caja">
+    <div class="titulo"><p class="eti">Síguenos</p><h2>@almaboutique</h2><p>Nuevas llegadas, combinaciones y preventas antes que nadie.</p></div>
+    <div class="insta">
+      <a href="#" aria-label="Publicación de Instagram" style="background:#e3d5c6" data-figura="blusa" data-color="#f4ece4"></a>
+      <a href="#" aria-label="Publicación de Instagram" style="background:#1f1b18" data-figura="aretes" data-color="#c9a35c"></a>
+      <a href="#" aria-label="Publicación de Instagram" style="background:#dfe3da" data-figura="falda" data-color="#8e9c86"></a>
+      <a href="#" aria-label="Publicación de Instagram" style="background:#ead8d0" data-figura="sombrero" data-color="#d9b98a"></a>
+      <a href="#" aria-label="Publicación de Instagram" style="background:#cfc3b6" data-figura="sueter" data-color="#f6f0e8"></a>
+      <a href="#" aria-label="Publicación de Instagram" style="background:#7a3b45" data-figura="mascada" data-color="#ead8d0"></a>
+    </div>
+    <div class="centro"><a class="btn btn--linea" href="#">Seguir en Instagram</a></div>
+  </div>
+</section>
+
+<footer class="pie-negocio">
+  <div class="caja fila">
+    <div><span class="marca">ALMA</span><p>Ropa y accesorios para mujer. Piezas elegidas con cariño desde 2019.</p></div>
+    <div><h4>Boutique</h4><p>Av. Juárez 214, local 5, Centro<br>Lunes a sábado 10:00 – 20:00<br>Domingo 11:00 – 16:00</p></div>
+    <div><h4>Ayuda</h4><p><a href="#envios">Envíos y cambios</a><br><a href="#" data-wa="¡Hola LocalConnect! Vi la tienda en línea de Alma Boutique y quiero una así para mi negocio.">Atención por WhatsApp</a><br><a href="#">Instagram</a></p></div>
+  </div>
+</footer>
+
+<button class="flotante" type="button" data-abrir-carrito aria-label="Abrir bolsa de compras">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 8h14l-1 13H6z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>
+  <span class="contador" data-contador>0</span>
+</button>
+
+<div class="velo" data-velo></div>
+<aside class="carrito" data-carrito aria-label="Bolsa de compras" aria-hidden="true">
+  <header><h2>Tu bolsa</h2><button class="cerrar" type="button" data-cerrar aria-label="Cerrar">×</button></header>
+  <div class="lineas" data-lineas></div>
+  <footer>
+    <div class="renglon"><span>Subtotal</span><span data-subtotal>$0</span></div>
+    <div class="renglon"><span>Envío</span><span data-envio>—</span></div>
+    <div class="renglon total"><span>Total</span><span data-total>$0</span></div>
+    <a class="btn" href="#" target="_blank" rel="noopener" data-enviar aria-disabled="true">Enviar pedido por WhatsApp</a>
+    <p class="nota">Te confirmamos existencias, envío y forma de pago por WhatsApp.</p>
+  </footer>
+</aside>
+<div class="toast" data-toast role="status"></div>
+
+<script>
+(function () {
+  "use strict";
+  const ENVIO = 149, ENVIO_GRATIS = 1500;
+  const CATEGORIAS = ["Todo", "Novedades", "Vestidos", "Blusas", "Pantalones y faldas", "Abrigos", "Accesorios"];
+  const P = [
+    { id: 1, n: "Vestido midi de lino", c: "Vestidos", p: 1290, f: "vestido", col: "#d8c3a5", nuevo: true, tallas: true },
+    { id: 2, n: "Vestido Valentina satinado", c: "Vestidos", p: 1490, f: "vestido", col: "#7a3b45", nuevo: true, tallas: true },
+    { id: 3, n: "Vestido camisero de algodón", c: "Vestidos", p: 1190, f: "vestido", col: "#9fb2c4", tallas: true },
+    { id: 4, n: "Blusa de seda con lazo", c: "Blusas", p: 790, f: "blusa", col: "#f3e7da", tallas: true },
+    { id: 5, n: "Blusa de manga globo", c: "Blusas", p: 690, antes: 860, f: "blusa", col: "#c9a9a6", tallas: true },
+    { id: 6, n: "Suéter tejido oversize", c: "Blusas", p: 990, f: "sueter", col: "#b9a68c", nuevo: true, tallas: true },
+    { id: 7, n: "Pantalón palazzo", c: "Pantalones y faldas", p: 890, f: "pantalon", col: "#2f2a26", tallas: true },
+    { id: 8, n: "Falda plisada midi", c: "Pantalones y faldas", p: 850, f: "falda", col: "#a8b5a0", tallas: true },
+    { id: 9, n: "Jeans de tiro alto", c: "Pantalones y faldas", p: 950, f: "pantalon", col: "#5c7391", tallas: true },
+    { id: 10, n: "Blazer Lucía de lino", c: "Abrigos", p: 1590, f: "blazer", col: "#c8b49c", nuevo: true, tallas: true },
+    { id: 11, n: "Gabardina clásica", c: "Abrigos", p: 1890, f: "gabardina", col: "#a89478", tallas: true },
+    { id: 12, n: "Bolsa tote de piel", c: "Accesorios", p: 1350, f: "bolsa", col: "#8b5e3c", nuevo: true },
+    { id: 13, n: "Bolsa de mano tejida", c: "Accesorios", p: 690, f: "bolsa-tejida", col: "#d9b98a" },
+    { id: 14, n: "Aretes de aro dorados", c: "Accesorios", p: 390, f: "aretes", col: "#c9a35c" },
+    { id: 15, n: "Collar de perlas", c: "Accesorios", p: 450, antes: 560, f: "collar", col: "#f4efe6" },
+    { id: 16, n: "Sombrero de palma", c: "Accesorios", p: 520, f: "sombrero", col: "#d9b98a" },
+  ];
+
+  // Prendas dibujadas en SVG
+  const det = 'fill="none" stroke="rgba(0,0,0,.2)" stroke-width="1.2"';
+  function figura(tipo, col) {
+    let s = "";
+    switch (tipo) {
+      case "vestido":
+        s = `<path fill="${col}" d="M40 12l2 18-6 14-15 64q29 7 58 0L64 44l-6-14 2-18h-4l-2 13q-4 4-8 0l-2-13z"/><path ${det} d="M37 44h26M44 46l-6 58M56 46l6 58M50 46v60"/>`; break;
+      case "blusa":
+        s = `<path fill="${col}" d="M38 16q12 8 24 0l18 8 8 20-12 5-4-9v60H28V40l-4 9-12-5 8-20z"/><path ${det} d="M44 18q6 14 12 0M50 26v70"/><circle cx="50" cy="40" r="1.4" fill="rgba(0,0,0,.25)"/><circle cx="50" cy="56" r="1.4" fill="rgba(0,0,0,.25)"/>`; break;
+      case "sueter":
+        s = `<path fill="${col}" d="M38 16q12 8 24 0l16 6q8 8 10 38l2 36-10 2-6-48-2 50H28l-2-50-6 48-10-2 2-36q2-30 10-38z"/><path ${det} d="M30 92h40M30 96h40M38 16q12 10 24 0M12 90l8 1M80 91l8-1"/>`; break;
+      case "blazer":
+        s = `<path fill="${col}" d="M38 14l12 4 12-4 16 6q8 8 10 38l2 38-10 2-6-48v58H26V50l-6 48-10-2 2-38q2-30 10-38z"/><path ${det} d="M38 14l12 40 12-40M50 54v54M30 64h10M60 64h10"/><circle cx="47" cy="66" r="1.6" fill="rgba(0,0,0,.3)"/><circle cx="47" cy="78" r="1.6" fill="rgba(0,0,0,.3)"/>`; break;
+      case "gabardina":
+        s = `<path fill="${col}" d="M38 8l12 4 12-4 16 6q8 8 9 36l3 46-10 2-6-50 4 64H22l4-64-6 50-10-2 3-46q1-28 9-36z"/><path ${det} d="M38 8l12 34 12-34M50 42v72M27 60h46M30 66h40"/><rect x="45" y="58" width="10" height="10" fill="none" stroke="rgba(0,0,0,.3)" stroke-width="1.2"/>`; break;
+      case "falda":
+        s = `<rect x="33" y="16" width="34" height="8" fill="${col}"/><path fill="${col}" d="M34 24h32l16 80H18z"/><path ${det} d="M33 24h34M42 24l-8 80M50 24v80M58 24l8 80M38 24l-14 80M62 24l14 80"/>`; break;
+      case "pantalon":
+        s = `<path fill="${col}" d="M30 12h40l6 96H56l-6-60-6 60H24z"/><path ${det} d="M30 20h40M50 20v28M36 22q2 10 10 10M64 22q-2 10-10 10"/>`; break;
+      case "bolsa":
+        s = `<path d="M36 44q0-28 14-28t14 28" fill="none" stroke="${col}" stroke-width="4"/><path fill="${col}" d="M20 42h60l-6 62H26z"/><path ${det} d="M22 54h56M36 44v4M64 44v4"/><rect x="45" y="50" width="10" height="7" rx="1" fill="rgba(255,255,255,.35)"/>`; break;
+      case "bolsa-tejida":
+        s = `<path d="M30 60q0-38 20-38t20 38" fill="none" stroke="#8b5e3c" stroke-width="3.5"/><circle cx="50" cy="74" r="30" fill="${col}"/><path ${det} d="M22 64h56M20 74h60M22 84h56M28 94h44M50 44v60M38 46l-6 56M62 46l6 56"/>`; break;
+      case "aretes":
+        s = `<circle cx="34" cy="30" r="3" fill="${col}"/><circle cx="66" cy="30" r="3" fill="${col}"/><circle cx="34" cy="56" r="20" fill="none" stroke="${col}" stroke-width="5"/><circle cx="66" cy="56" r="20" fill="none" stroke="${col}" stroke-width="5"/><path d="M22 46a16 16 0 0 1 8-8M54 46a16 16 0 0 1 8-8" fill="none" stroke="rgba(255,255,255,.6)" stroke-width="1.5"/>`; break;
+      case "collar": {
+        let perlas = "";
+        for (let i = 0; i <= 16; i++) { const t = i / 16, x = (1 - t) * (1 - t) * 20 + 2 * (1 - t) * t * 50 + t * t * 80, y = (1 - t) * (1 - t) * 20 + 2 * (1 - t) * t * 110 + t * t * 20; perlas += `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="4.2" fill="${col}" stroke="rgba(0,0,0,.15)" stroke-width=".8"/>`; }
+        s = perlas + `<circle cx="50" cy="74" r="7" fill="#c9a35c"/>`; break;
+      }
+      case "sombrero":
+        s = `<ellipse cx="50" cy="74" rx="44" ry="13" fill="${col}"/><path fill="${col}" d="M30 72q0-34 20-34t20 34z"/><path d="M30 64q20 6 40 0v6q-20 6-40 0z" fill="#3a2e26"/><path ${det} d="M14 76q36 10 72 0M36 50q14-4 28 0"/>`; break;
+      case "mascada":
+        s = `<rect x="27" y="27" width="46" height="46" fill="${col}" transform="rotate(45 50 50)"/><rect x="34" y="34" width="32" height="32" fill="none" stroke="#b07d6f" stroke-width="2" transform="rotate(45 50 50)"/><circle cx="50" cy="50" r="7" fill="#b07d6f"/><path d="M50 84l-6 22M50 84l6 22" stroke="${col}" stroke-width="5"/>`; break;
+    }
+    return `<svg viewBox="0 0 100 120" aria-hidden="true">${s}</svg>`;
+  }
+  document.querySelectorAll("[data-figura]").forEach((el) => (el.innerHTML = figura(el.dataset.figura, el.dataset.color)));
+  document.querySelectorAll(".nov [data-figura] svg").forEach((svg) => svg.parentElement.replaceWith(svg));
+
+  const dinero = (n) => "$" + n.toLocaleString("es-MX");
+  const $ = (s) => document.querySelector(s);
+
+  // Catálogo, filtros y búsqueda
+  let categoria = "Todo";
+  const filtros = $("[data-filtros]");
+  filtros.innerHTML = CATEGORIAS.map((c) => `<button type="button" data-cat="${c}" aria-pressed="${c === categoria}">${c}</button>`).join("");
+  const lista = $("[data-productos]");
+  lista.innerHTML = P.map((x) => `
+    <article class="producto" data-id="${x.id}">
+      <div class="foto">${x.nuevo ? '<span class="sello">Nuevo</span>' : x.antes ? '<span class="sello">Rebaja</span>' : ""}${figura(x.f, x.col)}</div>
+      <small>${x.c}</small>
+      <h3>${x.n}</h3>
+      <div class="precio">${dinero(x.p)}${x.antes ? `<s>${dinero(x.antes)}</s>` : ""}</div>
+      <div class="acciones">
+        ${x.tallas ? '<select aria-label="Talla"><option>CH</option><option selected>M</option><option>G</option><option>XG</option></select>' : ""}
+        <button type="button" data-agregar="${x.id}">Agregar</button>
+      </div>
+    </article>`).join("");
+  const sinAcentos = (t) => t.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
+  function filtrar() {
+    const q = sinAcentos($("[data-buscar]").value.trim());
+    let visibles = 0;
+    lista.querySelectorAll(".producto").forEach((el) => {
+      const x = P.find((y) => y.id === +el.dataset.id);
+      const okCat = categoria === "Todo" || (categoria === "Novedades" ? x.nuevo : x.c === categoria);
+      const okQ = !q || sinAcentos(x.n + " " + x.c).includes(q);
+      el.hidden = !(okCat && okQ);
+      if (!el.hidden) visibles++;
+    });
+    $("[data-vacio]").hidden = visibles > 0;
+  }
+  function elegir(c) {
+    categoria = c;
+    filtros.querySelectorAll("button").forEach((b) => b.setAttribute("aria-pressed", b.dataset.cat === c));
+    filtrar();
+  }
+  filtros.addEventListener("click", (e) => { const b = e.target.closest("[data-cat]"); if (b) elegir(b.dataset.cat); });
+  $("[data-buscar]").addEventListener("input", filtrar);
+  document.querySelectorAll("[data-ir-cat]").forEach((b) => b.addEventListener("click", () => {
+    elegir(b.dataset.irCat);
+    $("#catalogo").scrollIntoView({ behavior: "smooth" });
+  }));
+
+  // Carrito
+  const carrito = []; // { id, talla, cant }
+  const clave = (l) => l.id + "|" + (l.talla || "");
+  function agregar(id, talla) {
+    const ya = carrito.find((l) => l.id === id && l.talla === talla);
+    if (ya) ya.cant++; else carrito.push({ id, talla, cant: 1 });
+    pintar();
+  }
+  function total() {
+    const sub = carrito.reduce((s, l) => s + P.find((x) => x.id === l.id).p * l.cant, 0);
+    const envio = sub === 0 ? 0 : sub >= ENVIO_GRATIS ? 0 : ENVIO;
+    return { sub, envio, total: sub + envio };
+  }
+  function mensaje() {
+    const t = total();
+    const filas = carrito.map((l) => { const x = P.find((y) => y.id === l.id); return `• ${l.cant} × ${x.n}${l.talla ? ` (talla ${l.talla})` : ""}: ${dinero(x.p * l.cant)}`; });
+    return `¡Hola Alma Boutique! Quiero hacer este pedido:\n\n${filas.join("\n")}\n\nSubtotal: ${dinero(t.sub)}\nEnvío: ${t.envio ? dinero(t.envio) : "gratis"}\nTotal: ${dinero(t.total)} MXN\n\n¿Me confirman disponibilidad y forma de pago?`;
+  }
+  function pintar() {
+    const n = carrito.reduce((s, l) => s + l.cant, 0);
+    document.querySelectorAll("[data-contador]").forEach((c) => (c.textContent = n));
+    const t = total();
+    $("[data-subtotal]").textContent = dinero(t.sub);
+    $("[data-envio]").textContent = t.sub === 0 ? "—" : t.envio ? dinero(t.envio) : "Gratis";
+    $("[data-total]").textContent = dinero(t.total);
+    const enviar = $("[data-enviar]");
+    const numero = String((window.MARCA && window.MARCA.whatsapp) || "").replace(/\D/g, "");
+    if (n) { enviar.href = `https://wa.me/${numero}?text=${encodeURIComponent(mensaje())}`; enviar.setAttribute("aria-disabled", "false"); }
+    else { enviar.href = "#"; enviar.setAttribute("aria-disabled", "true"); }
+    const cont = $("[data-lineas]");
+    if (!n) { cont.innerHTML = '<div class="carrito-vacio"><p>Tu bolsa está vacía</p>Agrega tus piezas favoritas del catálogo.</div>'; return; }
+    const falta = ENVIO_GRATIS - t.sub;
+    cont.innerHTML = (falta > 0 ? `<p class="nota" style="padding:0.8rem 0 0">Te faltan ${dinero(falta)} para el envío gratis.</p>` : `<p class="nota" style="padding:0.8rem 0 0">Tu pedido tiene envío gratis.</p>`) +
+      carrito.map((l) => { const x = P.find((y) => y.id === l.id); return `
+      <div class="linea" data-clave="${clave(l)}">
+        <div class="mini">${figura(x.f, x.col)}</div>
+        <div><h3>${x.n}</h3><div class="det">${l.talla ? "Talla " + l.talla + " · " : ""}${dinero(x.p)}</div>
+          <div class="cantidad"><button type="button" data-menos aria-label="Quitar uno">−</button><span>${l.cant}</span><button type="button" data-mas aria-label="Agregar uno">+</button></div></div>
+        <div class="der"><b>${dinero(x.p * l.cant)}</b><button class="quitar" type="button" data-quitar>Quitar</button></div>
+      </div>`; }).join("");
+  }
+  $("[data-lineas]").addEventListener("click", (e) => {
+    const fila = e.target.closest("[data-clave]"); if (!fila) return;
+    const i = carrito.findIndex((l) => clave(l) === fila.dataset.clave); if (i < 0) return;
+    if (e.target.closest("[data-mas]")) carrito[i].cant++;
+    else if (e.target.closest("[data-menos]")) { carrito[i].cant--; if (!carrito[i].cant) carrito.splice(i, 1); }
+    else if (e.target.closest("[data-quitar]")) carrito.splice(i, 1);
+    else return;
+    pintar();
+  });
+  let tiempo;
+  lista.addEventListener("click", (e) => {
+    const b = e.target.closest("[data-agregar]"); if (!b) return;
+    const sel = b.parentElement.querySelector("select");
+    agregar(+b.dataset.agregar, sel ? sel.value : "");
+    b.textContent = "Agregado ✓"; b.classList.add("listo");
+    setTimeout(() => { b.textContent = "Agregar"; b.classList.remove("listo"); }, 1400);
+    const toast = $("[data-toast]");
+    toast.textContent = "Se agregó a tu bolsa";
+    toast.classList.add("ver"); clearTimeout(tiempo); tiempo = setTimeout(() => toast.classList.remove("ver"), 1600);
+  });
+  const panel = $("[data-carrito]"), velo = $("[data-velo]");
+  function abrir(si) {
+    panel.classList.toggle("abierto", si); velo.classList.toggle("abierto", si);
+    panel.setAttribute("aria-hidden", !si); document.body.classList.toggle("sin-scroll", si);
+  }
+  document.querySelectorAll("[data-abrir-carrito]").forEach((b) => b.addEventListener("click", () => abrir(true)));
+  $("[data-cerrar]").addEventListener("click", () => abrir(false));
+  velo.addEventListener("click", () => abrir(false));
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape") abrir(false); });
+  pintar();
+})();
+</script>
+<script src="../../plantillas/comun/marca.js"></script>
+<script src="../portafolio.js" data-proyecto="Alma Boutique" data-tipo="Tienda en línea"></script>
+</body>
+</html>
