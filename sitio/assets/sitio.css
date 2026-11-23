@@ -533,3 +533,7 @@ h1, h2 { font-family: var(--serif); font-weight: 600; letter-spacing: -0.01em; }
 .hero__mockup--doble .navegador--atras { position: absolute; top: 0; left: 0; width: 74%; transform: rotate(-3deg); filter: saturate(0.9); }
 .hero__mockup--doble .navegador--frente { position: relative; width: 84%; margin: 18% 0 0 auto; transform: rotate(1.5deg); z-index: 1; }
 .hero__mockup--doble .telefono--flotante { right: auto; left: 2%; bottom: -10px; z-index: 2; transform: rotate(-5deg); }
+/* Logotipo: "Connect" en cursiva con degradado */
+.logo__texto em { font-style: italic; font-weight: 600; background: linear-gradient(90deg, #c97f66, #b8936a); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.logo--claro .logo__texto em { background-image: linear-gradient(90deg, #e8b4a0, #d9b48a); }
+.logo img[src$="icono.svg"] { border-radius: 0; }

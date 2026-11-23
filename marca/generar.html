@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@600&family=Playfair+Display:ital,wght@0,700;1,600&display=swap">
+<style>
+  html, body { margin: 0; height: 100%; }
+  body { display: grid; place-items: center; font-family: Inter, sans-serif; }
+  body.perfil { background: radial-gradient(circle at 50% 40%, #262d47, #141826 70%); }
+  body.perfil img { width: 54%; }
+  body.oscuro { background: #141826; color: #fff; }
+  body.claro { background: #faf6f1; color: #1b2033; }
+  body.transparente { background: transparent; color: #1b2033; }
+  .logo { display: flex; align-items: center; gap: 36px; }
+  .logo img { width: 190px; }
+  .nom { font-family: "Playfair Display", serif; font-weight: 700; font-size: 150px; line-height: 1; letter-spacing: -0.01em; }
+  .nom i { font-weight: 600; background: linear-gradient(90deg, #e8b4a0, #d9b48a); -webkit-background-clip: text; background-clip: text; color: transparent; padding-right: 8px; }
+  .claro .nom i, .transparente .nom i { background-image: linear-gradient(90deg, #c97f66, #b8936a); }
+  .lema { display: block; font-size: 30px; letter-spacing: 0.24em; text-transform: uppercase; margin-top: 20px; opacity: 0.65; }
+</style></head>
+<body>
+<script>
+  const modo = new URLSearchParams(location.search).get("modo") || "perfil";
+  document.body.className = modo;
+  document.body.innerHTML = modo === "perfil"
+    ? '<img src="../sitio/assets/icono.svg" alt="">'
+    : '<div class="logo"><img src="../sitio/assets/icono.svg" alt=""><div><div class="nom">Local<i>Connect</i></div><span class="lema">Páginas web · Sistemas · Invitaciones</span></div></div>';
+</script>
+</body></html>
